@@ -1,9 +1,9 @@
 <?php
 namespace Glider\Connectors\Mysqli;
 
-use Glider\Connectors\Contract\ConnectorProviderInterface;
+use Glider\Connectors\Contract\ConnectorProvider;
 
-class MysqliConnector implements ConnectorProviderInterface
+class MysqliConnector implements ConnectorProvider
 {
 
 	/**

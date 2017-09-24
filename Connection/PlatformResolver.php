@@ -9,7 +9,7 @@ use Glider\Platform\Contract\PlatformProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Connection\Contract\ConnectionInterface;
 
-class Connector
+class PlatformResolver
 {
 
 	/**
@@ -49,12 +49,12 @@ class Connector
 	}
 
 	/**
-	* Resolve provided connection.
+	* Resolve provided connection's platform.
 	*
 	* @access 	public
 	* @return 	Object
 	*/
-	public function resolveConnection()
+	public function resolvePlatform()
 	{
 		if (!$this->connectionManager instanceof ConnectionInterface) {
 			throw new RuntimeException('Connection must implement \ConnectionInterface');
@@ -82,16 +82,20 @@ class Connector
 	* @access 	private
 	* @return 	Mixed
 	*/
-	private function getPlatformProvider(array $platform=[])
+	private function getPlatformProvider($platform=[])
 	{	
+		if (is_null($platform)) {
+			return false;
+		}
+
 		$platformId = key($platform);
 		$platform = current($platform);
-		if (!isset($platform['connectsWith'])) {
+		if (!isset($platform['provider'])) {
 			$this->connectionFailed = ':noPlatform';
 			return false;
 		}
 
-		$connector = $platform['connectsWith'];
+		$connector = $platform['provider'];
 		if (!class_exists($connector)) {
 			$this->connectionFailed = ':noConnectorProvider';
 			return false;
@@ -103,21 +107,11 @@ class Connector
 		}
 
 		$this->platformProvider = $platformProvider;
+		$connector = $this->platformProvider->connector();
 
 		print '<pre>';
-		print_r($platform);
-
+		print_r($this);
 		return true;
-	}
-
-	/**
-	*
-	*
-	*
-	*/
-	private function resolveAndSet(String $providerName)
-	{
-
 	}
 
 }

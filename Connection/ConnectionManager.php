@@ -7,7 +7,7 @@ use RuntimeException;
 use Glider\ClassLoader;
 use Glider\Configurator;
 use Glider\Connection\DomainBag;
-use Glider\Connection\Connector;
+use Glider\Connection\PlatformResolver;
 use Glider\Connection\ActiveConnection;
 use Glider\Connection\ConnectionLoader;
 use Glider\Connection\QueuedConnections;
@@ -217,8 +217,8 @@ class ConnectionManager implements ConnectionInterface
 		if (isset($this->loadedConnections[$id])) {
 			$this->configuredConnectionId = $id;
 			$this->platformConnector = [$id => $this->loadedConnections[$id]];
-			$connector = new Connector($this);
-			return $connector->resolveConnection();
+			$connector = new PlatformResolver($this);
+			return $connector->resolvePlatform();
 		}
 	}
 
