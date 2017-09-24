@@ -6,6 +6,7 @@ use Closure;
 use RuntimeException;
 use Glider\ClassLoader;
 use Glider\Configurator;
+use Glider\Events\EventManager;
 use Glider\Connection\DomainBag;
 use Glider\Connection\PlatformResolver;
 use Glider\Connection\ActiveConnection;
@@ -85,7 +86,7 @@ class ConnectionManager implements ConnectionInterface
 		// If we're not able to connect using the provided connection id,
 		// we'll attempt to reconnect using the next provided connection id
 		// the queue.
-		return $this->canConnect($connectionId) || [];
+		return $this->canConnect($connectionId);
 	}
 
 	/**
@@ -95,10 +96,7 @@ class ConnectionManager implements ConnectionInterface
 	*/
 	protected function canConnect($id='')
 	{
-		if (!$this->fromQueue()->get($id)) {
-			$this->connectionFailed = true;
-			return false;
-		}
+		return $this->fromQueue()->get($id);
 	}
 
 	/**
@@ -218,7 +216,7 @@ class ConnectionManager implements ConnectionInterface
 			$this->configuredConnectionId = $id;
 			$this->platformConnector = [$id => $this->loadedConnections[$id]];
 			$connector = new PlatformResolver($this);
-			return $connector->resolvePlatform();
+			return $connector->resolvePlatform(new EventManager());
 		}
 	}
 

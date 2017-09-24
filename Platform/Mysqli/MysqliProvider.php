@@ -1,6 +1,7 @@
 <?php
 namespace Glider\Platform\Mysqli;
 
+use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
 use Glider\Connectors\Mysqli\MysqliConnector;
 use Glider\Platform\Contract\PlatformProvider;
@@ -16,11 +17,18 @@ class MysqliProvider implements PlatformProvider
 	private 	$config;
 
 	/**
+	* @var 		$eventManager
+	* @access 	private
+	*/
+	public 		$eventManager;
+
+	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(PlatformResolver $platform)
+	public function __construct(PlatformResolver $platform, EventManager $eventManager)
 	{
 		$this->config = $platform->preparedConnection();
+		$this->eventManager = $eventManager;
 	}
 
 	/**

@@ -27,7 +27,9 @@ interface ConnectorProvider {
 	* @param 	$host <String>
 	* @param 	$username <String>
 	* @param 	$password <String>
+	* @param 	$database <String>
+	* @access 	public
 	*/
-	public function connect(String $host=null, String $username=null, String $password=null);
+	public function connect(String $host=null, String $username=null, String $password=null, String $database=null);
 
 }

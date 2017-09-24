@@ -5,10 +5,13 @@ use StdClass;
 use ReflectionClass;
 use RuntimeException;
 use Glider\Connection\Domain;
+use Glider\Events\EventManager;
+use Glider\Events\Contract\Subscriber;
 use Glider\Connection\ConnectionManager;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Connection\Contract\ConnectionInterface;
+use Glider\Events\Subscribers\ConnectionAttemptSubscriber;
 
 class PlatformResolver
 {
@@ -58,10 +61,11 @@ class PlatformResolver
 	/**
 	* Resolve provided connection's platform.
 	*
+	* @param 	$eventManager Glider\Events\EventManager
 	* @access 	public
 	* @return 	Object
 	*/
-	public function resolvePlatform()
+	public function resolvePlatform(EventManager $eventManager)
 	{
 		if (!$this->connectionManager instanceof ConnectionInterface) {
 			throw new RuntimeException('Connection must implement \ConnectionInterface');
@@ -70,16 +74,21 @@ class PlatformResolver
 		$connections = $reflector->getProperty('platformConnector');
 		$connections->setAccessible('public');
 		$connections = $connections->getValue($this->connectionManager);
-		$resolvedConnection = null;
+		$resolvedConnection = $this->getPlatformProvider($connections);
 
-		if ($this->getPlatformProvider($connections) == false) {
+		if (!$resolvedConnection) {
 			$resolvedConnection = $this->getPlatformProvider($this->connectionManager->getAlternativeId(ConnectionManager::USE_ALT_KEY));
 		}
 
 		if (!is_null($resolvedConnection) && $resolvedConnection == false) {
 			throw new RuntimeException('Unable to start connection for database platform.');
 		}
-		return false;
+
+		// If an error occurred while establishin a connection, we'll dispatch the connect.failed
+		// event that will send the necessary error message.
+		$eventManager->dispatchEvent('connect.failed');
+
+		return $resolvedConnection;
 	}
 
 	/**
@@ -109,7 +118,7 @@ class PlatformResolver
 		}
 
 		$this->preparedConnection = $platform;
-		$platformProvider = new $provider($this);
+		$platformProvider = new $provider($this, new EventManager());
 		if (!$platformProvider instanceof PlatformProvider) {
 			return false;
 		}
@@ -133,6 +142,14 @@ class PlatformResolver
 	final public function preparedConnection()
 	{
 		return $this->preparedConnection;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public static function getRegisteredEvents() : Array
+	{
+		return [];
 	}
 
 }

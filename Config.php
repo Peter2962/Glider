@@ -5,6 +5,7 @@ return [
 		'host' => 'localhost',
 		'username' => 'root',
 		'password' => 'root',
+		'database' => 'a',
 		'charset' => 'utf8',
 		'collation' => 'utf8',
 		'domain' => 'localhost',

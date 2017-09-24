@@ -9,6 +9,7 @@
 
 namespace Glider\Platform\Contract;
 
+use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
 use Glider\Connectors\Contract\ConnectorProvider;
 
@@ -16,14 +17,16 @@ interface PlatformProvider
 {
 
 	/**
-	* The constructor accepts an argument <Glider\Connection\PlatformResolver> which
-	* passes the configuration to it.
+	* The constructor accepts two arguments: Glider\Connection\PlatformResolver which
+	* passes the configuration to it and Glider\Events\EventManager which handles the
+	* platform events.
 	*
-	* @param 	$platform <Glider\Connection\PlatformResolver>
+	* @param 	$platform Glider\Connection\PlatformResolver
+	* @param 	$eventManager Glider\Events\EventManager	
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(PlatformResolver $platformResolver);
+	public function __construct(PlatformResolver $platformResolver, EventManager $eventManager);
 
 	/**
 	* The platform's connector provider that will be used to initialize
