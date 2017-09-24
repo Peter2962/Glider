@@ -7,7 +7,7 @@ return [
 		'password' => 'root',
 		'charset' => 'utf8',
 		'collation' => 'utf8',
-		'domain' => 'http://server.web/',
+		'domain' => 'localhost',
 		'prefix' => '',
 		'alt' => 'dev'
 	],

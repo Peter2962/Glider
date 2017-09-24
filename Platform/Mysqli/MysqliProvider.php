@@ -16,18 +16,27 @@ class MysqliProvider implements PlatformProvider
 	private 	$config;
 
 	/**
-	* The constructor accepts an argument
-	*
-	*
+	* {@inheritDoc}
 	*/
-	public function __construct()
+	public function __construct(PlatformResolver $platform)
 	{
-
+		$this->config = $platform->preparedConnection();
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
 	public function connector() : ConnectorProvider
 	{
-		return new MysqliConnector();
+		return new MysqliConnector($this);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	final public function getConfig(String $key=null)
+	{
+		return $this->config[$key] ?? null;
 	}
 
 }

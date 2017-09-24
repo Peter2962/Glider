@@ -2,8 +2,9 @@
 namespace Glider\Connection;
 
 use StdClass;
-use RuntimeException;
 use ReflectionClass;
+use RuntimeException;
+use Glider\Connection\Domain;
 use Glider\Connection\ConnectionManager;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
@@ -35,6 +36,12 @@ class PlatformResolver
 	* @access 	private
 	*/
 	private 	$platformProvider;
+
+	/**
+	* @var 		$preparedConnection
+	* @access 	private
+	*/
+	private 	$preparedConnection;
 
 	/**
 	* @param 	$contract Glider\Connectors\Contract\ConnectionInterface
@@ -95,23 +102,37 @@ class PlatformResolver
 			return false;
 		}
 
-		$connector = $platform['provider'];
-		if (!class_exists($connector)) {
+		$provider = $platform['provider'];
+		if (!class_exists($provider)) {
 			$this->connectionFailed = ':noConnectorProvider';
 			return false;
 		}
 
-		$platformProvider = new $connector();
+		$this->preparedConnection = $platform;
+		$platformProvider = new $provider($this);
 		if (!$platformProvider instanceof PlatformProvider) {
 			return false;
 		}
 
-		$this->platformProvider = $platformProvider;
-		$connector = $this->platformProvider->connector();
+		if (isset($platform['domain']) && !Domain::matches($platform['domain'])) {
+			return false;
+		}
 
-		print '<pre>';
-		print_r($this);
-		return true;
+		$this->platformProvider = $platformProvider;
+		$providerConnector = $this->platformProvider->connector();
+		return $providerConnector->connect();
+	}
+
+	/**
+	* Returns the resolved connection configuration.
+	*
+	* @access 	public
+	* @final
+	* @return 	Array
+	*/
+	final public function preparedConnection()
+	{
+		return $this->preparedConnection;
 	}
 
 }

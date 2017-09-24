@@ -8,15 +8,15 @@ abstract class Domain
 	* Checks if the server host matches provided domain(s). A single
 	* domain (string) or array of domains can be provided.
 	*
-	* @param 	$providedDomain <String>
+	* @param 	$providedDomain <Mixed>
 	* @access 	public
 	* @static
 	* @return 	Boolean
 	*/
-	public static function matches(Type $providedDomain)
+	public static function matches($providedDomain=null)
 	{
 		if (is_string($providedDomain)) {
-			return (Boolean) $_SERVER['HTTP_HOST'] == $providedDomain;
+			return $_SERVER['HTTP_HOST'] == $providedDomain;
 		}
 
 		if (is_array($providedDomain)) {
