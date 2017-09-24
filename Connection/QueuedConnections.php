@@ -19,8 +19,7 @@ class QueuedConnections
 	*/
 	final public function getQueued(ConnectionLoader $connectionLoader) : Array
 	{
-		$connections = $connectionLoader->getConnectionsFromResource();
-		return $connections;
+		return $connectionLoader->getConnectionsFromResource();
 	}
 
 	/**

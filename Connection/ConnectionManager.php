@@ -3,6 +3,7 @@ namespace Glider\Connection;
 
 use Str;
 use Closure;
+use RuntimeException;
 use Glider\ClassLoader;
 use Glider\Configurator;
 use Glider\Connection\DomainBag;
@@ -17,10 +18,10 @@ class ConnectionManager implements ConnectionInterface
 {
 	
 	/**
-	* @var 		$connector
+	* @var 		$platformConnector
 	* @access 	private
 	*/
-	private 	$connector;
+	private 	$platformConnector;
 
 	/**
 	* @var 		$loadedConnections
@@ -51,12 +52,17 @@ class ConnectionManager implements ConnectionInterface
 	* @access 	private
 	* @static
 	*/
-	private static $connectionFailed = false;
+	private 	$connectionFailed = false;
 
 	/**
 	* @const 	DEFAULT_CONNECTION_ID
 	*/
 	const 		DEFAULT_CONNECTION_ID = 'default';
+
+	/**
+	* @const 	USE_ALT_KEY 	
+	*/
+	const 		USE_ALT_KEY = 'set_id_as_alternate_key';
 
 	/**
 	* @access 	public
@@ -79,9 +85,7 @@ class ConnectionManager implements ConnectionInterface
 		// If we're not able to connect using the provided connection id,
 		// we'll attempt to reconnect using the next provided connection id
 		// the queue.
-		if (!$this->canConnect($connectionId)) {
-			return $this->reconnect($connectionId);
-		}
+		return $this->canConnect($connectionId) || [];
 	}
 
 	/**
@@ -92,10 +96,7 @@ class ConnectionManager implements ConnectionInterface
 	protected function canConnect($id='')
 	{
 		if (!$this->fromQueue()->get($id)) {
-			return false;
-		}
-
-		if ($this->configuredConnectionId !== '' && !isset($this->connections[$this->configuredConnectionId])) {
+			$this->connectionFailed = true;
 			return false;
 		}
 	}
@@ -113,16 +114,33 @@ class ConnectionManager implements ConnectionInterface
 	*/
 	public static function has(String $id)
 	{
-
+		return $this->fromQueue()->get($id);
 	}
 
 	/**
 	* {@inheritDoc}
 	*/
-	public function reconnect(String $id)
+	public function getAlternativeId(String $id)
 	{
-		print '<pre>';
-		print_r($this);
+		// If no id is provided, we will try to reconnect with the default
+		// connection id.
+		if (empty($id)) {
+			$id = ConnectionManager::DEFAULT_CONNECTION_ID;
+		}
+
+		if (!in_array($id, array_keys($this->loadedConnections)) && $id !== ConnectionManager::USE_ALT_KEY) {
+			throw new RuntimeException('Cannot initialize a reconnection.');
+		}
+
+		$loaded = $this->loadedConnections;
+		$nextKey = ConnectionManager::USE_ALT_KEY;
+		$failedId = $this->getConnectionId();
+
+		if (isset($loaded[$failedId]['alt']) && isset($loaded[$loaded[$failedId]['alt']])) {
+			return [$loaded[$failedId]['alt'] => $loaded[$loaded[$failedId]['alt']]];
+		}
+
+		return null;		
 	}
 
 	/**
@@ -159,13 +177,13 @@ class ConnectionManager implements ConnectionInterface
 	}
 
 	/**
-	* @param 	$connectionConfig <Array>
+	* @param 	$event <Array>
 	* @access 	private
 	* @return 	Boolean
 	*/
-	private function raiseChecks(array $connectionConfig=[])
+	private function raiseEvent(array $event=[])
 	{
-
+		return null;
 	}
 
 	/**
@@ -196,8 +214,11 @@ class ConnectionManager implements ConnectionInterface
 			return false;
 		}
 
-		if ($this->loadedConnections[$id]) {
-			return new Connector();
+		if (isset($this->loadedConnections[$id])) {
+			$this->configuredConnectionId = $id;
+			$this->platformConnector = [$id => $this->loadedConnections[$id]];
+			$connector = new Connector($this);
+			return $connector->resolveConnection();
 		}
 	}
 

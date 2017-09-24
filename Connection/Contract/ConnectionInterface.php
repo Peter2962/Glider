@@ -1,7 +1,6 @@
 <?php
 namespace Glider\Connection\Contract;
 
-use Str;
 use Closure;
 
 interface ConnectionInterface
@@ -14,7 +13,7 @@ interface ConnectionInterface
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function reconnect(String $withId);
+	public function getAlternativeId(String $withId);
 
 	/**
 	* Returns a configured connection. Glider returns the default connection
