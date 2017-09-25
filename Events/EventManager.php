@@ -39,6 +39,7 @@ class EventManager
 	* triggered.
 	*
 	* @param 	$listenerId <String>
+	* @param 	$callback <Mixed>
 	* @access 	public
 	* @return 	void
 	*/
@@ -72,7 +73,7 @@ class EventManager
 	* @param 	$eventId <String>
 	* @param 	$subscriber Glider\Events\Contract\Subscriber
 	* @access 	public
-	* @return 	Mixed
+	* @return 	void
 	*/
 	public function dispatchEvent(String $eventId, $subscriber=null)
 	{

@@ -10,26 +10,66 @@
 
 namespace Glider;
 
+use Glider\Query\Builder\QueryBinder;
+use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\ConnectionManager;
 
 class Factory
 {
 
 	/**
-	* @var 		$connection
+	* @var 		$provider
 	* @access 	protected
 	*/
-	protected 	$connection;
+	protected 	$provider;
 
 	/**
-	* @param 	$connection Glider\Connection\ConnectionManager
+	* @var 		$queryBuilder
+	* @access 	protected
+	*/
+	protected	$queryBuilder;
+
+	/**
+	* @var 		$transaction
+	* @access 	protected
+	*/
+	protected 	$transaction;
+
+	/**
 	* @access 	public
 	* @return 	void
 	*/
 	public function __construct()
 	{
 		$connectionManager = new ConnectionManager();
-		$this->connection = $connectionManager->getConnection();
+		$provider = $connectionManager->getConnection('default');
+		$connection = $provider->connector()->connect();
+		$this->transaction = $provider->transaction();
+		$this->queryBuilder = $queryBuilder = $provider->queryBuilder($provider->connector());
+	}
+
+	/**
+	* Returns instance of query builder.
+	*
+	* @access 	public
+	* @static
+	* @return 	Object Glider\Query\Builder\QueryBuilder
+	*/
+	public static function getQueryBuilder()
+	{
+		return Factory::getInstance()->queryBuilder;
+	}
+
+	/**
+	* Returns a static instance of Glider\Factory.
+	*
+	* @access 	protected
+	* @static
+	* @return 	Object
+	*/
+	protected static function getInstance()
+	{
+		return new self();
 	}
 
 }

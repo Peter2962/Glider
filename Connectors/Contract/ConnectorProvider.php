@@ -1,5 +1,8 @@
 <?php
 /**
+* @package 	ConnectorProvider
+* @version 	0.1.0
+*
 * All connectors must implement this interface.
 * This interface helps to configure a connector.
 */
@@ -22,14 +25,17 @@ interface ConnectorProvider {
 	public function __construct(PlatformProvider $platformProvider);
 
 	/**
-	* Connects a database connect to the server.
+	* Initializes a database connection with the server.
 	*
 	* @param 	$host <String>
 	* @param 	$username <String>
 	* @param 	$password <String>
 	* @param 	$database <String>
+	* @param 	$collation <String>
+	* @param 	$charset <String>
 	* @access 	public
+	* @return 	Mixed
 	*/
-	public function connect(String $host=null, String $username=null, String $password=null, String $database=null);
+	public function connect(String $host=null, String $username=null, String $password=null, String $database=null, String $collation=null, String $charset=null);
 
 }

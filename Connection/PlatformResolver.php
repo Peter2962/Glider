@@ -63,7 +63,7 @@ class PlatformResolver
 	*
 	* @param 	$eventManager Glider\Events\EventManager
 	* @access 	public
-	* @return 	Object
+	* @return 	Object Glider\Platform\Contract\PlatformProvider
 	*/
 	public function resolvePlatform(EventManager $eventManager)
 	{
@@ -74,21 +74,19 @@ class PlatformResolver
 		$connections = $reflector->getProperty('platformConnector');
 		$connections->setAccessible('public');
 		$connections = $connections->getValue($this->connectionManager);
-		$resolvedConnection = $this->getPlatformProvider($connections);
+		$resolvedProvider = $this->getPlatformProvider($connections);
 
-		if (!$resolvedConnection) {
-			$resolvedConnection = $this->getPlatformProvider($this->connectionManager->getAlternativeId(ConnectionManager::USE_ALT_KEY));
+		if (!$resolvedProvider) {
+			$resolvedProvider = $this->getPlatformProvider($this->connectionManager->getAlternativeId(ConnectionManager::USE_ALT_KEY));
 		}
 
-		if (!is_null($resolvedConnection) && $resolvedConnection == false) {
+		if (!is_null($resolvedProvider) && $resolvedProvider == false) {
 			throw new RuntimeException('Unable to start connection for database platform.');
 		}
 
-		// If an error occurred while establishin a connection, we'll dispatch the connect.failed
-		// event that will send the necessary error message.
-		$eventManager->dispatchEvent('connect.failed');
-
-		return $resolvedConnection;
+		// If connection was successfully established, dispatch `connect.created` event.
+		$this->platformProvider->eventManager->dispatchEvent('connect.created');
+		return $resolvedProvider;
 	}
 
 	/**
@@ -128,8 +126,8 @@ class PlatformResolver
 		}
 
 		$this->platformProvider = $platformProvider;
-		$providerConnector = $this->platformProvider->connector();
-		return $providerConnector->connect();
+		$providerConnector = $this->platformProvider;
+		return $providerConnector;
 	}
 
 	/**

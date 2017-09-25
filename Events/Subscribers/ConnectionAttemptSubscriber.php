@@ -8,19 +8,19 @@ class ConnectionAttemptSubscriber implements Subscriber
 {
 
 	/**
-	* @var 		$message
+	* @var 		$connection
 	* @access 	private
 	*/
-	private 	$message;
+	private 	$connection;
 
 	/**
-	* @param 	$message <String>
+	* @param 	$connection <String>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct($message='')
+	public function __construct($connection='')
 	{
-		$this->message = $message;
+		$this->connection = $connection;
 	}
 
 	/**
@@ -29,7 +29,8 @@ class ConnectionAttemptSubscriber implements Subscriber
 	public function getRegisteredEvents() : Array
 	{
 		return [
-			'connect.failed' => 'throwError'
+			'connect.failed' => 'onConnectionFailed',
+			'connect.created' => 'onConnectionCreated'
 		];
 	}
 
@@ -40,9 +41,21 @@ class ConnectionAttemptSubscriber implements Subscriber
 	* @return 	void
 	* @throws 	ConnectionFailedException
 	*/
-	public function throwError()
+	public function onConnectionFailed()
 	{
-		throw new ConnectionFailedException($this->message);
+		throw new ConnectionFailedException($this->connection->connect_error);
+	}
+
+	/**
+	* This method is called after a connection has been successfully created.
+	*
+	* @access 	public
+	* @return 	void
+	* @throws 	ConnectionFailedException
+	*/
+	public function onConnectionCreated()
+	{
+		//
 	}
 
 }
