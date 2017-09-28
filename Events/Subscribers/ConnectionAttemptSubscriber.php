@@ -1,6 +1,8 @@
 <?php
 namespace Glider\Events\Subscribers;
 
+use RuntimeException;
+use InvalidArgumentException;
 use Glider\Events\Contract\Subscriber;
 use Glider\Exceptions\ConnectionFailedException;
 
@@ -30,20 +32,24 @@ class ConnectionAttemptSubscriber implements Subscriber
 	{
 		return [
 			'connect.failed' => 'onConnectionFailed',
-			'connect.created' => 'onConnectionCreated'
+			'connect.created' => 'onConnectionCreated',
+			'domain.notallowed' => 'domainNotAllowed',
+			'connect.failed.message.instance' => 'onGenerateErrorMessage',
+			'connect.failed.number.instance' => 'onGenerateErrorNumber'
 		];
 	}
 
 	/**
 	* This method throws an exxeption on failed connection.
 	*
+	* @param 	$message <String>
 	* @access 	public
 	* @return 	void
 	* @throws 	ConnectionFailedException
 	*/
-	public function onConnectionFailed()
-	{
-		throw new ConnectionFailedException($this->connection->connect_error);
+	public function onConnectionFailed(String $message)
+	{	
+		throw new ConnectionFailedException($message);
 	}
 
 	/**
@@ -56,6 +62,57 @@ class ConnectionAttemptSubscriber implements Subscriber
 	public function onConnectionCreated()
 	{
 		//
+	}
+
+	/**
+	* This method throws an exception if an attempt is made to connect to the
+	* on the domain that is not specified in the configuration file.
+	*
+	* @param 	$configuration <Array>
+	* @access 	public
+	* @return 	void
+	* @throws 	RuntimeException
+	*/
+	public function domainNotAllowed(Array $configuration)
+	{
+		$connectionName = '';
+		if (key($configuration)) {
+			$connectionName = key($configuration);
+		}
+
+		throw new RuntimeException(sprintf(
+			"Connection not allowed for domain {%s} in {%s} configuration.", array_values($configuration)[0]['domain'], $connectionName)
+		);
+	}
+
+	/**
+	* This method throws an exception if a platform's error message is being generated
+	* and the provided parameter is not the required instance.
+	*
+	* @param 	$instanceName <String>
+	* @access 	public
+	* @return 	void
+	*/
+	public function onGenerateErrorMessage(String $instanceName)
+	{
+		throw new InvalidArgumentException(sprintf(
+			"Cannot retrieve error message. Instance of {%s} is required.", $instanceName)
+		);
+	}
+
+	/**
+	* This method throws an exception if a platform's error number is being generated
+	* and the provided parameter is not the required instance.
+	*
+	* @param 	$instanceName <String>
+	* @access 	public
+	* @return 	void
+	*/
+	public function onGenerateErrorNumber(String $instanceName)
+	{
+		throw new InvalidArgumentException(sprintf(
+			"Cannot retrieve error number. Instance of {%s} is required.", $instanceName)
+		);
 	}
 
 }

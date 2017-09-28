@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Events/Contract/Subscriber.php';
@@ -24,6 +26,7 @@ include 'Connection/ConnectionManager.php';
 include 'Factory.php';
 
 $db = new Glider\Factory();
+$builder = $db->getQueryBuilder()->rawQuery('SELECT * FROM users');
 
 print '<pre>';
-print_r($db->getQueryBuilder());
+print_r($builder);

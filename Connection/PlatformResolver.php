@@ -67,17 +67,22 @@ class PlatformResolver
 	*/
 	public function resolvePlatform(EventManager $eventManager)
 	{
+		$eventManager->attachSubscriber(new ConnectionAttemptSubscriber());
+
 		if (!$this->connectionManager instanceof ConnectionInterface) {
 			throw new RuntimeException('Connection must implement \ConnectionInterface');
 		}
+
 		$reflector = new \ReflectionClass($this->connectionManager);
 		$connections = $reflector->getProperty('platformConnector');
 		$connections->setAccessible('public');
 		$connections = $connections->getValue($this->connectionManager);
-		$resolvedProvider = $this->getPlatformProvider($connections);
+		$resolvedProvider = $this->getPlatformProvider($connections, $eventManager);
 
 		if (!$resolvedProvider) {
-			$resolvedProvider = $this->getPlatformProvider($this->connectionManager->getAlternativeId(ConnectionManager::USE_ALT_KEY));
+			$resolvedProvider = $this->getPlatformProvider(
+				$this->connectionManager->getAlternativeId(ConnectionManager::USE_ALT_KEY), $eventManager
+			);
 		}
 
 		if (!is_null($resolvedProvider) && $resolvedProvider == false) {
@@ -92,11 +97,12 @@ class PlatformResolver
 	/**
 	* Resolves a connector's provider and returns it's object.
 	*
+	* @param 	$eventManager Glider\Events\EventManager 	
 	* @param 	$platform <Array>
 	* @access 	private
 	* @return 	Mixed
 	*/
-	private function getPlatformProvider($platform=[])
+	private function getPlatformProvider($platform=[], EventManager $eventManager)
 	{	
 		if (is_null($platform)) {
 			return false;
@@ -122,6 +128,7 @@ class PlatformResolver
 		}
 
 		if (isset($platform['domain']) && !Domain::matches($platform['domain'])) {
+			$eventManager->dispatchEvent('domain.notallowed', [$platformId => $platform]);
 			return false;
 		}
 

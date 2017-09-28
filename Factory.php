@@ -43,9 +43,7 @@ class Factory
 	{
 		$connectionManager = new ConnectionManager();
 		$provider = $connectionManager->getConnection('default');
-		$connection = $provider->connector()->connect();
 		$this->transaction = $provider->transaction();
-		$this->queryBuilder = $queryBuilder = $provider->queryBuilder($provider->connector());
 	}
 
 	/**
@@ -57,7 +55,7 @@ class Factory
 	*/
 	public static function getQueryBuilder()
 	{
-		return Factory::getInstance()->queryBuilder;
+		return new QueryBuilder(new ConnectionManager());
 	}
 
 	/**

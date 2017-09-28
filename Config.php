@@ -8,7 +8,7 @@ return [
 		'database' => 'test',
 		'charset' => 'utf8',
 		'collation' => '',
-		'domain' => 'localhost',
+		'domain' => 'glider.app',
 		'prefix' => '',
 		'alt' => 'dev'
 	],

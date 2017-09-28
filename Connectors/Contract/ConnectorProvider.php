@@ -38,4 +38,24 @@ interface ConnectorProvider {
 	*/
 	public function connect(String $host=null, String $username=null, String $password=null, String $database=null, String $collation=null, String $charset=null);
 
+	/**
+	* Returns the platform's error message. The method accepts a parameter of type `object`
+	* which must be the platform's connection object. E.g `mysqli`
+	*
+	* @param 	$connection <Object>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getErrorMessage($connection=null);
+
+	/**
+	* Returns the platform's generated error number. The method accepts a parameter of type `object`
+	* which must be the platform's connection object. E.g `mysqli`
+	*
+	* @param 	$connection <Object>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getErrorNumber($connection=null);
+
 }

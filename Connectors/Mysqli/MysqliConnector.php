@@ -52,14 +52,13 @@ class MysqliConnector implements ConnectorProvider
 		$charset = $charset == null ? $this->platformProvider->getConfig('charset') : $charset;
 
 		$connection = new mysqli($host, $username, $password, $database);
-		$this->platformProvider->eventManager->attachSubscriber(new ConnectionAttemptSubscriber($connection));
 
 		// If there is an error establishing a connection, attach the `ConnectionAttemptSubscriber` to
 		// the event manager to dispatch.
 		if ($connection->connect_error) {
 			// If an error occurred while establishin a connection, we'll dispatch the connect.failed
 			// event that will send the necessary error message.
-			$this->platformProvider->eventManager->dispatchEvent('connect.failed');
+			$this->platformProvider->eventManager->dispatchEvent('connect.failed', $connection->connect_error);
 		}
 
 		// If `collation` is set in the configuration or we are able to get it from
@@ -77,6 +76,28 @@ class MysqliConnector implements ConnectorProvider
 
 		$this->connection = $connection;
 		return $this->connection;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getErrorMessage($connection=null)
+	{
+		if (!$connection instanceof mysqli) {
+			$this->platformProvider->eventManager->dispatchEvent('connect.failed.message.instance', 'mysqli');
+		}
+		return $connection->error;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getErrorNumber($connection=null)
+	{
+		if (!$connection instanceof mysqli) {
+			$this->platformProvider->eventManager->dispatchEvent('connect.failed.number.instance', 'mysqli');
+		}
+		return $connection->errno;
 	}
 
 	/**

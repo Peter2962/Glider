@@ -1,5 +1,15 @@
 <?php
+/**
+* @package 	QueryBinder
+* @version 	0.1.0
+*
+* QueryBinder saves created queries into an array that would later
+* be used by the SqlGenerator to generate query.
+*/
+
 namespace Glider\Query\Builder;
+
+use Glider\Query\Builder\SqlGenerator;
 
 class QueryBinder
 {
@@ -9,7 +19,13 @@ class QueryBinder
 	* @access 	protected
 	* @static
 	*/
-	protected static $bindings = [];
+	protected 	$bindings = [];
+
+	/**
+	* @var 		$generator
+	* @access 	protected
+	*/
+	protected 	$generator;
 
 	/**
 	* @access 	public
@@ -17,16 +33,25 @@ class QueryBinder
 	*/
 	public function __construct()
 	{
-		QueryBinder::$bindings = [
+		$this->bindings = [
+			'sql' => '',
 			'select' => [],
 			'join' => [],
 			'innerjoin' => [],
 			'outerjoin' => [],
 			'rightOuterJoin' => [],
+			'fulljoin' => [],
 			'where' => [
 				'parameters' => []
-			]
+			],
+			'insert' => [
+				'parameters' => []
+			],
+			'update' => [],
+			'delete' => []
 		];
+
+		$this->generator = new SqlGenerator($this);
 	}
 
 	/**
@@ -34,22 +59,28 @@ class QueryBinder
 	* the query builder.
 	*
 	* @param 	$key <String>
+	* @param 	$queryPart <Mixed>
 	* @access 	public
 	* @return 	void
 	*/
-	public function createBinding(String $key)
+	public function createBinding(String $key, $queryPart)
 	{
+		if (!array_key_exists($key, $this->bindings)) {
+			return false;
+		}
 
+		$this->bindings[$key] = $queryPart;
 	}
 
 	/**
+	* Returns array of created queries.
 	*
-	*
-	*
+	* @access 	public
+	* @return 	Array
 	*/
-	public function getBinding()
+	public function getBinding() : Array
 	{
-
+		return $this->bindings;
 	}
 
 }

@@ -39,6 +39,7 @@ class ClassLoader
 			throw new ReflectionException('Call to undefined method ' . $method);
 		}
 
+		$methodName = $method;
 		$method = $reflectedClass->getMethod($method);
 		$methodParameters = $method->getParameters();
 
@@ -62,6 +63,11 @@ class ClassLoader
 
 		$resolvedParameters = array_filter($resolvedParameters);
 		$resolvedParameters = array_merge($resolvedParameters, $arguments);
+
+		if ($methodName == '__construct') {
+			return $reflectedClass->newInstanceArgs($resolvedParameters);
+		}
+
 		return $method->invokeArgs($class, $resolvedParameters);
 	}
 
