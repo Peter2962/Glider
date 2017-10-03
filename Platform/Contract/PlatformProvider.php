@@ -11,6 +11,7 @@ namespace Glider\Platform\Contract;
 
 use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
+use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
@@ -47,6 +48,14 @@ interface PlatformProvider
 	* @return 	Object Glider\Transaction\Contract\TransactionProvider
 	*/
 	public function transaction() : TransactionProvider;
+
+	/**
+	* The platform's statement provider that will be used to execute queries.
+	*
+	* @access 	public
+	* @return 	Glider\Statements\Contract\StatementProvider
+	*/
+	public function statement() : StatementProvider;
 
 	/**
 	* The platform's query builder provider that will be used to build up

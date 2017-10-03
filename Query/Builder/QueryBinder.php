@@ -61,7 +61,7 @@ class QueryBinder
 	* @param 	$key <String>
 	* @param 	$queryPart <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	Mixed
 	*/
 	public function createBinding(String $key, $queryPart)
 	{
@@ -69,6 +69,16 @@ class QueryBinder
 			return false;
 		}
 
+		switch ($key) {
+			case 'sql':
+				// $key is raw sql, return query string.
+				return $queryPart;
+				break;
+			
+			default:
+				return $queryPart;
+				break;
+		}
 		$this->bindings[$key] = $queryPart;
 	}
 

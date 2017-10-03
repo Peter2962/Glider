@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
+include 'Statements/Contract/StatementProvider.php';
 include 'Events/Contract/Subscriber.php';
 include 'Query/Builder/SqlGenerator.php';
 include 'Query/Builder/QueryBinder.php';
@@ -11,6 +12,7 @@ include 'Query/Builder/QueryBuilder.php';
 include 'Transactions/Contract/TransactionProvider.php';
 include 'Transactions/Mysqli/MysqliTransaction.php';
 include 'Events/Subscribers/ConnectionAttemptSubscriber.php';
+include 'Events/Subscribers/BuildEventsSubscriber.php';
 include 'Events/EventManager.php';
 include 'Connection/ConnectionLoader.php';
 include 'Contract/ConfiguratorInterface.php';
@@ -26,7 +28,7 @@ include 'Connection/ConnectionManager.php';
 include 'Factory.php';
 
 $db = new Glider\Factory();
-$builder = $db->getQueryBuilder()->rawQuery('SELECT * FROM users');
+$builder = $db->getQueryBuilder()->rawQuery('SELECT * FROM users WHERE user = :name')->setParam('name', 'Peter');
 
 print '<pre>';
 print_r($builder);

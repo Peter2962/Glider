@@ -5,7 +5,9 @@ use Glider\ClassLoader;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
+use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
+use Glider\Events\Subscribers\BuildEventsSubscriber;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 class QueryBuilder implements QueryBuilderProvider
@@ -49,6 +51,12 @@ class QueryBuilder implements QueryBuilderProvider
 	private static $isCustomQuery = false;
 
 	/**
+	* @var 		$parameters
+	* @access 	private
+	*/
+	private 	$parameters = [];
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(ConnectionManager $connectionManager)
@@ -68,6 +76,23 @@ class QueryBuilder implements QueryBuilderProvider
 		// Here we are creating a binding for raw sql queries.
 		$this->sqlQuery = $this->binder->createBinding('sql', $query);
 		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function setParam($key, $value)
+	{
+		$this->parameters[$key] = $value;
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResult()
+	{
+
 	}
 
 	/**

@@ -36,6 +36,27 @@ interface QueryBuilderProvider
 	public function rawQuery(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
 
 	/**
+	* This method sets a parameter for a given column value in a query. This method accepts
+	* two parameters. The first parameter is the parameter provided in the query. Each parameter
+	* must should start with a semi-colon and then the parameter name. E.g `:name`. The second argument
+	* is the parameter value.
+	*
+	* @param 	$key <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function setParam($key, $value);
+
+	/**
+	* Returns a result set of a select query.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getResult();
+
+	/**
 	* Binds a select query to the query binder. This method accepts mixed arguments.
 	* It's arguments accepts model instances that can be used to generate fields attached
 	* to that particular model.

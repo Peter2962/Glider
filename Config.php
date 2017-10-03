@@ -3,6 +3,7 @@ return [
 	'default' => [
 		'provider' => Glider\Platform\Mysqli\MysqliProvider::class,
 		'host' => 'localhost',
+		'alias' => 'mysqli',
 		'username' => 'root',
 		'password' => 'root',
 		'database' => 'test',
@@ -15,6 +16,7 @@ return [
 	'dev' => [
 		'provider' => Glider\Platform\Pdo\PdoProvider::class,
 		'host' => 'localhost',
+		'alias' => 'pdo',
 		'username' => 'root',
 		'password' => 'root',
 		'database' => 'test',
