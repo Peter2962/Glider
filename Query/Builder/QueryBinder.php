@@ -60,10 +60,11 @@ class QueryBinder
 	*
 	* @param 	$key <String>
 	* @param 	$queryPart <Mixed>
+	* @param 	$params <Array>
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function createBinding(String $key, $queryPart)
+	public function createBinding(String $key, $queryPart, array $params=array())
 	{
 		if (!array_key_exists($key, $this->bindings)) {
 			return false;
@@ -79,6 +80,7 @@ class QueryBinder
 				return $queryPart;
 				break;
 		}
+		
 		$this->bindings[$key] = $queryPart;
 	}
 

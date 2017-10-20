@@ -74,6 +74,30 @@ class MysqliProvider implements PlatformProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function isPrepareCompatible() : Bool
+	{
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isQueryCompatible() : Bool
+	{
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isAutoCommitEnabled() : Bool
+	{
+		return ($this->getConfig('auto_commit') == true) ? true : false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	final public function getConfig(String $key=null)
 	{
 		return $this->config[$key] ?? null;

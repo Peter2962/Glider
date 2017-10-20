@@ -2,9 +2,12 @@
 namespace Glider\Query\Builder;
 
 use Glider\ClassLoader;
+use Glider\Query\Parameters;
+use Glider\Query\Builder\Type;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
+use Glider\Platform\Contract\PlatformProvider;
 use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Events\Subscribers\BuildEventsSubscriber;
@@ -21,9 +24,9 @@ class QueryBuilder implements QueryBuilderProvider
 
 	/**
 	* @var 		$generator
-	* @access 	private
+	* @access 	public
 	*/
-	private 	$generator;
+	public 		$generator;
 
 	/**
 	* @var 		$bindings
@@ -51,20 +54,53 @@ class QueryBuilder implements QueryBuilderProvider
 	private static $isCustomQuery = false;
 
 	/**
+	* @var 		$strictType
+	* @access 	private
+	*/
+	private 	$strictType;
+
+	/**
 	* @var 		$parameters
 	* @access 	private
 	*/
 	private 	$parameters = [];
 
 	/**
+	* @var 		$provider
+	* @access 	private
+	*/
+	private 	$provider;
+
+	/**
+	* @var 		$queryResult
+	* @access 	private
+	*/
+	private 	$queryResult = null;
+
+	/**
+	* @var 		$statement
+	* @access 	private
+	*/
+	private 	$statement;
+
+	/**
+	* @var 		$parameterBag
+	* @access 	private
+	*/
+	private 	$parameterBag;
+
+	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(ConnectionManager $connectionManager)
+	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
 	{
 		$classLoader = new ClassLoader();
-		$this->connector = $connectionManager->getConnection()->connector();
+		$this->provider = $connectionManager->getConnection();
+		$this->connector = $this->provider->connector();
+		$this->statement = $this->provider->statement();
 		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
+		$this->parameterBag = new Parameters();
 	}
 
 	/**
@@ -81,18 +117,10 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function setParam($key, $value)
+	public function setParam(String $key, $value)
 	{
-		$this->parameters[$key] = $value;
+		$this->parameterBag->setParameter($key, $value);
 		return $this;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function getResult()
-	{
-
 	}
 
 	/**
@@ -103,8 +131,38 @@ class QueryBuilder implements QueryBuilderProvider
 		if (sizeof($arguments) < 1) {
 			$arguments = ['*'];
 		}
+
 		$this->binder->createBinding('select', $arguments);
 		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResult()
+	{
+		$this->queryResult = [];
+		if (is_null($this->queryResult)) {
+			return;
+		}
+
+		return $this->statement->fetch($this, $this->parameterBag);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getQueryParameters() : Array
+	{
+		return $this->parameterBag->getAll();
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getQuery() : String
+	{
+		return $this->sqlQuery;
 	}
 
 	/**

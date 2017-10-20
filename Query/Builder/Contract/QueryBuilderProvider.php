@@ -11,18 +11,21 @@
 namespace Glider\Query\Builder\Contract;
 
 use Glider\Connection\ConnectionManager;
+use Glider\Platform\Contract\PlatformProvider;
 
 interface QueryBuilderProvider
 {
 
 	/**
-	* The constructor accepts an argument: Glider\Connection\ConnectionManager
+	* The constructor accepts two arguments: Glider\Connection\ConnectionManager
+	* and Glider\Platform\Contract\PlatformProvider
 	*
 	* @param 	$connectorProvider Glider\Connection\ConnectionManager
+	* @param 	$platformProvider Glider\Platform\Contract\PlatformProvider
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(ConnectionManager $connectionManager);
+	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platformProvider);
 
 	/**
 	* This method runs a raw sql query. This is useful when there is need to write
@@ -46,7 +49,7 @@ interface QueryBuilderProvider
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function setParam($key, $value);
+	public function setParam(String $key, $value);
 
 	/**
 	* Returns a result set of a select query.
@@ -55,6 +58,22 @@ interface QueryBuilderProvider
 	* @return 	Mixed
 	*/
 	public function getResult();
+
+	/**
+	* Returns an array of query parameters.
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getQueryParameters() : Array;
+
+	/**
+	* Returns the query string.
+	*
+	* @access 	public
+	* @return 	String
+	*/
+	public function getQuery() : String;
 
 	/**
 	* Binds a select query to the query binder. This method accepts mixed arguments.

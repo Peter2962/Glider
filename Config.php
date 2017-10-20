@@ -6,10 +6,11 @@ return [
 		'alias' => 'mysqli',
 		'username' => 'root',
 		'password' => 'root',
-		'database' => 'test',
+		'database' => 'service_finder_app',
 		'charset' => 'utf8',
 		'collation' => '',
 		'domain' => 'glider.app',
+		'auto_commit' => false,
 		'prefix' => '',
 		'alt' => 'dev'
 	],
@@ -24,6 +25,7 @@ return [
 		'collation' => 'utf8',
 		'domain' => 'http://server.web/',
 		'prefix' => '',
+		'auto_commit' => true,
 		'alt' => null
 	]
 ];

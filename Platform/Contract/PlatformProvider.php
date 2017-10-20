@@ -69,6 +69,31 @@ interface PlatformProvider
 	public function queryBuilder(ConnectorProvider $connectorProvider) : QueryBuilderProvider;
 
 	/**
+	* This method helps to check if a platform supports prepared statement
+	* method of executing queries.
+	* 
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isPrepareCompatible() : Bool;
+
+	/**
+	* This method checks if a platform has a query method to execute queries.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isQueryCompatible() : Bool;
+
+	/**
+	* This method checks if auto_commit is enabled in the configuration.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isAutoCommitEnabled() : Bool;
+
+	/**
 	* Returns a configuraiton key if it exists. Returns null if it does not.
 	*
 	* @param 	$key <String>
