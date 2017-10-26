@@ -37,7 +37,8 @@ include 'Factory.php';
 $db = new Glider\Factory();
 $builder = $db->getQueryBuilder()
 ->rawQuery('SELECT * FROM users WHERE firstname = :name AND id = :id')
-->setParam('name', 'Peter');
+->setParam('name', 'Peter')
+->setParam('id', 1);
 
 $result = $builder->getResult();
 // $d = new mysqli('localhost', 'root', 'root', 'service_finder_app');

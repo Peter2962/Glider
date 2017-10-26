@@ -40,26 +40,10 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	*/
 	public function fetch(QueryBuilder $queryBuilder, Parameters $parameterBag) : Array
 	{
-		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
-		$connection = $queryObject->connection;
-		$query = $queryObject->queryObject->query;
-
-		if (!$this->platformProvider->isAutoCommitEnabled()) {
-			// Only start transaction manually if auto commit is not enabled.
-			$transaction = $this->platformProvider->transaction();
-		}
-
-		// Turn error reporting on for mysqli
-		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
-		try{
-			$statement = $connection->prepare($query);
-		}catch(mysqli_sql_exception $sqlExp) {
-			throw new QueryException($sqlExp->getMessage(), $queryObject->queryObject);
-		}
+		$resolved = $this->resolveQueryObject($queryBuilder, $parameterBag);
 
 		print '<pre>';
-		print_r($connection);
+		print_r($resolved);
 		return [];
 	}
 
@@ -83,6 +67,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	{
 		$std = new StdClass();
 
+		$transaction = null;
 		$connection = $this->platformProvider->connector()->connect();
 		$query = $queryBuilder->getQuery();
 		$sqlGenerator = $queryBuilder->generator;
@@ -92,6 +77,25 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 		$std->queryObject = $queryObject;
 		$std->connection = $connection;
 
+		$connection = $std->connection;
+		$query = $queryObject->query;
+
+		if (!$this->platformProvider->isAutoCommitEnabled()) {
+			// Only start transaction manually if auto commit is not enabled.
+			$transaction = $this->platformProvider->transaction();
+		}
+
+		// Turn error reporting on for mysqli
+		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+		try{
+			$statement = $connection->prepare($query);
+		}catch(mysqli_sql_exception $sqlExp) {
+			throw new QueryException($sqlExp->getMessage(), $queryObject->queryObject);
+		}
+
+		$std->statement = $statement;
+		$std->transaction = $transaction;
 		return $std;
 	}
 
