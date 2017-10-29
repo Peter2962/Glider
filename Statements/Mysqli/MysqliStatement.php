@@ -40,10 +40,31 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	*/
 	public function fetch(QueryBuilder $queryBuilder, Parameters $parameterBag) : Array
 	{
-		$resolved = $this->resolveQueryObject($queryBuilder, $parameterBag);
+		$resolvedQueryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
+		$statement = $resolvedQueryObject->statement;
+		$connection = $resolvedQueryObject->connection;
+		$resultMetaData = $statement->result_metadata();
+		$result = [];
+		$params = [];
 
-		print '<pre>';
-		print_r($resolved);
+		while ($field = $resultMetaData->fetch_field())
+		{
+			$var = $field->name; 
+			$$var = null; 
+			$params[] = &$$var;
+		}
+
+		try {
+			call_user_func_array([$statement, 'bind_result'], $params);
+			$resultMapper = $queryBuilder->getResultMapper();
+			while($statement->fetch()) {
+
+			}
+
+		}catch(mysqli_sql_exception $sqlExp) {
+			throw new QueryException($sqlExp->getMessage(), $resolvedQueryObject->queryObject);
+		}
+
 		return [];
 	}
 
@@ -62,10 +83,26 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	* @param 	$parameterBag Glider\Query\Parameters
 	* @access 	private
 	* @return 	Object
+	* @throws 	Glider\Statements\Exceptions\QueryException;
 	*/
 	private function resolveQueryObject(QueryBuilder $queryBuilder, Parameters $parameterBag) : StdClass
 	{
 		$std = new StdClass();
+		$parameterTypes = '';
+		$boundParameters = [];
+
+		if ($parameterBag->size() > 0) {
+
+			foreach(array_values($parameterBag->getAll()) as $param) {
+				$parameterTypes .= $parameterBag->getType($param);
+			}
+
+			$boundParameters[] = $parameterTypes;
+			foreach(array_values($parameterBag->getAll()) as $param) {
+				$boundParameters[] =& $param;
+			}
+
+		}
 
 		$transaction = null;
 		$connection = $this->platformProvider->connector()->connect();
@@ -89,9 +126,19 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 		try{
-			$statement = $connection->prepare($query);
+
+			$hasMappableFields = $sqlGenerator->hasMappableFields($query);
+
+			// Attempt to prepare query, bind parameters dynamically and execute query.
+			$statement = $connection->stmt_init();
+			$statement->prepare($query);
+			if (!empty($hasMappableFields)) {
+				call_user_func_array([$statement, 'bind_param'], $boundParameters);
+			}
+
+			$statement->execute();
 		}catch(mysqli_sql_exception $sqlExp) {
-			throw new QueryException($sqlExp->getMessage(), $queryObject->queryObject);
+			throw new QueryException($sqlExp->getMessage(), $queryObject);
 		}
 
 		$std->statement = $statement;

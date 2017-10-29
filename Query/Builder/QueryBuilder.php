@@ -3,7 +3,9 @@ namespace Glider\Query\Builder;
 
 use Glider\ClassLoader;
 use Glider\Query\Parameters;
+use InvalidArgumentException;
 use Glider\Query\Builder\Type;
+use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
@@ -90,6 +92,12 @@ class QueryBuilder implements QueryBuilderProvider
 	private 	$parameterBag;
 
 	/**
+	* @var 		$resultMapper
+	* @access 	private
+	*/
+	private 	$resultMapper;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
@@ -117,15 +125,6 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function setParam(String $key, $value)
-	{
-		$this->parameterBag->setParameter($key, $value);
-		return $this;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
 	public function select(...$arguments) : QueryBuilderProvider
 	{
 		if (sizeof($arguments) < 1) {
@@ -133,6 +132,15 @@ class QueryBuilder implements QueryBuilderProvider
 		}
 
 		$this->binder->createBinding('select', $arguments);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function setParam(String $key, $value)
+	{
+		$this->parameterBag->setParameter($key, $value);
 		return $this;
 	}
 
@@ -152,6 +160,14 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function setResultMapper(ResultMapper $resultMapper)
+	{
+		$this->resultMapper = $resultMapper;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function getQueryParameters() : Array
 	{
 		return $this->parameterBag->getAll();
@@ -163,6 +179,14 @@ class QueryBuilder implements QueryBuilderProvider
 	public function getQuery() : String
 	{
 		return $this->sqlQuery;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResultMapper() : ResultMapper
+	{
+		return $this->resultMapper;
 	}
 
 	/**

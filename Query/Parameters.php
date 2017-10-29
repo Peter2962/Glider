@@ -63,4 +63,33 @@ class Parameters
 		return sizeof(array_keys($this->getAll()));
 	}
 
+	/**
+	* Return a parameter type.
+	*
+	* @param 	$paramter <Mixed>
+	* @access 	public
+	* @return 	String
+	*/
+	public function getType($parameter='') : String
+	{
+		$parameterType = null;
+		switch (gettype($parameter)) {
+			case 'string':
+				$parameterType = 's';
+				break;
+			case 'numeric':
+			case 'integer':
+				$parameterType = 'i';
+				break;
+			case 'double':
+				$parameterType = 'd';
+				break;
+			default:
+				$parameterType = null;
+				break;
+		}
+
+		return $parameterType;
+	}
+
 }

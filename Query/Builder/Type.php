@@ -14,7 +14,7 @@ abstract class Type
 	public static function getStatementType(String $query) : Int
 	{
 		$type = 0;
-		if (preg_match("/^SELECT([^ ]+)/", $query)) {
+		if (preg_match("/^SELECT|select|Select([^ ]+)/", $query)) {
 			$type = 1;
 		}
 

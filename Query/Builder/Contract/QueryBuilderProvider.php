@@ -10,6 +10,7 @@
 
 namespace Glider\Query\Builder\Contract;
 
+use Glider\Result\ResultMapper;
 use Glider\Connection\ConnectionManager;
 use Glider\Platform\Contract\PlatformProvider;
 
@@ -60,6 +61,16 @@ interface QueryBuilderProvider
 	public function getResult();
 
 	/**
+	* Sets the ResultMapper class to use. This method accepts either an array r
+	* instance of Glider\Result\ResultMapper as it's parameter.
+	*
+	* @param 	$resultMapper;
+	* @access 	public
+	* @return 	Object
+	*/
+	public function setResultMapper(ResultMapper $resultMapper);
+
+	/**
 	* Returns an array of query parameters.
 	*
 	* @access 	public
@@ -74,6 +85,14 @@ interface QueryBuilderProvider
 	* @return 	String
 	*/
 	public function getQuery() : String;
+
+	/**
+	* Returns the registered ResultMapper.
+	*
+	* @access 	public
+	* @return 	Glider\Result\ResultMapper
+	*/
+	public function getResultMapper() : ResultMapper;
 
 	/**
 	* Binds a select query to the query binder. This method accepts mixed arguments.

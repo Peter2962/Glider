@@ -11,6 +11,7 @@ namespace Glider\Query\Builder;
 
 use StdClass;
 use Glider\Query\Parameters;
+use Glider\Query\Builder\Type;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Query\Exceptions\ParameterNotFoundException;
@@ -37,7 +38,7 @@ class SqlGenerator
 	*/
 	public function __construct(QueryBinder $binder)
 	{
-
+		//
 	}
 
 	/**
@@ -68,6 +69,47 @@ class SqlGenerator
 		$stdClass->query = str_replace($matched[0], '?', $query);
 
 		return $stdClass;
+	}
+
+	/**
+	* Returns an array of selected fields in a `SELECT` statement.
+	*
+	* @param 	$query <String>
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getSelectedFields(String $query) : Array
+	{
+		$columns = [];
+
+		if (Type::getStatementType($query) == 1) {
+			if (preg_match("/(SELECT|select|Select)(.*?)FROM|from|From([^ ]+)/s", $query, $matches)) {
+				$columns = explode(',', $matches[2]);
+				$columns = array_map(function($field) {
+					return trim(ltrim($field));
+				}, $columns);
+			}
+		}
+
+		return $columns;
+	}
+
+	/**
+	* This method returns an array of fields to map in a query.
+	*
+	* @param 	$query <String>
+	* @access 	public
+	* @return 	Array
+	*/
+	public function hasMappableFields(String $query) : Array
+	{
+		$fields = [];
+
+		if (preg_match("/=([^ ]+)?/s", $query, $matches)) {
+			$fields = $matches;
+		}
+
+		return $fields;
 	}
 
 }

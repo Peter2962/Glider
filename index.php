@@ -1,8 +1,12 @@
 <?php
 ini_set('display_errors', 1);
+// error_reporting(1);
 
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
+include 'Result/Contract/ResultMapperContract.php';
+include 'Result/ResultMapper.php';
+include 'Result/Mappers/DataResultMapper.php';
 include 'Statements/Contract/StatementProvider.php';
 include 'Statements/AbstractStatementProvider.php';
 include 'Statements/Exceptions/QueryException.php';
@@ -35,10 +39,9 @@ include 'Connection/ConnectionManager.php';
 include 'Factory.php';
 
 $db = new Glider\Factory();
-$builder = $db->getQueryBuilder()
-->rawQuery('SELECT * FROM users WHERE firstname = :name AND id = :id')
-->setParam('name', 'Peter')
-->setParam('id', 1);
+$queryBuilder = $db->getQueryBuilder();
+$queryBuilder->setResultMapper(new Glider\Result\Mappers\DataResultMapper());
+$builder = $queryBuilder->rawQuery('SELECT id, name FROM oauth_clients');
 
 $result = $builder->getResult();
 // $d = new mysqli('localhost', 'root', 'root', 'service_finder_app');
