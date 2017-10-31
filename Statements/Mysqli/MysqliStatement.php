@@ -3,10 +3,12 @@ namespace Glider\Statements\Mysqli;
 
 use StdClass;
 use Exception;
+use RuntimeException;
 use mysqli_sql_exception;
 use Glider\Query\Parameters;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Platform\Contract\PlatformProvider;
+use Glider\Result\Contract\ResultMapperContract;
 use Glider\Statements\AbstractStatementProvider;
 use Glider\Statements\Exceptions\QueryException;
 use Glider\Statements\Contract\StatementProvider;
@@ -46,26 +48,52 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 		$resultMetaData = $statement->result_metadata();
 		$result = [];
 		$params = [];
+		$mappedFields = [];
 
 		while ($field = $resultMetaData->fetch_field())
 		{
 			$var = $field->name; 
+			$mappedFields[] = $var;
 			$$var = null; 
 			$params[] = &$$var;
 		}
 
 		try {
+			$statement->store_result();
 			call_user_func_array([$statement, 'bind_result'], $params);
-			$resultMapper = $queryBuilder->getResultMapper();
 			while($statement->fetch()) {
+				$resultStdClass = new StdClass();
 
+				foreach($mappedFields as $field) {
+
+					// If no `ResultMapper` class is registered or provided, we'll use
+					// `StdClass` to store and retrieve our columns instead.
+					if (!$queryBuilder->resultMappingEnabled()) {
+						$resultStdClass->$field = $$field;
+						continue;
+					}
+
+					$resultStdClass = $queryBuilder->getResultMapper();
+					if (!$resultStdClass->register()) {
+						continue;
+					}
+
+					if (!property_exists($resultStdClass, $field)) {
+						throw new RuntimeException(sprintf("Result Mapping Failed. Property %s does not exist in Mapper class.", $field));
+					}
+
+					$resultStdClass->$field = $$field;
+					$resultStdClass->getFields();
+				}
+
+				$result[] = $resultStdClass;
 			}
 
 		}catch(mysqli_sql_exception $sqlExp) {
 			throw new QueryException($sqlExp->getMessage(), $resolvedQueryObject->queryObject);
 		}
 
-		return [];
+		return $result;
 	}
 
 	/**

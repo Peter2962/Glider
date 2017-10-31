@@ -43,14 +43,7 @@ $queryBuilder = $db->getQueryBuilder();
 $queryBuilder->setResultMapper(new Glider\Result\Mappers\DataResultMapper());
 $builder = $queryBuilder->rawQuery('SELECT id, name FROM oauth_clients');
 
-$result = $builder->getResult();
-// $d = new mysqli('localhost', 'root', 'root', 'service_finder_app');
-// $a = $d->query('SELECT * FROM users');
+$result = $builder->getResult(true);
 
-
-// foreach($a as $b) {
-// 	print_r($b);
-// }
-
-// print '<pre>';
-// print_r($a);
+print '<pre>';
+print_r($result);

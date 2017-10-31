@@ -5,11 +5,11 @@ use Glider\ClassLoader;
 use Glider\Query\Parameters;
 use InvalidArgumentException;
 use Glider\Query\Builder\Type;
-use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
 use Glider\Platform\Contract\PlatformProvider;
+use Glider\Result\Contract\ResultMapperContract;
 use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Events\Subscribers\BuildEventsSubscriber;
@@ -147,7 +147,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function getResult()
+	public function getResult(Bool $nullifyResultAccess=false)
 	{
 		$this->queryResult = [];
 		if (is_null($this->queryResult)) {
@@ -160,7 +160,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function setResultMapper(ResultMapper $resultMapper)
+	public function setResultMapper(ResultMapperContract $resultMapper)
 	{
 		$this->resultMapper = $resultMapper;
 	}
@@ -184,9 +184,17 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function getResultMapper() : ResultMapper
+	public function getResultMapper() : ResultMapperContract
 	{
 		return $this->resultMapper;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function resultMappingEnabled() : Bool
+	{
+		return ($this->resultMapper instanceof ResultMapperContract) ? true : false;
 	}
 
 	/**

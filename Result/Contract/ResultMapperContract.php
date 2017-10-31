@@ -1,10 +1,20 @@
 <?php
+/**
+* @package 	ResultMapperContract
+* @version 	0.1.0
+*/
+
 namespace Glider\Result\Contract;
 
 interface ResultMapperContract
 {
 
-	// public function register();
-	// public function setMapType();
+	/**
+	* This method returns an array of map ids and it's values. 
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function register() : Bool;
 
 }
