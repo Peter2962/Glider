@@ -69,7 +69,7 @@ interface QueryBuilderProvider
 	* @access 	public
 	* @return 	Object
 	*/
-	public function setResultMapper(ResultMapperContract $resultMapper);
+	public function setResultMapper($resultMapper);
 
 	/**
 	* Returns an array of query parameters.
@@ -91,9 +91,9 @@ interface QueryBuilderProvider
 	* Returns the registered ResultMapper.
 	*
 	* @access 	public
-	* @return 	Glider\Result\ResultMapper
+	* @return 	String
 	*/
-	public function getResultMapper() : ResultMapperContract;
+	public function getResultMapper() : String;
 
 	/**
 	* This method checks if a `ResultMapper` class is being used for the current
@@ -114,5 +114,28 @@ interface QueryBuilderProvider
 	* @return 	Glider\Query\Builder\Contract\QueryBuilderProvider 
 	*/
 	public function select(...$arguments) : QueryBuilderProvider;
+
+	/**
+	* Set table where data will be fetched. Since parameter type has been set,
+	* we do not need to check if @param $table is of valid type or not.
+	*
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function from(String $table) : QueryBuilderProvider;
+
+	/**
+	* This method sets average `aggregate` function in a select statement.
+	* The first parameter is the name of the column to apply the aggregate function
+	* and the second parameter is the alias of the column. Note that both of these parameters
+	* are required.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function avg(String $column, String $alias) : QueryBuilderProvider;
 
 }

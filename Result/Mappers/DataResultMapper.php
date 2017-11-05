@@ -9,15 +9,15 @@ class DataResultMapper extends ResultMapper
 
 	/**
 	* @var 		$id
-	* @access 	public
+	* @access 	protected
 	*/
-	public 		$id;
+	protected 		$id;
 
 	/**
 	* @var 		$name
-	* @access 	public
+	* @access 	protected
 	*/
-	public 		$name;
+	protected 		$name;
 
 	/**
 	* {@inheritDoc}
@@ -30,9 +30,9 @@ class DataResultMapper extends ResultMapper
 	/**
 	* {@inheritDoc}
 	*/
-	public function getActiveMapping()
+	public function getName()
 	{
-
+		return $this->name;
 	}
 
 }

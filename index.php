@@ -7,6 +7,7 @@ include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
 include 'Result/ResultMapper.php';
 include 'Result/Mappers/DataResultMapper.php';
+include 'Result/Exceptions/InvalidPropertyAccessException.php';
 include 'Statements/Contract/StatementProvider.php';
 include 'Statements/AbstractStatementProvider.php';
 include 'Statements/Exceptions/QueryException.php';
@@ -40,10 +41,7 @@ include 'Factory.php';
 
 $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
-$queryBuilder->setResultMapper(new Glider\Result\Mappers\DataResultMapper());
-$builder = $queryBuilder->rawQuery('SELECT id, name FROM oauth_clients');
-
-$result = $builder->getResult(true);
+$result = $queryBuilder->avg('id', 'avg_id')->from('oauth_clients');
 
 print '<pre>';
-print_r($result);
+print_r($result->getResult());

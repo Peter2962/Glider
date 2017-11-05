@@ -9,6 +9,7 @@
 
 namespace Glider\Query\Builder;
 
+use RuntimeException;
 use Glider\Query\Builder\SqlGenerator;
 
 class QueryBinder
@@ -19,7 +20,23 @@ class QueryBinder
 	* @access 	protected
 	* @static
 	*/
-	protected 	$bindings = [];
+	protected 	$bindings = [
+		'sql' => '',
+		'select' => [],
+		'join' => [],
+		'innerjoin' => [],
+		'outerjoin' => [],
+		'rightOuterJoin' => [],
+		'fulljoin' => [],
+		'where' => [
+			'parameters' => []
+		],
+		'insert' => [
+			'parameters' => []
+		],
+		'update' => [],
+		'delete' => []
+	];
 
 	/**
 	* @var 		$generator
@@ -33,24 +50,6 @@ class QueryBinder
 	*/
 	public function __construct()
 	{
-		$this->bindings = [
-			'sql' => '',
-			'select' => [],
-			'join' => [],
-			'innerjoin' => [],
-			'outerjoin' => [],
-			'rightOuterJoin' => [],
-			'fulljoin' => [],
-			'where' => [
-				'parameters' => []
-			],
-			'insert' => [
-				'parameters' => []
-			],
-			'update' => [],
-			'delete' => []
-		];
-
 		$this->generator = new SqlGenerator($this);
 	}
 
@@ -64,35 +63,62 @@ class QueryBinder
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function createBinding(String $key, $queryPart, array $params=array())
+	public function createBinding(String $key, $queryPart, array $params=[])
 	{
 		if (!array_key_exists($key, $this->bindings)) {
 			return false;
 		}
 
-		switch ($key) {
-			case 'sql':
-				// $key is raw sql, return query string.
-				return $queryPart;
-				break;
-			
-			default:
-				return $queryPart;
-				break;
+		if ($key == 'sql') {
+			return $queryPart;
 		}
-		
+
 		$this->bindings[$key] = $queryPart;
+		return $this->$key($queryPart);
 	}
 
 	/**
-	* Returns array of created queries.
-	*
+	* @param 	$key <String>
 	* @access 	public
 	* @return 	Array
 	*/
-	public function getBinding() : Array
+	public function getBinding(String $key)
 	{
-		return $this->bindings;
+		return $this->bindings[$key] ?? null;
+	}
+
+	/**
+	* @param 	$parameters <Array>
+	* @access 	private
+	* @return 	String
+	*/
+	private function select(array $parameters) : String
+	{
+		$select = 'SELECT';
+		$params = [];
+		if (!empty($parameters)) {
+			foreach($parameters as $param) {
+				if (is_numeric($param) || is_object($param) || is_int($param)) {
+					continue;
+				}
+
+				$params[] = $param;
+			}
+		}
+
+		$select .= ' ' . implode(', ', $params);
+		return $select;
+	}
+
+	/**
+	* @param 	$parameters <Array>
+	* @access 	private
+	* @return 	String
+	*/
+	private function avg(array $parameters)
+	{
+		print '<pre>';
+		print_r($parameters);
 	}
 
 }

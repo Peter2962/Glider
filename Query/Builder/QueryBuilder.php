@@ -1,10 +1,12 @@
 <?php
 namespace Glider\Query\Builder;
 
+use RuntimeException;
 use Glider\ClassLoader;
 use Glider\Query\Parameters;
 use InvalidArgumentException;
 use Glider\Query\Builder\Type;
+use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
@@ -131,7 +133,29 @@ class QueryBuilder implements QueryBuilderProvider
 			$arguments = ['*'];
 		}
 
-		$this->binder->createBinding('select', $arguments);
+		$this->sqlQuery = $this->binder->createBinding('select', $arguments);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function from(String $table) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= ' FROM ' . $table;
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function avg(String $column, String $alias) : QueryBuilderProvider
+	{
+		if (!$this->binder->getBinding('select')) {
+			// Since this method cannot be used without the SELECT statement,
+			// we will throw an exception if `SELECT` binding is null or false. 
+			throw new RuntimeException(sprintf('Cannot call aggregate function %s on empty select.', 'AVG'));
+		}
 		return $this;
 	}
 
@@ -160,7 +184,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function setResultMapper(ResultMapperContract $resultMapper)
+	public function setResultMapper($resultMapper)
 	{
 		$this->resultMapper = $resultMapper;
 	}
@@ -184,7 +208,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function getResultMapper() : ResultMapperContract
+	public function getResultMapper() : String
 	{
 		return $this->resultMapper;
 	}
@@ -194,7 +218,11 @@ class QueryBuilder implements QueryBuilderProvider
 	*/
 	public function resultMappingEnabled() : Bool
 	{
-		return ($this->resultMapper instanceof ResultMapperContract) ? true : false;
+		if (gettype($this->resultMapper) !== 'string' || !class_exists($this->resultMapper)) {
+			return false;
+		}
+
+		return (new $this->resultMapper instanceof ResultMapper) ? true : false;
 	}
 
 	/**

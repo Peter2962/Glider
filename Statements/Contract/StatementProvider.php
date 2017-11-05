@@ -44,11 +44,13 @@ interface StatementProvider
 	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Array;
 
 	/**
-	* This method creates/saves new data. 
+	* This method creates/saves new data. This method accepts instance
+	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
+	* Parameters <Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
 	* @return 	void
 	*/
-	public function insert();
+	public function insert(QueryBuilder $queryBuilder);
 
 }

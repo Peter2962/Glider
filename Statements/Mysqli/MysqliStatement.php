@@ -6,6 +6,7 @@ use Exception;
 use RuntimeException;
 use mysqli_sql_exception;
 use Glider\Query\Parameters;
+use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Result\Contract\ResultMapperContract;
@@ -50,8 +51,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 		$params = [];
 		$mappedFields = [];
 
-		while ($field = $resultMetaData->fetch_field())
-		{
+		while ($field = $resultMetaData->fetch_field()) {
 			$var = $field->name; 
 			$mappedFields[] = $var;
 			$$var = null; 
@@ -64,8 +64,18 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 			while($statement->fetch()) {
 				$resultStdClass = new StdClass();
 
-				foreach($mappedFields as $field) {
+				if ($queryBuilder->resultMappingEnabled()) {
+					$mapper = $queryBuilder->getResultMapper();
+					$mapper = new $mapper();
+					if ($mapper instanceof ResultMapper) {
+						$resultStdClass = $mapper;
+						if (!$resultStdClass->register()) {
+							continue;
+						}
+					}
+				}
 
+				foreach($mappedFields as $field) {
 					// If no `ResultMapper` class is registered or provided, we'll use
 					// `StdClass` to store and retrieve our columns instead.
 					if (!$queryBuilder->resultMappingEnabled()) {
@@ -73,17 +83,13 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 						continue;
 					}
 
-					$resultStdClass = $queryBuilder->getResultMapper();
-					if (!$resultStdClass->register()) {
-						continue;
-					}
-
 					if (!property_exists($resultStdClass, $field)) {
 						throw new RuntimeException(sprintf("Result Mapping Failed. Property %s does not exist in Mapper class.", $field));
 					}
 
-					$resultStdClass->$field = $$field;
-					$resultStdClass->getFields();
+					// Here, each field will be mapped to a class property if the class
+					// exists.
+					$resultStdClass->mapFieldToClassProperty($field, $$field);
 				}
 
 				$result[] = $resultStdClass;
@@ -99,7 +105,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function insert()
+	public function insert(QueryBuilder $queryBuilder)
 	{
 
 	}
