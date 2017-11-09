@@ -138,4 +138,51 @@ interface QueryBuilderProvider
 	*/
 	public function avg(String $column, String $alias) : QueryBuilderProvider;
 
+	/**
+	* Set `count` aggregate function in a select statement.
+	* The first parameter is the name of the column to apply the aggregate function
+	* and the second parameter is the alias of the column. Note that both of these parameters
+	* are required.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function count(String $column, String $alias) : QueryBuilderProvider;
+
+	/**
+	* Return the sum of a set of values. The SUM function ignores NULL values.
+	* If no matching row found, the SUM function returns a NULL value.
+	* The first parameter is the name of the column to apply the aggregate function
+	* and the second parameter is the alias of the column. Note that both of these parameters
+	* are required.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function sum(String $column, String $alias) : QueryBuilderProvider;
+
+	/**
+	* Return the maximum value in a set of values.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function max(String $column, String $alias) : QueryBuilderProvider;
+
+	/**
+	* Return the minimum value in a set of values.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function min(String $column, String $alias) : QueryBuilderProvider;
+
 }

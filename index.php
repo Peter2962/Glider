@@ -41,7 +41,10 @@ include 'Factory.php';
 
 $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
-$result = $queryBuilder->avg('id', 'avg_id')->from('oauth_clients');
+$result = $queryBuilder
+->select('id', 'name')
+->max('id', 'avg_id')
+->from('province');
 
 print '<pre>';
 print_r($result->getResult());

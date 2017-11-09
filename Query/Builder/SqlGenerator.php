@@ -21,12 +21,12 @@ class SqlGenerator
 {
 
 	/**
-	* Set of keys that are not allowed when running a select query.
+	* Set of keys that are not allowed when in a select query.
 	*
 	* @var 		$disallowedChars
 	* @access 	private
 	*/
-	private 	$disallowedChars = ['?', '&', '%', '$', '#', '+', '!', ')', '(', '-', '^', '_', '=', '/', '>', '<', ':', ';'];
+	private 	$disallowedChars = ['?', '&', '%', '$', '#', '+', '!', ')', '(', '-', '^', '=', '/', '>', '<', ':', ';'];
 
 	/**
 	* Constructor accepts Glider\Query\Builder\QueryBinder as an argument. It gets the
@@ -110,6 +110,17 @@ class SqlGenerator
 		}
 
 		return $fields;
+	}
+
+	/**
+	* Return array of disallowed characters.
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getDisallowedChars() : Array
+	{
+		return $this->disallowedChars;
 	}
 
 }

@@ -151,11 +151,43 @@ class QueryBuilder implements QueryBuilderProvider
 	*/
 	public function avg(String $column, String $alias) : QueryBuilderProvider
 	{
-		if (!$this->binder->getBinding('select')) {
-			// Since this method cannot be used without the SELECT statement,
-			// we will throw an exception if `SELECT` binding is null or false. 
-			throw new RuntimeException(sprintf('Cannot call aggregate function %s on empty select.', 'AVG'));
-		}
+		$this->sqlQuery .= $this->binder->alias('AVG(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function count(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('COUNT(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function sum(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('SUM(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function max(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('MAX(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function min(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('MIN(' . $column . ')', $alias);
 		return $this;
 	}
 

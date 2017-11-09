@@ -88,6 +88,41 @@ class QueryBinder
 	}
 
 	/**
+	* Create and return alias for a column.
+	*
+	* @param 	$column <String>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	String
+	*/
+	public function alias(String $column, String $alias)
+	{
+		// if (!$this->getBinding('select') || empty($this->getBinding('select'))) {
+			// Since this method cannot be used without the SELECT statement,
+			// we will throw an exception if `SELECT` binding is null or false. 
+			// throw new RuntimeException(sprintf('Cannot call aggregate function on empty select.'));
+		// }
+		$alias = str_replace($this->generator->getDisallowedChars(), '', $alias);
+		return $this->attachSeparator($column . ' AS ' . $alias);
+	}
+
+	/**
+	* @param 	$parts <String>
+	* @access 	private
+	* @return 	String
+	*/
+	private function attachSeparator(String $parts)
+	{
+		$separator = ', ';
+		if (!$this->getBinding('select') || empty($this->getBinding('select'))) {
+			$separator = 'SELECT ';
+			$this->binding['select'][] = $parts; 
+		}
+
+		return $separator . $parts;
+	}
+
+	/**
 	* @param 	$parameters <Array>
 	* @access 	private
 	* @return 	String
@@ -108,17 +143,6 @@ class QueryBinder
 
 		$select .= ' ' . implode(', ', $params);
 		return $select;
-	}
-
-	/**
-	* @param 	$parameters <Array>
-	* @access 	private
-	* @return 	String
-	*/
-	private function avg(array $parameters)
-	{
-		print '<pre>';
-		print_r($parameters);
 	}
 
 }
