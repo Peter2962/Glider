@@ -238,4 +238,24 @@ interface QueryBuilderProvider
 	*/
 	public function whereNot(String $column, $value='') : QueryBuilderProvider;
 
+	/**
+	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function orWhereNot(String $column, $value='') : QueryBuilderProvider;
+
+	/**
+	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function andWhereNot(String $column, $value='') : QueryBuilderProvider;
+
 }

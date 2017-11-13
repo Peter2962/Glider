@@ -253,6 +253,30 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function orWhereNot(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '!=', 'OR', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function andWhereNot(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '!=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function setParam(String $key, $value)
 	{
 		$this->parameterBag->setParameter($key, $value);

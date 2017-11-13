@@ -43,8 +43,7 @@ $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
 $result = $queryBuilder->select('*')
 ->from('users')
-->whereNot('id', 14)
-->andWhere('id', 15);
+->whereNot('id', 14);
 
 print '<pre>';
 print_r($result->getResult());
