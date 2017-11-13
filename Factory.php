@@ -20,8 +20,9 @@ class Factory
 	/**
 	* @var 		$provider
 	* @access 	protected
+	* @static
 	*/
-	protected 	$provider;
+	protected static $provider;
 
 	/**
 	* @var 		$queryBuilder
@@ -42,7 +43,7 @@ class Factory
 	public function __construct()
 	{
 		$connectionManager = new ConnectionManager();
-		$provider = $connectionManager->getConnection('default');
+		Factory::$provider = $provider = $connectionManager->getConnection('default');
 		$this->transaction = $provider->transaction();
 	}
 
@@ -55,7 +56,7 @@ class Factory
 	*/
 	public static function getQueryBuilder()
 	{
-		return new QueryBuilder(new ConnectionManager());
+		return new QueryBuilder(new ConnectionManager(), Factory::$provider);
 	}
 
 	/**

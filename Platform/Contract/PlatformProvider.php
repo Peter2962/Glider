@@ -11,6 +11,7 @@ namespace Glider\Platform\Contract;
 
 use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
+use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
@@ -49,6 +50,14 @@ interface PlatformProvider
 	public function transaction() : TransactionProvider;
 
 	/**
+	* The platform's statement provider that will be used to execute queries.
+	*
+	* @access 	public
+	* @return 	Glider\Statements\Contract\StatementProvider
+	*/
+	public function statement() : StatementProvider;
+
+	/**
 	* The platform's query builder provider that will be used to build up
 	* queries. Glider has a default query builder but we are doing this because
 	* a platform might require a different query builder.
@@ -58,6 +67,31 @@ interface PlatformProvider
 	* @return 	Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
 	public function queryBuilder(ConnectorProvider $connectorProvider) : QueryBuilderProvider;
+
+	/**
+	* This method helps to check if a platform supports prepared statement
+	* method of executing queries.
+	* 
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isPrepareCompatible() : Bool;
+
+	/**
+	* This method checks if a platform has a query method to execute queries.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isQueryCompatible() : Bool;
+
+	/**
+	* This method checks if auto_commit is enabled in the configuration.
+	*
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isAutoCommitEnabled() : Bool;
 
 	/**
 	* Returns a configuraiton key if it exists. Returns null if it does not.

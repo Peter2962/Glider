@@ -1,11 +1,20 @@
 <?php
 namespace Glider\Query\Builder;
 
+use RuntimeException;
 use Glider\ClassLoader;
+use Glider\Query\Parameters;
+use InvalidArgumentException;
+use Glider\Query\Builder\Type;
+use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
+use Glider\Platform\Contract\PlatformProvider;
+use Glider\Result\Contract\ResultMapperContract;
+use Glider\Statements\Contract\StatementProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
+use Glider\Events\Subscribers\BuildEventsSubscriber;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 class QueryBuilder implements QueryBuilderProvider
@@ -19,9 +28,9 @@ class QueryBuilder implements QueryBuilderProvider
 
 	/**
 	* @var 		$generator
-	* @access 	private
+	* @access 	public
 	*/
-	private 	$generator;
+	public 		$generator;
 
 	/**
 	* @var 		$bindings
@@ -49,14 +58,59 @@ class QueryBuilder implements QueryBuilderProvider
 	private static $isCustomQuery = false;
 
 	/**
+	* @var 		$strictType
+	* @access 	private
+	*/
+	private 	$strictType;
+
+	/**
+	* @var 		$parameters
+	* @access 	private
+	*/
+	private 	$parameters = [];
+
+	/**
+	* @var 		$provider
+	* @access 	private
+	*/
+	private 	$provider;
+
+	/**
+	* @var 		$queryResult
+	* @access 	private
+	*/
+	private 	$queryResult = null;
+
+	/**
+	* @var 		$statement
+	* @access 	private
+	*/
+	private 	$statement;
+
+	/**
+	* @var 		$parameterBag
+	* @access 	private
+	*/
+	private 	$parameterBag;
+
+	/**
+	* @var 		$resultMapper
+	* @access 	private
+	*/
+	private 	$resultMapper;
+
+	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(ConnectionManager $connectionManager)
+	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
 	{
 		$classLoader = new ClassLoader();
-		$this->connector = $connectionManager->getConnection()->connector();
+		$this->provider = $connectionManager->getConnection();
+		$this->connector = $this->provider->connector();
+		$this->statement = $this->provider->statement();
 		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
+		$this->parameterBag = new Parameters();
 	}
 
 	/**
@@ -78,8 +132,187 @@ class QueryBuilder implements QueryBuilderProvider
 		if (sizeof($arguments) < 1) {
 			$arguments = ['*'];
 		}
-		$this->binder->createBinding('select', $arguments);
+
+		$this->sqlQuery = $this->binder->createBinding('select', $arguments);
 		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function least(Array $arguments, String $alias) : QueryBuilderProvider
+	{
+		if (sizeof($arguments) > 0) {
+			$this->sqlQuery .= $this->binder->alias('LEAST(' . implode(',', $arguments) . ')', $alias);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function from(String $table) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= ' FROM ' . $table;
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function avg(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('AVG(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function count(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('COUNT(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function sum(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('SUM(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function max(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('MAX(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function min(String $column, String $alias) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('MIN(' . $column . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function where(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function orWhere(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'OR', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function andWhere(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereNot(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '!=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function setParam(String $key, $value)
+	{
+		$this->parameterBag->setParameter($key, $value);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResult(Bool $nullifyResultAccess=false)
+	{
+		$this->queryResult = [];
+		if (is_null($this->queryResult)) {
+			return;
+		}
+		return $this->statement->fetch($this, $this->parameterBag);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function setResultMapper($resultMapper)
+	{
+		$this->resultMapper = $resultMapper;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getQueryParameters() : Array
+	{
+		return $this->parameterBag->getAll();
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getQuery() : String
+	{
+		return $this->sqlQuery;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResultMapper() : String
+	{
+		return $this->resultMapper;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function resultMappingEnabled() : Bool
+	{
+		if (gettype($this->resultMapper) !== 'string' || !class_exists($this->resultMapper)) {
+			return false;
+		}
+
+		return (new $this->resultMapper instanceof ResultMapper) ? true : false;
 	}
 
 	/**

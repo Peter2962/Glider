@@ -5,9 +5,11 @@ use Glider\Events\EventManager;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\PlatformResolver;
 use Glider\Connectors\Mysqli\MysqliConnector;
+use Glider\Statements\Mysqli\MysqliStatement;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Transactions\Mysqli\MysqliTransaction;
 use Glider\Connectors\Contract\ConnectorProvider;
+use Glider\Statements\Contract\StatementProvider;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
@@ -52,6 +54,14 @@ class MysqliProvider implements PlatformProvider
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function statement() : StatementProvider
+	{
+		return new MysqliStatement($this);
+	}
+
+	/**
 	* We're using the default query builder.
 	*
 	* {@inheritDoc}
@@ -59,6 +69,30 @@ class MysqliProvider implements PlatformProvider
 	public function queryBuilder(ConnectorProvider $connectorProvider) : QueryBuilderProvider
 	{
 		return new QueryBuilder($connectorProvider);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isPrepareCompatible() : Bool
+	{
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isQueryCompatible() : Bool
+	{
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isAutoCommitEnabled() : Bool
+	{
+		return ($this->getConfig('auto_commit') == true) ? true : false;
 	}
 
 	/**
