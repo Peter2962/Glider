@@ -41,10 +41,10 @@ include 'Factory.php';
 
 $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
-$result = $queryBuilder
-->select('id', 'name')
-->max('id', 'avg_id')
-->from('province');
+$result = $queryBuilder->select('*')
+->from('users')
+->whereNot('id', 14)
+->andWhere('id', 15);
 
 print '<pre>';
 print_r($result->getResult());

@@ -116,6 +116,16 @@ interface QueryBuilderProvider
 	public function select(...$arguments) : QueryBuilderProvider;
 
 	/**
+	* Return the smallest (minimum-valued) argumennt.
+	*
+	* @param 	$arguments <Array>
+	* @param 	$alias <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\Contract\QueryBuilderProvider
+	*/
+	public function least(Array $arguments, String $alias) : QueryBuilderProvider;
+
+	/**
 	* Set table where data will be fetched. Since parameter type has been set,
 	* we do not need to check if @param $table is of valid type or not.
 	*
@@ -184,5 +194,48 @@ interface QueryBuilderProvider
 	* @return 	Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function min(String $column, String $alias) : QueryBuilderProvider;
+
+	/**
+	* Specify rows to select in a SELECT statement based on a condition or expression.
+	* This method accepts two parameters. The `setParam` does not need to be called. It will
+	* be handled automatically in the method.
+	*
+	* @see 		Glider\Query\Builder\QueryBuilder::where
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function where(String $column, $value='') : QueryBuilderProvider;
+
+	/**
+	* Add `OR` operator to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function orWhere(String $column, $value='') : QueryBuilderProvider;
+
+	/**
+	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function andWhere(String $column, $value='') : QueryBuilderProvider;
+
+	/**
+	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereNot(String $column, $value='') : QueryBuilderProvider;
 
 }

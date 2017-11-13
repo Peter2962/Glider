@@ -128,15 +128,45 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 		if ($parameterBag->size() > 0) {
 
 			foreach(array_values($parameterBag->getAll()) as $param) {
+				$isset = false;
+
+				if (is_array($param)) {
+					foreach($param as $p) {
+						$parameterTypes .= $parameterBag->getType($p);
+						$isset = true;
+					}
+				}
+
+				if ($isset == true) {
+					continue;
+				}
+
 				$parameterTypes .= $parameterBag->getType($param);
 			}
 
 			$boundParameters[] = $parameterTypes;
-			foreach(array_values($parameterBag->getAll()) as $param) {
-				$boundParameters[] =& $param;
-			}
 
+			$count = 0;
+			$values = array_values($parameterBag->getAll());
+			$paramValues = [];
+
+			while ($count <= count($values) - 1) {
+				$value = $values[$count];
+				$isBound = false;
+				if (is_array($value)) {
+					foreach($value as $val) {
+						$boundParameters[] =& $val;
+					}
+				}
+
+				if (!is_array($value)) {
+					echo $value;
+					$boundParameters[] =& $values[$count];
+				}
+				$count++;
+			}
 		}
+
 
 		$transaction = null;
 		$connection = $this->platformProvider->connector()->connect();
@@ -155,6 +185,8 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 			// Only start transaction manually if auto commit is not enabled.
 			$transaction = $this->platformProvider->transaction();
 		}
+		print '<pre>';
+		print_r($values);
 
 		// Turn error reporting on for mysqli
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

@@ -140,6 +140,17 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function least(Array $arguments, String $alias) : QueryBuilderProvider
+	{
+		if (sizeof($arguments) > 0) {
+			$this->sqlQuery .= $this->binder->alias('LEAST(' . implode(',', $arguments) . ')', $alias);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function from(String $table) : QueryBuilderProvider
 	{
 		$this->sqlQuery .= ' FROM ' . $table;
@@ -194,6 +205,54 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function where(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function orWhere(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'OR', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function andWhere(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereNot(String $column, $value='') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '!=', 'AND', false);
+		if (!empty($value)) {
+			$this->setParam($column, $value);
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function setParam(String $key, $value)
 	{
 		$this->parameterBag->setParameter($key, $value);
@@ -209,7 +268,6 @@ class QueryBuilder implements QueryBuilderProvider
 		if (is_null($this->queryResult)) {
 			return;
 		}
-
 		return $this->statement->fetch($this, $this->parameterBag);
 	}
 

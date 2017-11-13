@@ -28,9 +28,7 @@ class QueryBinder
 		'outerjoin' => [],
 		'rightOuterJoin' => [],
 		'fulljoin' => [],
-		'where' => [
-			'parameters' => []
-		],
+		'where' => [],
 		'insert' => [
 			'parameters' => []
 		],
@@ -59,11 +57,13 @@ class QueryBinder
 	*
 	* @param 	$key <String>
 	* @param 	$queryPart <Mixed>
-	* @param 	$params <Array>
+	* @param 	$params <Mixed>
+	* @param 	$exppr 	<Mixed>
+	* @param 	$with 	<Mixed>
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function createBinding(String $key, $queryPart, array $params=[])
+	public function createBinding(String $key, $queryPart, $params=[], $expr='', $with='', $addValue=true)
 	{
 		if (!array_key_exists($key, $this->bindings)) {
 			return false;
@@ -73,8 +73,11 @@ class QueryBinder
 			return $queryPart;
 		}
 
-		$this->bindings[$key] = $queryPart;
-		return $this->$key($queryPart);
+		if ($addValue == true) {
+			$this->bindings[$key] = $queryPart;
+		}
+
+		return $this->$key($queryPart, $params, $expr, $with);
 	}
 
 	/**
@@ -143,6 +146,35 @@ class QueryBinder
 
 		$select .= ' ' . implode(', ', $params);
 		return $select;
+	}
+
+	/**
+	* @param 	$column <String>
+	* @param 	$value <Mixed>
+	* @param 	$with <Mixed>
+	* @param 	$operator <String>
+	* @access 	private
+	* @return 	String
+	*/
+	private function where(String $column, $value='', String $with='=', String $operator='AND') : String
+	{
+		$where = '';
+
+		// We'll be doing a check to see if `WHERE` clause already exists in the query. 
+		if (empty($this->bindings['where'])) {
+			$where = ' WHERE ' . $column;
+		}else{
+			$where = ' '. $operator .' ' . $column;
+		}
+
+		if (!empty($value)) {
+			$where .= ' ' . $with . ' ?';
+		}else if ($value == NULL) {
+			$where .= ($with == '=') ? ' IS NULL' : ' IS NOT NULL';
+		}
+
+		$this->bindings['where'][] = $where;
+		return $where;
 	}
 
 }

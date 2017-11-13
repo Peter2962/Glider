@@ -26,6 +26,13 @@ class Parameters
 	*/
 	public function setParameter(String $key, $value, Bool $override=false)
 	{
+		if ($this->getParameter($key)) {
+			$defValue = $this->getParameter($key);
+			$this->parameters[$key] = [$defValue];
+			$this->parameters[$key][] = $value;
+			return;
+		}
+
 		$this->parameters[$key] = $value;
 	}
 
