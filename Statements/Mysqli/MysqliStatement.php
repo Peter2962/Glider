@@ -185,8 +185,6 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 			// Only start transaction manually if auto commit is not enabled.
 			$transaction = $this->platformProvider->transaction();
 		}
-		print '<pre>';
-		print_r($values);
 
 		// Turn error reporting on for mysqli
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
