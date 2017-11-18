@@ -160,9 +160,9 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 				}
 
 				if (!is_array($value)) {
-					echo $value;
 					$boundParameters[] =& $values[$count];
 				}
+				
 				$count++;
 			}
 		}

@@ -33,7 +33,9 @@ class QueryBinder
 			'parameters' => []
 		],
 		'update' => [],
-		'delete' => []
+		'delete' => [],
+		'between' => [],
+		'like' => []
 	];
 
 	/**
@@ -58,7 +60,7 @@ class QueryBinder
 	* @param 	$key <String>
 	* @param 	$queryPart <Mixed>
 	* @param 	$params <Mixed>
-	* @param 	$exppr 	<Mixed>
+	* @param 	$expr 	<Mixed>
 	* @param 	$with 	<Mixed>
 	* @access 	public
 	* @return 	Mixed
@@ -77,7 +79,7 @@ class QueryBinder
 			$this->bindings[$key] = $queryPart;
 		}
 
-		return $this->$key($queryPart, $params, $expr, $with);
+		return $this->$key($queryPart, $params, $expr, $with, $addValue);
 	}
 
 	/**
@@ -175,6 +177,45 @@ class QueryBinder
 
 		$this->bindings['where'][] = $where;
 		return $where;
+	}
+
+	/**
+	* @param 	$colum <String>
+	* @param 	$leftValue <Mixed>
+	* @param 	$rightValue <Mixed>
+	* @param 	$operator <String>
+	* @param 	$isNOt <Boolean>
+	* @access 	private
+	* @return 	String
+	*/
+	private function between(String $column, $leftValue, $rightValue, String $operator='AND', Bool $isNOt=true) : String
+	{
+		$with = ($isNOt == true) ? 'BETWEEN' : 'NOT BETWEEN';
+		$parts = ' WHERE ' . $column . ' ' . $with . ' ' . $leftValue . ' ' . $operator . '  ' . $rightValue;
+		$this->bindings['where'][] = $parts;
+		return $parts;
+	}
+
+	/**
+	* @param 	$column <String>
+	* @param 	$pattern <String>
+	* @param 	$notLike <Boolean>
+	* @access 	private
+	* @return 	String
+	*/
+	private function like(String $column, String $pattern, String $operator='AND', Bool $notLike=false) : String
+	{
+		$with = ($notLike == true) ? ' LIKE ' : ' NOT LIKE ';
+		$parts = $column . $with . '\'' . $pattern . '\'';
+
+		if (!empty($this->getBinding('where'))) {
+			$parts = ' ' . $operator . ' ' . $parts;
+		}else{
+			$parts = ' WHERE ' . $parts;
+		}
+
+		$this->bindings['where'][] = $parts;
+		return $parts;
 	}
 
 }
