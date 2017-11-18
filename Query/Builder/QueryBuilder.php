@@ -100,6 +100,12 @@ class QueryBuilder implements QueryBuilderProvider
 	private 	$resultMapper;
 
 	/**
+	* @var 		$allowedOperators
+	* @access 	protected
+	*/
+	protected 	$allowedOperators = [];
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
@@ -111,6 +117,7 @@ class QueryBuilder implements QueryBuilderProvider
 		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
 		$this->parameterBag = new Parameters();
+		$this->allowedOperators = ['AND', 'OR', '||', '&&']; // Will add more here.
 	}
 
 	/**
@@ -205,6 +212,15 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
+	public function groupConcat(String $expression, String $alias, String $separator) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->alias('GROUP_CONCAT(' . $expression . ')', $alias);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function where(String $column, $value='') : QueryBuilderProvider
 	{
 		$this->sqlQuery .= $this->binder->createBinding('where', $column, $value, '=', 'AND', false);
@@ -277,7 +293,101 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function setParam(String $key, $value)
+	public function whereIn(String $column, Array $values) : QueryBuilderProvider
+	{
+		if (!empty($this->binder->getBinding('select')) && sizeof($values) > 0) {
+			$values = implode(',', $values);
+			$this->sqlQuery .= ' WHERE ' . $column . ' IN (' . $values . ')';
+		}
+
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('between', $column, $leftValue, $rightValue, 'AND', true);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereNotBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('between', $column, $leftValue, $rightValue, 'AND', false);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereNotIn(String $column, Array $values) : QueryBuilderProvider
+	{
+		if (!empty($this->binder->getBinding('select')) && sizeof($values) > 0) {
+			$values = implode(',', $values);
+			$this->sqlQuery .= ' WHERE ' . $column . ' NOT IN (' . $values . ')';
+		}
+		
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('like', $column, $pattern, $operator, true);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereNotLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider
+	{
+		$this->sqlQuery .= $this->binder->createBinding('like', $column, $pattern, $operator, false);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/	
+	public function limit(Int $limit, Int $offset=0) : QueryBuilderProvider
+	{
+		$this->sqlQuery .= ' LIMIT ' . $limit;
+		if ($offset > 0) {
+			$this->sqlQuery .= ' OFFSET ' . $offset;
+		}
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function orderBy(Array $columns) : QueryBuilderProvider
+	{
+		$columns = implode(',', $columns);
+		$this->sqlQuery .= $this->setOrderByFunction(' ORDER BY ' . $columns, '');
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function orderByField(Array $columns) : QueryBuilderProvider
+	{
+		$columns = implode(',', $columns);
+		$this->sqlQuery .= $this->setOrderByFunction($columns, 'FIELD');
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function setParam(String $key, $value) : QueryBuilderProvider
 	{
 		$this->parameterBag->setParameter($key, $value);
 		return $this;
@@ -292,15 +402,17 @@ class QueryBuilder implements QueryBuilderProvider
 		if (is_null($this->queryResult)) {
 			return;
 		}
+
 		return $this->statement->fetch($this, $this->parameterBag);
 	}
 
 	/**
 	* {@inheritDoc}
 	*/
-	public function setResultMapper($resultMapper)
+	public function setResultMapper($resultMapper) : QueryBuilderProvider
 	{
 		$this->resultMapper = $resultMapper;
+		return $this;
 	}
 
 	/**
@@ -340,6 +452,18 @@ class QueryBuilder implements QueryBuilderProvider
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function setOperator(String $operator) : QueryBuilderProvider
+	{
+		if (in_array($operator, $this->allowedOperators) && $this->sqlQuery !== '') {
+			$this->sqlQuery .= $operator;
+		}
+
+		return $this;
+	}
+
+	/**
 	* This static method checks if the last query is a custom query.
 	*
 	* @access 	public
@@ -349,6 +473,22 @@ class QueryBuilder implements QueryBuilderProvider
 	public static function lastQueryCustom()
 	{
 		return QueryBuilder::$isCustomQuery;
+	}
+
+	/**
+	* This method is used to set a field on ORDER BY clause.
+	*
+	* @param 	$query <String>
+	* @access 	protected
+	* @return 	String
+	*/
+	protected function setOrderByFunction(String $query, String $functionName) : String
+	{
+		if ($functionName !== null && $functionName !== '') {
+			$query =' ORDER BY ' . $functionName . '(' . $query . ')';
+		}
+
+		return $query;
 	}
 
 }

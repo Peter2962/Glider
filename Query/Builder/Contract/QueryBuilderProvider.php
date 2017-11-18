@@ -35,7 +35,7 @@ interface QueryBuilderProvider
 	* @param 	$query <String>
 	* @param 	$useDefaultQueryMethod <Boolean>
 	* @access 	public
-	* @return 	Mixed.
+	* @return 	Glider\Query\Builder\QueryBuilder
 	*/
 	public function rawQuery(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
 
@@ -48,9 +48,9 @@ interface QueryBuilderProvider
 	* @param 	$key <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	Glider\Query\Builder\QueryBuilder
 	*/
-	public function setParam(String $key, $value);
+	public function setParam(String $key, $value) : QueryBuilderProvider;
 
 	/**
 	* Returns a result set of a select query.
@@ -67,9 +67,9 @@ interface QueryBuilderProvider
 	*
 	* @param 	$resultMapper;
 	* @access 	public
-	* @return 	Object
+	* @return 	Glider\Query\Builder\QueryBuilder
 	*/
-	public function setResultMapper($resultMapper);
+	public function setResultMapper($resultMapper) : QueryBuilderProvider;
 
 	/**
 	* Returns an array of query parameters.
@@ -103,6 +103,16 @@ interface QueryBuilderProvider
 	* @return 	Boolean
 	*/
 	public function resultMappingEnabled() : Bool;
+
+	/**
+	* This method allows or can be used to set an operator if it is needed in
+	* a query. For example: we might want to add an `OR` operator at a specific position.
+	*
+	* @param 	$operator <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function setOperator(String $operator) : QueryBuilderProvider;
 
 	/**
 	* Binds a select query to the query binder. This method accepts mixed arguments.
@@ -196,6 +206,17 @@ interface QueryBuilderProvider
 	public function min(String $column, String $alias) : QueryBuilderProvider;
 
 	/**
+	* Concatenate strings from a group into a single string with various options.
+	*
+	* @param 	$expression <String>
+	* @param 	$alias <String>
+	* @param 	$separator <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function groupConcat(String $expression, String $alias, String $separator) : QueryBuilderProvider;
+
+	/**
 	* Specify rows to select in a SELECT statement based on a condition or expression.
 	* This method accepts two parameters. The `setParam` does not need to be called. It will
 	* be handled automatically in the method.
@@ -229,7 +250,7 @@ interface QueryBuilderProvider
 	public function andWhere(String $column, $value='') : QueryBuilderProvider;
 
 	/**
-	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	* Add `NOT` operator to `WHERE` clause in a `SELECT` statement.
 	*
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
@@ -239,7 +260,7 @@ interface QueryBuilderProvider
 	public function whereNot(String $column, $value='') : QueryBuilderProvider;
 
 	/**
-	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	* Add `AND`and `OR` operators to `WHERE` clause in a `SELECT` statement.
 	*
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
@@ -249,7 +270,7 @@ interface QueryBuilderProvider
 	public function orWhereNot(String $column, $value='') : QueryBuilderProvider;
 
 	/**
-	* Add `AND` operator to `WHERE` clause in a `SELECT` statement.
+	* Add `AND` and `NOT` operators to `WHERE` clause in a `SELECT` statement.
 	*
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
@@ -257,5 +278,108 @@ interface QueryBuilderProvider
 	* @return 	Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function andWhereNot(String $column, $value='') : QueryBuilderProvider;
+
+	/**
+	* Add `IN` operator to `WHERE` clause to a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$values <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereIn(String $column, Array $values) : QueryBuilderProvider;
+
+	/**
+	* Add `NOT IN` operator to `WHERE` clause to a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$values <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereNotIn(String $column, Array $values) : QueryBuilderProvider;
+
+	/**
+	* Add `BETWEEN` operator to a `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$leftValue <Mixed>
+	* @param 	$rightValue <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
+
+	/**
+	* Add `NOT BETWEEN` operator to a `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$column <String>
+	* @param 	$leftValue <Mixed>
+	* @param 	$rightValue <Mixed>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereNotBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
+
+	/**
+	* Add `LIKE` operator to a `WHERE` clause in a `SELECT` statement. This method has three
+	* required parameters namely @param $column, @param $pattern and @param $operator.
+	* The first parameter @param $column is the name of the column that the specified pattern
+	* will be matched on. The second parameter @param $pattern is the pattern that will be
+	* searched for.
+	* When adding `LIKE` operator in a `SELECT` statement, we might just want to add the `LIKE`
+	* to the query. Because of that, we have a third parameter named @param $operator. The @param $operator
+	* parameter must either be `AND` or `OR` operator. If `WHERE` clause is found in the query, the @param $operator
+	* parameter will be set as prefix. You can also set an operator prefix using the operator method.
+	* @see QueryBuilderProvider::setOperator()
+	*
+	* @param 	$column <String>
+	* @param 	$pattern <String>
+	* @param 	$operator <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
+
+	/**
+	* Add `NOT` and `LIKE` operators to a `WHERE` clause in a `SELECT` statement. This method
+	* works just like the `whereLike` method. @see QueryBuilderProvider::whereLike().
+	* The only difference is the `NOT` operator that exists in this method.
+	*
+	* @param 	$column <String>
+	* @param 	$pattern <String>
+	* @param 	$operator <String>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function whereNotLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
+
+	/**
+	* Add `LIMIT` clause to the sql query.
+	*
+	* @param 	$limit <Integer>
+	* @param 	$offset <Integer>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function limit(Int $limit, Int $offset=0) : QueryBuilderProvider;
+
+	/**
+	* Add `ORDER BY` clause to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$columns <Array>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function orderBy(Array $columns) : QueryBuilderProvider;
+
+	/**
+	* Add `ORDER BY` clause to `WHERE` clause in a `SELECT` statement.
+	*
+	* @param 	$columns <Array>
+	* @access 	public
+	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	*/
+	public function orderByField(Array $columns) : QueryBuilderProvider;
 
 }

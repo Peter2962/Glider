@@ -43,7 +43,8 @@ $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
 $result = $queryBuilder->select('*')
 ->from('users')
-->whereNot('id', 14);
+->where('id', 14)
+->orderByField(['id', 'firstname'], 'FIELD');
 
 print '<pre>';
 print_r($result->getResult());
