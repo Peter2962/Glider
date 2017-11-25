@@ -16,6 +16,7 @@
 namespace Glider\Statements\Contract;
 
 use Glider\Query\Parameters;
+use Glider\Result\Collection;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Platform\Contract\PlatformProvider;
@@ -39,9 +40,9 @@ interface StatementProvider
 	*
 	* @param 	$queryBuiler Glider\Query\Builder\QueryBuilder
 	* @access 	public
-	* @return 	Array
+	* @return 	Glider\Result\Collection
 	*/
-	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Array;
+	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Collection;
 
 	/**
 	* This method creates/saves new data. This method accepts instance
@@ -52,5 +53,13 @@ interface StatementProvider
 	* @return 	void
 	*/
 	public function insert(QueryBuilder $queryBuilder);
+
+	/**
+	* Returns the statement result.
+	*
+	* @access 	public
+	* @return 	void
+	*/
+	public function getResult();
 
 }

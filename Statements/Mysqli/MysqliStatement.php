@@ -1,4 +1,9 @@
 <?php
+/**
+* @author 	Peter Taiwo
+* @package 	Glider\Statements\Mysqli\MysqliStatement
+*/
+
 namespace Glider\Statements\Mysqli;
 
 use StdClass;
@@ -6,6 +11,7 @@ use Exception;
 use RuntimeException;
 use mysqli_sql_exception;
 use Glider\Query\Parameters;
+use Glider\Result\Collection;
 use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Platform\Contract\PlatformProvider;
@@ -31,6 +37,15 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	private 	$sqlGenerator;
 
 	/**
+	* We are setting this to protected because we'll be setting the result
+	* internally.
+	*
+	* @var 		$result
+	* @access 	protected
+	*/
+	protected 	$result;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(PlatformProvider $platformProvider)
@@ -41,7 +56,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function fetch(QueryBuilder $queryBuilder, Parameters $parameterBag) : Array
+	public function fetch(QueryBuilder $queryBuilder, Parameters $parameterBag) : Collection
 	{
 		$resolvedQueryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
 		$statement = $resolvedQueryObject->statement;
@@ -99,7 +114,8 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 			throw new QueryException($sqlExp->getMessage(), $resolvedQueryObject->queryObject);
 		}
 
-		return $result;
+		$this->result = $result;
+		return new Collection($this, $statement);
 	}
 
 	/**
@@ -108,6 +124,14 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	public function insert(QueryBuilder $queryBuilder)
 	{
 
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getResult()
+	{
+		return $this->result;
 	}
 
 	/**
