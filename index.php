@@ -10,6 +10,7 @@ include 'Result/Contract/CollectionContract.php';
 include 'Result/Collection.php';
 include 'Result/Mappers/DataResultMapper.php';
 include 'Result/Exceptions/InvalidPropertyAccessException.php';
+include 'Result/Exceptions/FunctionNotFoundException.php';
 include 'Statements/Contract/StatementProvider.php';
 include 'Statements/AbstractStatementProvider.php';
 include 'Statements/Exceptions/QueryException.php';
@@ -46,5 +47,11 @@ $queryBuilder = $db->getQueryBuilder();
 $result = $queryBuilder->select('*')
 ->from('migrations')->get();
 
+function test($e, $i) {
+	echo (Int) $i == 566;
+}
+
+$data = $result->partition(4)->flatten()->all();
+
 print '<pre>';
-print_r($result->first());
+print_r($data);

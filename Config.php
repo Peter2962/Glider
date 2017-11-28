@@ -5,7 +5,7 @@ return [
 		'host' => 'localhost',
 		'alias' => 'mysqli',
 		'username' => 'root',
-		'password' => '',
+		'password' => 'root',
 		'database' => 'project',
 		'charset' => 'utf8',
 		'collation' => '',
