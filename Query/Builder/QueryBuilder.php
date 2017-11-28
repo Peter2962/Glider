@@ -227,6 +227,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -239,6 +240,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -251,6 +253,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -263,6 +266,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -275,6 +279,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -287,6 +292,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if (!empty($value)) {
 			$this->setParam($column, $value);
 		}
+
 		return $this;
 	}
 
@@ -361,6 +367,7 @@ class QueryBuilder implements QueryBuilderProvider
 		if ($offset > 0) {
 			$this->sqlQuery .= ' OFFSET ' . $offset;
 		}
+
 		return $this;
 	}
 
@@ -396,7 +403,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function getResult(Bool $nullifyResultAccess=false)
+	public function get(Bool $nullifyResultAccess=false)
 	{
 		$this->queryResult = [];
 		if (is_null($this->queryResult)) {
@@ -485,7 +492,7 @@ class QueryBuilder implements QueryBuilderProvider
 	protected function setOrderByFunction(String $query, String $functionName) : String
 	{
 		if ($functionName !== null && $functionName !== '') {
-			$query =' ORDER BY ' . $functionName . '(' . $query . ')';
+			$query = ' ORDER BY ' . $functionName . '(' . $query . ')';
 		}
 
 		return $query;

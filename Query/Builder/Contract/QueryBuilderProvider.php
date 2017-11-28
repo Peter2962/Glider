@@ -59,7 +59,7 @@ interface QueryBuilderProvider
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function getResult(Bool $nullifyResultAccess=false);
+	public function get(Bool $nullifyResultAccess=false);
 
 	/**
 	* Sets the ResultMapper class to use. This method accepts either an array r

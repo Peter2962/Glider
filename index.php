@@ -6,8 +6,11 @@ include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
 include 'Result/ResultMapper.php';
+include 'Result/Contract/CollectionContract.php';
+include 'Result/Collection.php';
 include 'Result/Mappers/DataResultMapper.php';
 include 'Result/Exceptions/InvalidPropertyAccessException.php';
+include 'Result/Exceptions/FunctionNotFoundException.php';
 include 'Statements/Contract/StatementProvider.php';
 include 'Statements/AbstractStatementProvider.php';
 include 'Statements/Exceptions/QueryException.php';
@@ -42,9 +45,13 @@ include 'Factory.php';
 $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
 $result = $queryBuilder->select('*')
-->from('users')
-->where('id', 14)
-->orderByField(['id', 'firstname'], 'FIELD');
+->from('migrations')->get();
+
+function test($e, $i) {
+	echo (Int) $i == 566;
+}
+
+$data = $result->partition(4)->flatten()->all();
 
 print '<pre>';
-print_r($result->getResult());
+print_r($data);
