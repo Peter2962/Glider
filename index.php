@@ -51,7 +51,7 @@ function test($e, $i) {
 	echo (Int) $i == 566;
 }
 
-$data = $result->partition(4)->flatten()->all();
+$data = $result->where(['batch' => 3]);
 
 print '<pre>';
 print_r($data);

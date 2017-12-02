@@ -348,17 +348,35 @@ class Collection implements CollectionContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function flatten(Bool $singleLevel=false) : CollectionContract
+	public function where(Array $conditions=[]) : CollectionContract
 	{
-		$collection = array_map(function($element, $index) {
-			if (is_array($element)) {
-				return (new self($element, null))->flatten()->first();
+		$clone = [];
+
+		if ($this->size() > 0) {
+			$this->toArray();
+			$condition = [];
+			foreach($this->collected as $index => $key) {
+				$element = $this->collected[$index];
+				$condition[$index] = [];
+
+				foreach (array_keys($conditions) as $i => $k) {
+					if (isset($element[$k]) && $element[$k] == $conditions[$k]) {
+						$condition[$index][] = 1;
+						continue;
+					}
+
+					$condition[$index][] = 0;
+				}
+
+				if (empty($condition[$index]) || in_array(0, $condition[$index])) {
+					continue;
+				}
+
+				$clone[] = $element;
 			}
+		}
 
-			return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($element)));
-		}, $this->collected, array_keys($this->collected));
-
-		$this->collected = $collection;
+		$this->collected = $clone;
 		return $this;
 	}
 
