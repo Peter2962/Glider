@@ -52,7 +52,17 @@ interface StatementProvider
 	* @access 	public
 	* @return 	void
 	*/
-	public function insert(QueryBuilder $queryBuilder);
+	public function insert(QueryBuilder $queryBuilder, Parameters $parameters);
+
+	/**
+	* Update data in the database. This method accepts instance
+	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
+	* Parameters <Glider\Query\Parameters> as an argument.
+	*
+	* @access 	public
+	* @return 	void
+	*/
+	public function update(QueryBuilder $queryBuilder, Parameters $parameters);
 
 	/**
 	* Returns the statement result.

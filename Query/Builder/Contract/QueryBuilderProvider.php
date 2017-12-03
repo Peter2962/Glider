@@ -382,4 +382,20 @@ interface QueryBuilderProvider
 	*/
 	public function orderByField(Array $columns) : QueryBuilderProvider;
 
+	/**
+	* @param 	$table <String>
+	* @param 	$fields <Array>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function insert(String $table, Array $fields=[]);
+
+	/**
+	* @param 	$table <String>
+	* @param 	$fields <Array>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function update(String $table, Array $fields);
+
 }

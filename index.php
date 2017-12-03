@@ -44,14 +44,14 @@ include 'Factory.php';
 
 $db = new Glider\Factory();
 $queryBuilder = $db->getQueryBuilder();
-$result = $queryBuilder->select('*')
-->from('migrations')->get();
+// $result = $queryBuilder->select('*')
+// ->from('migrations')->get();
 
-function test($e, $i) {
-	echo (Int) $i == 566;
-}
+$data = $queryBuilder->where('id', 23)->update('users', [
+	'firstname' => 'Test Firstname'
+]);
 
-$data = $result->where(['batch' => 3]);
+// $data = $result->where(['batch' => 3]);
 
 print '<pre>';
 print_r($data);
