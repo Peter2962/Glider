@@ -82,10 +82,10 @@ class QueryBuilder implements QueryBuilderProvider
 	private 	$queryResult = null;
 
 	/**
-	* @var 		$statement
+	* @var 		$statementProvider
 	* @access 	private
 	*/
-	private 	$statement;
+	private 	$statementProvider;
 
 	/**
 	* @var 		$parameterBag
@@ -106,6 +106,12 @@ class QueryBuilder implements QueryBuilderProvider
 	protected 	$allowedOperators = [];
 
 	/**
+	* @var 		$queryType
+	* @access 	protected
+	*/
+	protected 	$queryType = 0;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
@@ -113,7 +119,7 @@ class QueryBuilder implements QueryBuilderProvider
 		$classLoader = new ClassLoader();
 		$this->provider = $connectionManager->getConnection();
 		$this->connector = $this->provider->connector();
-		$this->statement = $this->provider->statement();
+		$this->statementProvider = $this->provider->statement();
 		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
 		$this->parameterBag = new Parameters();
@@ -140,6 +146,7 @@ class QueryBuilder implements QueryBuilderProvider
 			$arguments = ['*'];
 		}
 
+		$this->queryType = 1;
 		$this->sqlQuery = $this->binder->createBinding('select', $arguments);
 		return $this;
 	}
@@ -410,7 +417,7 @@ class QueryBuilder implements QueryBuilderProvider
 			return;
 		}
 
-		return $this->statement->fetch($this, $this->parameterBag);
+		return $this->statementProvider->fetch($this, $this->parameterBag);
 	}
 
 	/**
@@ -471,6 +478,34 @@ class QueryBuilder implements QueryBuilderProvider
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function insert(String $table, Array $fields=[])
+	{
+		foreach(array_keys($fields) as $field) {
+			$this->setParam($field, $fields[$field]);
+		}
+
+		$this->queryType = 2;
+		$this->sqlQuery = $this->binder->createBinding('insert', $table, $fields);
+		return $this->statementProvider->insert($this, $this->parameterBag);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function update(String $table, Array $fields=[])
+	{
+		foreach(array_keys($fields) as $field) {
+			$this->setParam($field, $fields[$field]);
+		}
+
+		$this->queryType = 3;
+		$this->sqlQuery = $this->binder->createBinding('update', $table, $fields);
+		return $this->statementProvider->update($this, $this->parameterBag);
+	}
+
+	/**
 	* This static method checks if the last query is a custom query.
 	*
 	* @access 	public
@@ -480,6 +515,17 @@ class QueryBuilder implements QueryBuilderProvider
 	public static function lastQueryCustom()
 	{
 		return QueryBuilder::$isCustomQuery;
+	}
+
+	/**
+	* Return an integer value of query type.
+	*
+	* @access 	public
+	* @return 	Integer
+	*/
+	public function getQueryType() : int
+	{
+		return $this->queryType;
 	}
 
 	/**

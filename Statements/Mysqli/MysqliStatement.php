@@ -121,9 +121,19 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function insert(QueryBuilder $queryBuilder)
+	public function insert(QueryBuilder $queryBuilder, Parameters $parameterBag)
 	{
+		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
+		return $queryObject->statement;
+	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	public function update(QueryBuilder $queryBuilder, Parameters $parameterBag)
+	{
+		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
+		return $queryObject->statement;
 	}
 
 	/**
@@ -220,7 +230,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 			// Attempt to prepare query, bind parameters dynamically and execute query.
 			$statement = $connection->stmt_init();
 			$statement->prepare($query);
-			if (!empty($hasMappableFields)) {
+			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3])) {
 				call_user_func_array([$statement, 'bind_param'], $boundParameters);
 			}
 

@@ -219,13 +219,13 @@ interface CollectionContract
 	public function partition(int $to) : CollectionContract;
 
 	/**
-	* Flattens a collection to any depth. If the @param $singleLevel
-	* is set to true, the collection will only be flattened one step deep.
+	* Loops through the collection and returns the array of elements that contains the
+	* key-value pairs provided in the @param $conditions parameter.
 	*
-	* @param 	$singleLevel <Boolean>
+	* @param 	$conditions <Array>
 	* @access 	public
 	* @return 	Glider\Result\CollectionContract
 	*/
-	public function flatten(Bool $singleLevel=false) : CollectionContract;
+	public function where(Array $conditions=[]) : CollectionContract;
 
 }

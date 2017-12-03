@@ -218,4 +218,50 @@ class QueryBinder
 		return $parts;
 	}
 
+	/**
+	* @param 	$table <String>
+	* @param 	$fields <Array>
+	* @access 	private
+	* @return 	String
+	*/
+	private function insert(String $table, Array $fields)
+	{
+		$placeholders = implode(', ', array_fill(0, count(array_keys($fields)), '?'));
+		$columns = implode(', ', array_keys($fields));
+
+		return "INSERT INTO $table ($columns) VALUES ($placeholders)";
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$columns <Array>
+	* @param 	$conditions <Array>
+	* @access 	private
+	* @return 	String
+	*/
+	private function update(String $table, Array $columns)
+	{
+		$placeholders = implode(', ', array_fill(0, count(array_keys($columns)), '?'));
+		$query = "UPDATE $table";
+		$clause = [];
+		$parameters = [];
+
+		if (empty($columns)) {
+			throw new RuntimeException('Update query failed. Columns cannot be empty');
+		}
+
+		foreach(array_keys($columns) as $key) {
+			$clause[] = $key . ' = ?';
+		}
+
+		$query .= ' SET ' .implode(', ', $clause);
+		
+		if (!empty($this->bindings['where'])) {
+			$conditions = implode(' ', $this->bindings['where']);
+			$query .= '' . $conditions;
+		}
+
+		return $query;
+	}
+
 }
