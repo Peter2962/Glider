@@ -1,10 +1,10 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Statements\Mysqli\MysqliStatement
+* @package 	Glider\Processor\Mysqli\MysqliProcessor
 */
 
-namespace Glider\Statements\Mysqli;
+namespace Glider\Processor\Mysqli;
 
 use StdClass;
 use Exception;
@@ -16,12 +16,12 @@ use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Result\Contract\ResultMapperContract;
-use Glider\Statements\AbstractStatementProvider;
-use Glider\Statements\Exceptions\QueryException;
-use Glider\Statements\Contract\StatementProvider;
+use Glider\Processor\AbstractProcessorProvider;
+use Glider\Processor\Exceptions\QueryException;
+use Glider\Processor\Contract\ProcessorProvider;
 use Glider\Results\Contract\ResultObjectProvider;
 
-class MysqliStatement extends AbstractStatementProvider implements StatementProvider
+class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
 {
 
 	/**
@@ -159,7 +159,7 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	* @param 	$parameterBag Glider\Query\Parameters
 	* @access 	private
 	* @return 	Object
-	* @throws 	Glider\Statements\Exceptions\QueryException;
+	* @throws 	Glider\Processor\Exceptions\QueryException;
 	*/
 	private function resolveQueryObject(QueryBuilder $queryBuilder, Parameters $parameterBag) : StdClass
 	{

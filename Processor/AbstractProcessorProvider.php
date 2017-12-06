@@ -1,9 +1,9 @@
 <?php
-namespace Glider\Statements;
+namespace Glider\Processor;
 
-use Glider\Statements\Contract\StatementProvider;
+use Glider\Processor\Contract\ProcessorProvider;
 
-abstract class AbstractStatementProvider
+abstract class AbstractProcessorProvider
 {
 
 	/**
@@ -31,9 +31,9 @@ abstract class AbstractStatementProvider
 	* @access 	public
 	* @return 	Object
 	*/
-	public static function setStatementResult(StatementProvider $statementProvider)
+	public static function setProcessorResult(ProcessorProvider $statementProvider)
 	{
-		AbstractStatementProvider::$statementResult = $statementProvider->getStatement();
+		//
 	}
 
 }

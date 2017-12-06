@@ -22,10 +22,10 @@ class SchemaManager implements SchemaManagerContract
 	protected static $connectionId;
 
 	/**
-	* @var 		$statement
+	* @var 		$processor
 	* @access  	protected
 	*/
-	protected 	$statement;
+	protected 	$processor;
 
 	/**
 	* {@inheritDoc}
@@ -34,7 +34,7 @@ class SchemaManager implements SchemaManagerContract
 	{
 		$connectionManager = new ConnectionManager();
 		$this->platformProvider = $connectionManager->getConnection($connectionId);
-		$this->statement = $this->platformProvider->statement();
+		$this->processor = $this->platformProvider->processor();
 	}
 
 	/**
@@ -58,7 +58,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function hasTable(String $table) : Bool
 	{
-		$hasTable = $this->statement->query(Expressions::hasTable($table));
+		$hasTable = $this->processor->query(Expressions::hasTable($table));
 	}
 
 	/**
