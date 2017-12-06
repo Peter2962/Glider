@@ -145,6 +145,14 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function query(String $queryString)
+	{
+		
+	}
+
+	/**
 	* Resolves query object returning: query, parameters and connection.
 	*
 	* @param 	$queryBuilder Glider\Query\Builder\QueryBuilder

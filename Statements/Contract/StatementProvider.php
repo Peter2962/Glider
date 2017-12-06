@@ -72,4 +72,15 @@ interface StatementProvider
 	*/
 	public function getResult();
 
+	/**
+	* Runs a custom query using the platform's query method.
+	* To be able to use this, make sure Glider\Platform\Contract\PlatformProvider::isQueryCompatible
+	* returns true.
+	*
+	* @param 	$queryString <String>
+	* @access 	public
+	* @return 	Mixed 
+	*/
+	public function query(String $queryString);
+
 }

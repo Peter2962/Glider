@@ -2,6 +2,9 @@
 ini_set('display_errors', 1);
 // error_reporting(1);
 
+use Glider\Schema\SchemaManager;
+use Glider\Factory;
+
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
@@ -40,18 +43,11 @@ include 'Connectors/Mysqli/MysqliConnector.php';
 include 'Connection/Contract/ConnectionInterface.php';
 include 'Connection/QueuedConnections.php';
 include 'Connection/ConnectionManager.php';
+include 'Schema/Contract/SchemaManagerContract.php';
+include 'Schema/SchemaManager.php';
 include 'Factory.php';
 
-$db = new Glider\Factory();
-$queryBuilder = $db->getQueryBuilder();
-// $result = $queryBuilder->select('*')
-// ->from('migrations')->get();
-
-$data = $queryBuilder->where('id', 23)->update('users', [
-	'firstname' => 'Test Firstname'
-]);
-
-// $data = $result->where(['batch' => 3]);
+$schema = Factory::getSchema();
 
 print '<pre>';
-print_r($data);
+print_r($schema->hasTable('a'));
