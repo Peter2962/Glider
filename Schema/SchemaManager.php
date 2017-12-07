@@ -76,7 +76,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function getAllTables()
 	{
-
+		return $this->queryBuilder->queryWithBinding(Expressions::allTables())->get();
 	}
 
 	/**
