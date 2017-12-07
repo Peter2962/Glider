@@ -29,15 +29,23 @@ interface QueryBuilderProvider
 	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platformProvider);
 
 	/**
-	* This method runs a raw sql query. This is useful when there is need to write
-	* a custom query.
+	* Run a query with bindings. This is useful for SELECT statements.
 	*
 	* @param 	$query <String>
 	* @param 	$useDefaultQueryMethod <Boolean>
 	* @access 	public
 	* @return 	Glider\Query\Builder\QueryBuilder
 	*/
-	public function rawQuery(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
+	public function queryWithBinding(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
+
+	/**
+	* Runs a query without bindings.
+	*
+	* @param 	$queryString <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function query(String $queryString);
 
 	/**
 	* This method sets a parameter for a given column value in a query. This method accepts

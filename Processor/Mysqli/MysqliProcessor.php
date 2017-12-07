@@ -14,6 +14,7 @@ use Glider\Query\Parameters;
 use Glider\Result\Collection;
 use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
+use Glider\Result\Platforms\MysqliResult;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Result\Contract\ResultMapperContract;
 use Glider\Processor\AbstractProcessorProvider;
@@ -46,11 +47,18 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	protected 	$result;
 
 	/**
+	* @var 		$connection
+	* @access 	protected
+	*/
+	protected 	$connection;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(PlatformProvider $platformProvider)
 	{
 		$this->platformProvider = $platformProvider;
+		$this->connection = $platformProvider->connector()->connect();
 	}
 
 	/**
@@ -147,9 +155,14 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function query(String $queryString)
+	public function query(String $queryString, int $returnType=1)
 	{
-		
+		$queryObject = $this->connection->query($queryString);
+		if ($returnType == 1) {
+			return new MysqliResult($queryObject);
+		}
+
+		return new MysqliStatement($queryObject);
 	}
 
 	/**

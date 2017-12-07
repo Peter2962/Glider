@@ -2,6 +2,7 @@
 namespace Glider\Schema\Contract;
 
 use Closure;
+use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\ConnectionManager;
 
 interface SchemaManagerContract
@@ -11,10 +12,11 @@ interface SchemaManagerContract
 	* Constructor accepts an optional parameter which is the connection id.
 	*
 	* @param 	$connectionId <String>
+	* @param 	$queryBuilder <Glider\Query\Builder\QueryBuilder>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(String $connectionId=null);
+	public function __construct(String $connectionId=null, QueryBuilder $queryBuilder);
 
 	/**
 	* Call SchemaManager methods statically.
@@ -43,6 +45,14 @@ interface SchemaManagerContract
 	* @return 	Boolean
 	*/
 	public function hasTable(String $table) : Bool;
+
+	/**
+	* Returns array of tables in the database.
+	*
+	* @access 	public
+	* @return 	Array
+	*/
+	public function getAllTables();
 
 	/**
 	* Alter a table.

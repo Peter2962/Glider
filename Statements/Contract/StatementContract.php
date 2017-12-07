@@ -1,86 +1,88 @@
 <?php
 /**
-* @package 	StatementProvider
+* @package 	Glider\Statements\Contract\StatementContract
 * @version 	0.1.0
 *
-* StatementProvider helps to formulize a platform's statement. It gives
+* StatementContract helps to formulize a platform's statement. It gives
 * each platform an architecture template that is required. The StatementProvider handles
 * query processing. 
-* @method fetch
-* @method insert
-* @method update
-* @method delete
-* @method query
+* @method affectedRows
+* @method errno
+* @method errorList
+* @method error
+* @method fieldCount
+* @method fieldCount
+* @method fieldCount
 */
 
 namespace Glider\Statements\Contract;
 
+use mysqli_stmt;
 use Glider\Query\Parameters;
 use Glider\Result\Collection;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Platform\Contract\PlatformProvider;
 
-interface StatementProvider
+interface StatementContract
 {
+	/**
+	* @access 	public
+	* @return 	Integer
+	*/
+	public function affectedRows() : int;
 
 	/**
-	* The constructor accepts Glider\Platform\Contract\PlatformProvider as the only
-	* argument.
+	* Return error number.
 	*
-	* @param 	$platformProvider Glider\Platform\Contract\PlatformProvider
 	* @access 	public
-	* @return 	void
+	* @return 	Integer
 	*/
-	public function __construct(PlatformProvider $platformProvider);
+	public function errno() : int;
 
 	/**
-	* The fetch method is used to fetch results from the database. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and Parameters <Glider\Query\Parameters> as an argument.
+	* Return an array of error list.
 	*
-	* @param 	$queryBuiler Glider\Query\Builder\QueryBuilder
 	* @access 	public
-	* @return 	Glider\Result\Collection
+	* @return 	Integer
 	*/
-	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Collection;
+	public function errorList();
 
 	/**
-	* This method creates/saves new data. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
-	* Parameters <Glider\Query\Parameters> as an argument.
+	* Returns error string.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	Integer
 	*/
-	public function insert(QueryBuilder $queryBuilder, Parameters $parameters);
+	public function error();
 
 	/**
-	* Update data in the database. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
-	* Parameters <Glider\Query\Parameters> as an argument.
-	*
 	* @access 	public
-	* @return 	void
+	* @return 	Integer
 	*/
-	public function update(QueryBuilder $queryBuilder, Parameters $parameters);
+	public function fieldCount() : int;
 
 	/**
-	* Returns the statement result.
+	* Returns the last insert id.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	Integer
 	*/
-	public function getResult();
+	public function insertId();
 
 	/**
-	* Runs a custom query using the platform's query method.
-	* To be able to use this, make sure Glider\Platform\Contract\PlatformProvider::isQueryCompatible
-	* returns true.
+	* Returns size of parameters.
 	*
-	* @param 	$queryString <String>
 	* @access 	public
-	* @return 	Mixed 
+	* @return 	Integer
 	*/
-	public function query(String $queryString);
+	public function paramCount() : int;
 
+	/**
+	* Returns sql state.
+	*
+	* @access 	public
+	* @return 	Integer
+	*/
+	public function sqlState() : int;
 }

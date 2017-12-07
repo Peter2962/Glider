@@ -6,11 +6,21 @@ class Expressions
 	
 	/**
 	* @access 	public
-	* @return 	
+	* @return 	String
 	*/
-	public static function hasTable(String $table) : String
+	public static function showTable(String $table) : String
 	{
-		return '';
+		return 'SHOW TABLES LIKE ' . '"' . $table . '"';
+	}
+
+	/**
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function allTables() : String
+	{
+		return 'SHOW TABLES';
 	}
 
 }

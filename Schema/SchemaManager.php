@@ -3,6 +3,7 @@ namespace Glider\Schema;
 
 use Closure;
 use Glider\Schema\Expressions;
+use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\ConnectionManager;
 use Glider\Schema\Contract\SchemaManagerContract;
 
@@ -28,13 +29,17 @@ class SchemaManager implements SchemaManagerContract
 	protected 	$processor;
 
 	/**
+	* @var 		$queryBuilder
+	* @access 	protected
+	*/
+	protected 	$queryBuilder;
+
+	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(String $connectionId=null)
+	public function __construct(String $connectionId=null, QueryBuilder $queryBuilder)
 	{
-		$connectionManager = new ConnectionManager();
-		$this->platformProvider = $connectionManager->getConnection($connectionId);
-		$this->processor = $this->platformProvider->processor();
+		$this->queryBuilder = $queryBuilder;
 	}
 
 	/**
@@ -58,7 +63,20 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function hasTable(String $table) : Bool
 	{
-		$hasTable = $this->processor->query(Expressions::hasTable($table));
+		$hasTable = $this->queryBuilder->query(Expressions::showTable($table));
+		if (!$hasTable instanceof QueryBuilder && $hasTable && $hasTable->numRows() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getAllTables()
+	{
+
 	}
 
 	/**

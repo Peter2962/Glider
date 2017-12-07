@@ -25,7 +25,7 @@ class Factory
 	* @access 	protected
 	* @static
 	*/
-	protected static $provider;
+	protected 	$provider;
 
 	/**
 	* @var 		$queryBuilder
@@ -46,7 +46,7 @@ class Factory
 	public function __construct(String $connection=null)
 	{
 		$connectionManager = new ConnectionManager();
-		Factory::$provider = $provider = $connectionManager->getConnection($connection);
+		$this->provider = $provider = $connectionManager->getConnection($connection);
 		$this->transaction = $provider->transaction();
 	}
 
@@ -59,7 +59,7 @@ class Factory
 	*/
 	public static function getQueryBuilder()
 	{
-		return new QueryBuilder(new ConnectionManager(), Factory::$provider);
+		return new QueryBuilder(new ConnectionManager(), Factory::getInstance()->provider);
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Factory
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
-		return new SchemaManager($connectionId);
+		return new SchemaManager($connectionId, Factory::getQueryBuilder());
 	}
 
 	/**

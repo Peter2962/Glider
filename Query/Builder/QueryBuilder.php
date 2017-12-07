@@ -12,7 +12,7 @@ use Glider\Query\Builder\SqlGenerator;
 use Glider\Connection\ConnectionManager;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Result\Contract\ResultMapperContract;
-use Glider\Statements\Contract\StatementProvider;
+use Glider\Processor\Contract\ProcessorProvider;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Events\Subscribers\BuildEventsSubscriber;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
@@ -82,10 +82,10 @@ class QueryBuilder implements QueryBuilderProvider
 	private 	$queryResult = null;
 
 	/**
-	* @var 		$statementProvider
+	* @var 		$processorProvider
 	* @access 	private
 	*/
-	private 	$statementProvider;
+	private 	$processorProvider;
 
 	/**
 	* @var 		$parameterBag
@@ -119,7 +119,7 @@ class QueryBuilder implements QueryBuilderProvider
 		$classLoader = new ClassLoader();
 		$this->provider = $connectionManager->getConnection();
 		$this->connector = $this->provider->connector();
-		$this->statementProvider = $this->provider->statement();
+		$this->processorProvider = $this->provider->processor();
 		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
 		$this->parameterBag = new Parameters();
@@ -129,11 +129,22 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function rawQuery(String $query, Bool $useDefaultQueryMethod=true) : QueryBuilderProvider
+	public function queryWithBinding(String $query, Bool $useDefaultQueryMethod=true) : QueryBuilderProvider
 	{
 		QueryBuilder::$isCustomQuery = true;
-		// Here we are creating a binding for raw sql queries.
 		$this->sqlQuery = $this->binder->createBinding('sql', $query);
+		return $this;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function query(String $queryString)
+	{
+		if ($this->provider->isQueryCompatible()) {
+			return $this->processorProvider->query($queryString);
+		}
+
 		return $this;
 	}
 
@@ -417,7 +428,7 @@ class QueryBuilder implements QueryBuilderProvider
 			return;
 		}
 
-		return $this->statementProvider->fetch($this, $this->parameterBag);
+		return $this->processorProvider->fetch($this, $this->parameterBag);
 	}
 
 	/**
@@ -488,7 +499,7 @@ class QueryBuilder implements QueryBuilderProvider
 
 		$this->queryType = 2;
 		$this->sqlQuery = $this->binder->createBinding('insert', $table, $fields);
-		return $this->statementProvider->insert($this, $this->parameterBag);
+		return $this->processorProvider->insert($this, $this->parameterBag);
 	}
 
 	/**
@@ -502,7 +513,7 @@ class QueryBuilder implements QueryBuilderProvider
 
 		$this->queryType = 3;
 		$this->sqlQuery = $this->binder->createBinding('update', $table, $fields);
-		return $this->statementProvider->update($this, $this->parameterBag);
+		return $this->processorProvider->update($this, $this->parameterBag);
 	}
 
 	/**

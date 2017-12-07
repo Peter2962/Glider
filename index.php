@@ -14,9 +14,12 @@ include 'Result/Collection.php';
 include 'Result/Mappers/DataResultMapper.php';
 include 'Result/Exceptions/InvalidPropertyAccessException.php';
 include 'Result/Exceptions/FunctionNotFoundException.php';
+include 'Result/Platforms/MysqliResult.php';
 include 'Processor/Contract/ProcessorProvider.php';
 include 'Processor/AbstractProcessorProvider.php';
 include 'Processor/Exceptions/QueryException.php';
+include 'Statements/Contract/StatementContract.php';
+include 'Statements/Platforms/MysqliStatement.php';
 include 'Events/Contract/Subscriber.php';
 include 'Query/Builder/Type.php';
 include 'Query/Builder/SqlGenerator.php';
@@ -49,6 +52,6 @@ include 'Schema/SchemaManager.php';
 include 'Factory.php';
 
 $schema = Factory::getSchema();
-
-print '<pre>';
-print_r($schema->hasTable('a'));
+if ($schema->hasTable('users')) {
+	echo "string";
+}
