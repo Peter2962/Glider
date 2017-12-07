@@ -2,6 +2,9 @@
 ini_set('display_errors', 1);
 // error_reporting(1);
 
+use Glider\Schema\SchemaManager;
+use Glider\Factory;
+
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
@@ -11,9 +14,12 @@ include 'Result/Collection.php';
 include 'Result/Mappers/DataResultMapper.php';
 include 'Result/Exceptions/InvalidPropertyAccessException.php';
 include 'Result/Exceptions/FunctionNotFoundException.php';
-include 'Statements/Contract/StatementProvider.php';
-include 'Statements/AbstractStatementProvider.php';
-include 'Statements/Exceptions/QueryException.php';
+include 'Result/Platforms/MysqliResult.php';
+include 'Processor/Contract/ProcessorProvider.php';
+include 'Processor/AbstractProcessorProvider.php';
+include 'Processor/Exceptions/QueryException.php';
+include 'Statements/Contract/StatementContract.php';
+include 'Statements/Platforms/MysqliStatement.php';
 include 'Events/Contract/Subscriber.php';
 include 'Query/Builder/Type.php';
 include 'Query/Builder/SqlGenerator.php';
@@ -25,7 +31,7 @@ include 'Query/Exceptions/ParameterNotFoundException.php';
 include 'Query/Parameters.php';
 include 'Transactions/Contract/TransactionProvider.php';
 include 'Transactions/Mysqli/MysqliTransaction.php';
-include 'Statements/Mysqli/MysqliStatement.php';
+include 'Processor/Mysqli/MysqliProcessor.php';
 include 'Events/Subscribers/ConnectionAttemptSubscriber.php';
 include 'Events/Subscribers/BuildEventsSubscriber.php';
 include 'Events/EventManager.php';
@@ -40,18 +46,12 @@ include 'Connectors/Mysqli/MysqliConnector.php';
 include 'Connection/Contract/ConnectionInterface.php';
 include 'Connection/QueuedConnections.php';
 include 'Connection/ConnectionManager.php';
+include 'Schema/Expressions.php';
+include 'Schema/Contract/SchemaManagerContract.php';
+include 'Schema/SchemaManager.php';
 include 'Factory.php';
 
-$db = new Glider\Factory();
-$queryBuilder = $db->getQueryBuilder();
-// $result = $queryBuilder->select('*')
-// ->from('migrations')->get();
-
-$data = $queryBuilder->where('id', 23)->update('users', [
-	'firstname' => 'Test Firstname'
-]);
-
-// $data = $result->where(['batch' => 3]);
-
-print '<pre>';
-print_r($data);
+$schema = Factory::getSchema();
+if ($schema->hasTable('users')) {
+	echo "string";
+}

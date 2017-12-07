@@ -4,12 +4,12 @@ namespace Glider\Platform\Mysqli;
 use Glider\Events\EventManager;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\PlatformResolver;
+use Glider\Processor\Mysqli\MysqliProcessor;
 use Glider\Connectors\Mysqli\MysqliConnector;
-use Glider\Statements\Mysqli\MysqliStatement;
 use Glider\Platform\Contract\PlatformProvider;
+use Glider\Processor\Contract\ProcessorProvider;
 use Glider\Transactions\Mysqli\MysqliTransaction;
 use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Statements\Contract\StatementProvider;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
@@ -56,9 +56,9 @@ class MysqliProvider implements PlatformProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function statement() : StatementProvider
+	public function processor() : ProcessorProvider
 	{
-		return new MysqliStatement($this);
+		return new MysqliProcessor($this);
 	}
 
 	/**

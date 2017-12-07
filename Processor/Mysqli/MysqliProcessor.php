@@ -1,10 +1,10 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Statements\Mysqli\MysqliStatement
+* @package 	Glider\Processor\Mysqli\MysqliProcessor
 */
 
-namespace Glider\Statements\Mysqli;
+namespace Glider\Processor\Mysqli;
 
 use StdClass;
 use Exception;
@@ -14,14 +14,15 @@ use Glider\Query\Parameters;
 use Glider\Result\Collection;
 use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
+use Glider\Result\Platforms\MysqliResult;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Result\Contract\ResultMapperContract;
-use Glider\Statements\AbstractStatementProvider;
-use Glider\Statements\Exceptions\QueryException;
-use Glider\Statements\Contract\StatementProvider;
+use Glider\Processor\AbstractProcessorProvider;
+use Glider\Processor\Exceptions\QueryException;
+use Glider\Processor\Contract\ProcessorProvider;
 use Glider\Results\Contract\ResultObjectProvider;
 
-class MysqliStatement extends AbstractStatementProvider implements StatementProvider
+class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
 {
 
 	/**
@@ -46,11 +47,18 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	protected 	$result;
 
 	/**
+	* @var 		$connection
+	* @access 	protected
+	*/
+	protected 	$connection;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(PlatformProvider $platformProvider)
 	{
 		$this->platformProvider = $platformProvider;
+		$this->connection = $platformProvider->connector()->connect();
 	}
 
 	/**
@@ -145,13 +153,26 @@ class MysqliStatement extends AbstractStatementProvider implements StatementProv
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function query(String $queryString, int $returnType=1)
+	{
+		$queryObject = $this->connection->query($queryString);
+		if ($returnType == 1) {
+			return new MysqliResult($queryObject);
+		}
+
+		return new MysqliStatement($queryObject);
+	}
+
+	/**
 	* Resolves query object returning: query, parameters and connection.
 	*
 	* @param 	$queryBuilder Glider\Query\Builder\QueryBuilder
 	* @param 	$parameterBag Glider\Query\Parameters
 	* @access 	private
 	* @return 	Object
-	* @throws 	Glider\Statements\Exceptions\QueryException;
+	* @throws 	Glider\Processor\Exceptions\QueryException;
 	*/
 	private function resolveQueryObject(QueryBuilder $queryBuilder, Parameters $parameterBag) : StdClass
 	{

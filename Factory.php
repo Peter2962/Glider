@@ -10,9 +10,12 @@
 
 namespace Glider;
 
+use Glider\Schema\SchemaManager;
 use Glider\Query\Builder\QueryBinder;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\ConnectionManager;
+use Glider\Platform\Contract\PlatformProvider;
+use Glider\Schema\Contract\SchemaManagerContract;
 
 class Factory
 {
@@ -22,7 +25,7 @@ class Factory
 	* @access 	protected
 	* @static
 	*/
-	protected static $provider;
+	protected 	$provider;
 
 	/**
 	* @var 		$queryBuilder
@@ -40,10 +43,10 @@ class Factory
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct()
+	public function __construct(String $connection=null)
 	{
 		$connectionManager = new ConnectionManager();
-		Factory::$provider = $provider = $connectionManager->getConnection('default');
+		$this->provider = $provider = $connectionManager->getConnection($connection);
 		$this->transaction = $provider->transaction();
 	}
 
@@ -56,7 +59,19 @@ class Factory
 	*/
 	public static function getQueryBuilder()
 	{
-		return new QueryBuilder(new ConnectionManager(), Factory::$provider);
+		return new QueryBuilder(new ConnectionManager(), Factory::getInstance()->provider);
+	}
+
+	/**
+	* Returns instance of SchemaManager.
+	*
+	* @param 	$connectionId <String>
+	* @access 	public
+	* @return 	Glider\Schema\SchemaManager\SchemaManagerContract
+	*/
+	public static function getSchema(String $connectionId=null) : SchemaManagerContract
+	{
+		return new SchemaManager($connectionId, Factory::getQueryBuilder());
 	}
 
 	/**

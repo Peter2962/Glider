@@ -86,6 +86,12 @@ class ConnectionManager implements ConnectionInterface
 		// If we're not able to connect using the provided connection id,
 		// we'll attempt to reconnect using the next provided connection id
 		// the queue.
+		
+		if ($connectionId == null) {
+			// If connection id is null, default connection should be used instead.
+			$connectionId = 'default';
+		}
+
 		return $this->canConnect($connectionId);
 	}
 
@@ -146,7 +152,7 @@ class ConnectionManager implements ConnectionInterface
 	*/
 	public static function domain(String $domain, Closure $settings)
 	{
-
+		//
 	}
 
 	/**

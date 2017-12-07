@@ -13,7 +13,7 @@
 * @method query
 */
 
-namespace Glider\Statements\Contract;
+namespace Glider\Processor\Contract;
 
 use Glider\Query\Parameters;
 use Glider\Result\Collection;
@@ -21,7 +21,7 @@ use Glider\Query\Builder\QueryBuilder;
 use Glider\Query\Builder\SqlGenerator;
 use Glider\Platform\Contract\PlatformProvider;
 
-interface StatementProvider
+interface ProcessorProvider
 {
 
 	/**
@@ -71,5 +71,19 @@ interface StatementProvider
 	* @return 	void
 	*/
 	public function getResult();
+
+	/**
+	* Runs a custom query using the platform's query method.
+	* To be able to use this, make sure Glider\Platform\Contract\PlatformProvider::isQueryCompatible
+	* returns true.
+	* The first parameter is the query string and second parameter is the mysqli return type.
+	* The second parameter accepts either 1 or 2. If the value is set to 1, it will return an instance
+	* of mysqli_result and if it is set to 2, it will return an instance of mysqli_stmt.
+	*
+	* @param 	$queryString <String>
+	* @access 	public
+	* @return 	Mixed 
+	*/
+	public function query(String $queryString, int $returnType=1);
 
 }
