@@ -9,7 +9,7 @@ namespace Glider\Result;
 use Closure;
 use StdClass;
 use Glider\Result\Contract\CollectionContract;
-use Glider\Statements\Contract\StatementProvider;
+use Glider\Processor\Contract\ProcessorProvider;
 use Glider\Result\Exceptions\FunctionNotFoundException;
 
 class Collection implements CollectionContract
@@ -36,17 +36,25 @@ class Collection implements CollectionContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function __construct($statementProvider, $statement)
+	public function __construct($processorProvider, $statement)
 	{
-		if ($statementProvider instanceof StatementProvider) {
-			$this->collected = $statementProvider->getResult();
+		if ($processorProvider instanceof ProcessorProvider) {
+			$this->collected = $processorProvider->getResult();
 		}else{
-			if (gettype($statementProvider) == 'array') {
-				$this->collected = $statementProvider;
+			if (gettype($processorProvider) == 'array') {
+				$this->collected = $processorProvider;
 			}
 		}
 
 		$this->statement = $statement;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function __get($property)
+	{
+		
 	}
 
 	/**

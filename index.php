@@ -8,6 +8,7 @@ use Glider\Factory;
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
+include 'Result/Contract/PlatformResultContract.php';
 include 'Result/ResultMapper.php';
 include 'Result/Contract/CollectionContract.php';
 include 'Result/Collection.php';
@@ -51,7 +52,8 @@ include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
 include 'Factory.php';
 
-$schema = Factory::getSchema();
-if ($schema->hasTable('users')) {
-	echo "string";
-}
+$schema = Factory::getQueryBuilder();
+$tables = $schema->select('*')->from('users')->get();
+
+print '<pre>';
+print_r($tables->all());

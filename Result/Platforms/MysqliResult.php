@@ -2,8 +2,9 @@
 namespace Glider\Result\Platforms;
 
 use mysqli_result;
+use Glider\Result\Contract\PlatformResultContract;
 
-class MysqliResult
+class MysqliResult implements PlatformResultContract
 {
 
 	/**
@@ -23,8 +24,7 @@ class MysqliResult
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function numRows() : int
 	{
@@ -32,8 +32,7 @@ class MysqliResult
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function lengths() : int
 	{
@@ -41,8 +40,7 @@ class MysqliResult
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function fieldCount() : int
 	{
@@ -50,12 +48,27 @@ class MysqliResult
 	}
 
 	/**
-	* @access 	public
-	* @return 	Mixed
+	* {@inheritDoc}
 	*/
-	public function currentField()
+	public function fetchArray()
 	{
-		return $this->result->current_field;
+
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function fetchObject()
+	{
+
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function fetchAll()
+	{
+
 	}
 
 }
