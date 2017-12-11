@@ -50,10 +50,13 @@ include 'Connection/ConnectionManager.php';
 include 'Schema/Expressions.php';
 include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
+include 'Schema/Platforms/MysqliSchemaManager.php';
+include 'Schema/Table.php';
 include 'Factory.php';
 
-$schema = Factory::getQueryBuilder();
-$tables = $schema->select('*')->from('users')->get();
+$schema = Factory::getSchema('dsfsd');
+$has = $schema->createDatabaseIfNotExist('anroidandroidandroid');
 
-print '<pre>';
-print_r($tables->all());
+if (!$has) {
+	echo "string";
+}

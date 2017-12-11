@@ -42,10 +42,11 @@ interface QueryBuilderProvider
 	* Runs a query without bindings.
 	*
 	* @param 	$queryString <String>
+	* @param 	$type <Integer>
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function query(String $queryString);
+	public function query(String $queryString, int $type=1);
 
 	/**
 	* This method sets a parameter for a given column value in a query. This method accepts

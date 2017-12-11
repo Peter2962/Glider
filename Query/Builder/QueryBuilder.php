@@ -139,13 +139,13 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function query(String $queryString)
+	public function query(String $queryString, int $type=1)
 	{
 		if ($this->provider->isQueryCompatible()) {
-			return $this->processorProvider->query($queryString);
+			return $this->processorProvider->query($queryString, $type);
 		}
 
-		return $this;
+		return false;
 	}
 
 	/**

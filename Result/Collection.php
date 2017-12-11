@@ -54,7 +54,11 @@ class Collection implements CollectionContract
 	*/
 	public function __get($property)
 	{
-		
+		if (is_object($this->statement) && isset($this->statement->$property)) {
+			return $this->statement->$property;
+		}
+
+		return null;
 	}
 
 	/**

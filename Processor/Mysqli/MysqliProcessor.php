@@ -19,6 +19,7 @@ use Glider\Platform\Contract\PlatformProvider;
 use Glider\Processor\AbstractProcessorProvider;
 use Glider\Processor\Exceptions\QueryException;
 use Glider\Processor\Contract\ProcessorProvider;
+use Glider\Statements\Platforms\MysqliStatement;
 use Glider\Result\Contract\ResultMapperContract;
 use Glider\Results\Contract\ResultObjectProvider;
 
@@ -134,7 +135,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function insert(QueryBuilder $queryBuilder, Parameters $parameterBag)
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
-		return $queryObject->statement;
+		return new MysqliStatement($queryObject->statement);
 	}
 
 	/**
@@ -143,7 +144,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function update(QueryBuilder $queryBuilder, Parameters $parameterBag)
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
-		return $queryObject->statement;
+		return new MysqliStatement($queryObject->statement);
 	}
 
 	/**
@@ -160,6 +161,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function query(String $queryString, int $returnType=1)
 	{
 		$queryObject = $this->connection->query($queryString);
+
+		if (!$queryObject) {
+			return false;
+		}
+
 		if ($returnType == 1) {
 			return new MysqliResult($queryObject);
 		}

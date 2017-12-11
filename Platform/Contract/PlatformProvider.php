@@ -12,6 +12,7 @@ namespace Glider\Platform\Contract;
 use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
 use Glider\Processor\Contract\ProcessorProvider;
+use Glider\Schema\Contract\SchemaManagerContract;
 use Glider\Connectors\Contract\ConnectorProvider;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
@@ -56,6 +57,14 @@ interface PlatformProvider
 	* @return 	Glider\Processor\Contract\ProcessorProvider
 	*/
 	public function processor() : ProcessorProvider;
+
+	/**
+	* Returns platform's schema manager.
+	*
+	* @access 	public
+	* @return 	Glider\Schema\Contract\SchemaManagerContract
+	*/
+	public function schemaManager() : SchemaManagerContract;
 
 	/**
 	* The platform's query builder provider that will be used to build up
