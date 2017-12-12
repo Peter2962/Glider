@@ -51,12 +51,12 @@ include 'Schema/Expressions.php';
 include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
 include 'Schema/Platforms/MysqliSchemaManager.php';
+include 'Schema/Contract/BaseTableContract.php';
 include 'Schema/Table.php';
 include 'Factory.php';
 
 $schema = Factory::getSchema('dsfsd');
-$has = $schema->createDatabaseIfNotExist('anroidandroidandroid');
+$has = $schema->getAllTables('anroidandroidandroid');
 
-if (!$has) {
-	echo "string";
-}
+print '<pre>';
+print_r($has);

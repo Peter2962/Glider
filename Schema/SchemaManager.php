@@ -164,6 +164,14 @@ class SchemaManager implements SchemaManagerContract
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function setTableEngine(String $engine)
+	{
+		
+	}
+
+	/**
 	* @param 	$expression <String>
 	* @param 	$type <Integer>
 	* @access 	protected

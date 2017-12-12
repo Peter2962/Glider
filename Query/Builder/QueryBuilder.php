@@ -114,7 +114,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platform)
+	public function __construct(ConnectionManager $connectionManager)
 	{
 		$classLoader = new ClassLoader();
 		$this->provider = $connectionManager->getConnection();
