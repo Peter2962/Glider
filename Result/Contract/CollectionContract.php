@@ -35,6 +35,15 @@ interface CollectionContract
 	public function __construct($statementProvider, $statement);
 
 	/**
+	* Return a property from statement.
+	*
+	* @param 	$property <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function __get($property);
+
+	/**
 	* Return result statement.
 	*
 	* @access 	public

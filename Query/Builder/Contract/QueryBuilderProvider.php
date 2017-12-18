@@ -18,15 +18,13 @@ interface QueryBuilderProvider
 {
 
 	/**
-	* The constructor accepts two arguments: Glider\Connection\ConnectionManager
-	* and Glider\Platform\Contract\PlatformProvider
+	* The constructor accepts Glider\Connection\ConnectionManager as it's argument.
 	*
 	* @param 	$connectorProvider Glider\Connection\ConnectionManager
-	* @param 	$platformProvider Glider\Platform\Contract\PlatformProvider
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(ConnectionManager $connectionManager, PlatformProvider $platformProvider);
+	public function __construct(ConnectionManager $connectionManager);
 
 	/**
 	* Run a query with bindings. This is useful for SELECT statements.
@@ -42,10 +40,11 @@ interface QueryBuilderProvider
 	* Runs a query without bindings.
 	*
 	* @param 	$queryString <String>
+	* @param 	$type <Integer>
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function query(String $queryString);
+	public function query(String $queryString, int $type=1);
 
 	/**
 	* This method sets a parameter for a given column value in a query. This method accepts

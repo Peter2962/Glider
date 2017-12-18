@@ -8,8 +8,11 @@ use Glider\Processor\Mysqli\MysqliProcessor;
 use Glider\Connectors\Mysqli\MysqliConnector;
 use Glider\Platform\Contract\PlatformProvider;
 use Glider\Processor\Contract\ProcessorProvider;
+use Glider\Schema\Platforms\MysqliSchemaManager;
+use Glider\Schema\Contract\SchemaManagerContract;
 use Glider\Transactions\Mysqli\MysqliTransaction;
 use Glider\Connectors\Contract\ConnectorProvider;
+use Glider\Connection\Contract\ConnectionInterface;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
@@ -66,9 +69,17 @@ class MysqliProvider implements PlatformProvider
 	*
 	* {@inheritDoc}
 	*/
-	public function queryBuilder(ConnectorProvider $connectorProvider) : QueryBuilderProvider
+	public function queryBuilder(ConnectionInterface $connection) : QueryBuilderProvider
 	{
-		return new QueryBuilder($connectorProvider);
+		return new QueryBuilder($connection);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract
+	{
+		return new MysqliSchemaManager($connectionId, $queryBuilder);
 	}
 
 	/**

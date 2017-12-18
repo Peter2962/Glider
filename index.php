@@ -8,6 +8,7 @@ use Glider\Factory;
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
+include 'Result/Contract/PlatformResultContract.php';
 include 'Result/ResultMapper.php';
 include 'Result/Contract/CollectionContract.php';
 include 'Result/Collection.php';
@@ -49,9 +50,13 @@ include 'Connection/ConnectionManager.php';
 include 'Schema/Expressions.php';
 include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
+include 'Schema/Platforms/MysqliSchemaManager.php';
+include 'Schema/Contract/BaseTableContract.php';
+include 'Schema/Table.php';
 include 'Factory.php';
 
-$schema = Factory::getSchema();
-if ($schema->hasTable('users')) {
-	echo "string";
-}
+$schema = Factory::getSchema('dsfsd');
+$has = $schema->getAllTables('anroidandroidandroid');
+
+print '<pre>';
+print_r($has);

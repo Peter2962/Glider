@@ -11,8 +11,9 @@
 * @method errorList
 * @method error
 * @method fieldCount
-* @method fieldCount
-* @method fieldCount
+* @method insertId
+* @method paramCount
+* @method sqlState
 */
 
 namespace Glider\Statements\Contract;

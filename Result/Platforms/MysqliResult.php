@@ -2,8 +2,9 @@
 namespace Glider\Result\Platforms;
 
 use mysqli_result;
+use Glider\Result\Contract\PlatformResultContract;
 
-class MysqliResult
+class MysqliResult implements PlatformResultContract
 {
 
 	/**
@@ -13,49 +14,80 @@ class MysqliResult
 	protected 	$result;
 
 	/**
-	* @param 	$result mysqli_result
+	* @param 	$result <Mixed>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(mysqli_result $result)
+	public function __construct($result)
 	{
 		$this->result = $result;
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function numRows() : int
 	{
-		return $this->result->num_rows;
+		return $this->_get('num_rows');
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function lengths() : int
 	{
-		return $this->result->lengths;
+		return $this->_get('lengths');
 	}
 
 	/**
-	* @access 	public
-	* @return 	Integer
+	* {@inheritDoc}
 	*/
 	public function fieldCount() : int
 	{
-		return $this->result->field_count;
+		return $this->_get('field_count');
 	}
 
 	/**
-	* @access 	public
+	* {@inheritDoc}
+	*/
+	public function fetchArray()
+	{
+
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function fetchObject()
+	{
+		return $this->_get('fetch_object', false);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function fetchAll()
+	{
+		return $this->_get('fetch_all', false);
+	}
+
+	/**
+	* @param 	$key <String>
+	* @param 	$isProperty <Boolean>
+	* @access 	protected
 	* @return 	Mixed
 	*/
-	public function currentField()
+	protected function _get(String $key, Bool $isProperty=true)
 	{
-		return $this->result->current_field;
+		if ($this->result instanceof mysqli_result) {
+			if ($isProperty == false) {
+				return $this->result->$key();
+			}
+
+			return $this->result->$key;
+		}
+
+		return false;
 	}
 
 }
