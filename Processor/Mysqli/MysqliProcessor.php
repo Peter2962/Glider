@@ -16,10 +16,11 @@ use Glider\Result\ResultMapper;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Result\Platforms\MysqliResult;
 use Glider\Platform\Contract\PlatformProvider;
-use Glider\Result\Contract\ResultMapperContract;
 use Glider\Processor\AbstractProcessorProvider;
 use Glider\Processor\Exceptions\QueryException;
 use Glider\Processor\Contract\ProcessorProvider;
+use Glider\Statements\Platforms\MysqliStatement;
+use Glider\Result\Contract\ResultMapperContract;
 use Glider\Results\Contract\ResultObjectProvider;
 
 class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
@@ -68,8 +69,8 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	{
 		$resolvedQueryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
 		$statement = $resolvedQueryObject->statement;
-		$connection = $resolvedQueryObject->connection;
 		$resultMetaData = $statement->result_metadata();
+
 		$result = [];
 		$params = [];
 		$mappedFields = [];
@@ -82,8 +83,10 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		}
 
 		try {
+
 			$statement->store_result();
 			call_user_func_array([$statement, 'bind_result'], $params);
+
 			while($statement->fetch()) {
 				$resultStdClass = new StdClass();
 
@@ -132,7 +135,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function insert(QueryBuilder $queryBuilder, Parameters $parameterBag)
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
-		return $queryObject->statement;
+		return new MysqliStatement($queryObject->statement);
 	}
 
 	/**
@@ -141,7 +144,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function update(QueryBuilder $queryBuilder, Parameters $parameterBag)
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
-		return $queryObject->statement;
+		return new MysqliStatement($queryObject->statement);
 	}
 
 	/**
@@ -158,6 +161,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function query(String $queryString, int $returnType=1)
 	{
 		$queryObject = $this->connection->query($queryString);
+
+		if (!$queryObject) {
+			return false;
+		}
+
 		if ($returnType == 1) {
 			return new MysqliResult($queryObject);
 		}
@@ -224,16 +232,13 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 
 
 		$transaction = null;
-		$connection = $this->platformProvider->connector()->connect();
+
 		$query = $queryBuilder->getQuery();
 		$sqlGenerator = $queryBuilder->generator;
 		$queryObject = $sqlGenerator->convertToSql($query, $parameterBag);
 		$query = $queryObject->query;
 
 		$std->queryObject = $queryObject;
-		$std->connection = $connection;
-
-		$connection = $std->connection;
 		$query = $queryObject->query;
 
 		if (!$this->platformProvider->isAutoCommitEnabled()) {
@@ -249,9 +254,10 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			$hasMappableFields = $sqlGenerator->hasMappableFields($query);
 
 			// Attempt to prepare query, bind parameters dynamically and execute query.
-			$statement = $connection->stmt_init();
+			$statement = $this->connection->stmt_init();
 			$statement->prepare($query);
-			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3])) {
+
+			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3]) && !empty($boundParameters)) {
 				call_user_func_array([$statement, 'bind_param'], $boundParameters);
 			}
 
@@ -262,6 +268,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 
 		$std->statement = $statement;
 		$std->transaction = $transaction;
+
 		return $std;
 	}
 

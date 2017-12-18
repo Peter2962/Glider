@@ -12,7 +12,9 @@ namespace Glider\Platform\Contract;
 use Glider\Events\EventManager;
 use Glider\Connection\PlatformResolver;
 use Glider\Processor\Contract\ProcessorProvider;
+use Glider\Schema\Contract\SchemaManagerContract;
 use Glider\Connectors\Contract\ConnectorProvider;
+use Glider\Connection\Contract\ConnectionInterface;
 use Glider\Transactions\Contract\TransactionProvider;
 use Glider\Query\Builder\Contract\QueryBuilderProvider;
 
@@ -58,15 +60,25 @@ interface PlatformProvider
 	public function processor() : ProcessorProvider;
 
 	/**
+	* Returns platform's schema manager.
+	*
+	* @param 	$connectionId <String>
+	* @param 	$queryBuilder <Glider\Query\Builder\QueryBuilder>
+	* @access 	public
+	* @return 	Glider\Schema\Contract\SchemaManagerContract
+	*/
+	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract;
+
+	/**
 	* The platform's query builder provider that will be used to build up
 	* queries. Glider has a default query builder but we are doing this because
 	* a platform might require a different query builder.
-	* This method accepts an argument: Glider\Connectors\Contract\ConnectorProvider.
+	* This method accepts an argument: Glider\Connection\Contract\ConnectionInterface.
 	*
 	* @access 	public
 	* @return 	Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
-	public function queryBuilder(ConnectorProvider $connectorProvider) : QueryBuilderProvider;
+	public function queryBuilder(ConnectionInterface $connectorProvider) : QueryBuilderProvider;
 
 	/**
 	* This method helps to check if a platform supports prepared statement

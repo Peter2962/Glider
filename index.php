@@ -5,9 +5,15 @@ ini_set('display_errors', 1);
 use Glider\Schema\SchemaManager;
 use Glider\Factory;
 
+function pre($a) {
+	print '<pre>';
+	print_r($a);
+}
+
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
+include 'Result/Contract/PlatformResultContract.php';
 include 'Result/ResultMapper.php';
 include 'Result/Contract/CollectionContract.php';
 include 'Result/Collection.php';
@@ -49,9 +55,14 @@ include 'Connection/ConnectionManager.php';
 include 'Schema/Expressions.php';
 include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
+include 'Schema/Platforms/MysqliSchemaManager.php';
+include 'Schema/Contract/BaseTableContract.php';
+include 'Schema/Column.php';
+include 'Schema/Table.php';
 include 'Factory.php';
 
 $schema = Factory::getSchema();
-if ($schema->hasTable('users')) {
-	echo "string";
-}
+$table = SchemaManager::table('users');
+
+print '<pre>';
+print_r($schema->getColumn('users', 'id'));

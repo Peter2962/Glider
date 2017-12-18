@@ -59,7 +59,7 @@ class Factory
 	*/
 	public static function getQueryBuilder()
 	{
-		return new QueryBuilder(new ConnectionManager(), Factory::getInstance()->provider);
+		return self::getInstance()->provider->queryBuilder(new ConnectionManager());
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Factory
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
-		return new SchemaManager($connectionId, Factory::getQueryBuilder());
+		return self::getInstance()->provider->schemaManager($connectionId, Factory::getQueryBuilder());
 	}
 
 	/**

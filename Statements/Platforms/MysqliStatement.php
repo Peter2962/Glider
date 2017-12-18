@@ -20,8 +20,12 @@ class MysqliStatement implements StatementContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(mysqli_stmt $statement)
+	public function __construct($statement)
 	{
+		if ($statement == false) {
+			return $statement;
+		}
+
 		$this->statement = $statement;
 	}
 
@@ -30,7 +34,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function affectedRows() : int
 	{
-
+		return $this->statement->affected_rows;
 	}
 
 	/**
@@ -38,7 +42,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function errno() : int
 	{
-		
+		return $this->statement->errno;
 	}
 
 	/**
@@ -46,7 +50,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function errorList()
 	{
-
+		return $this->statement->error_list;
 	}
 
 	/**
@@ -54,7 +58,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function error()
 	{
-
+		return $this->statement->error;
 	}
 
 	/**
@@ -62,7 +66,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function fieldCount() : int
 	{
-
+		return $this->statement->field_count;
 	}
 
 	/**
@@ -70,7 +74,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function insertId()
 	{
-
+		return $this->statement->insert_id;
 	}
 
 	/**
@@ -78,7 +82,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function paramCount() : int
 	{
-
+		return $this->statement->param_count;
 	}
 
 	/**
@@ -86,7 +90,7 @@ class MysqliStatement implements StatementContract
 	*/
 	public function sqlState() : int
 	{
-
+		return $this->statement->sqlstate;
 	}	
 
 }
