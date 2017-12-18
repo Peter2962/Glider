@@ -1,6 +1,7 @@
 <?php
 namespace Glider\Schema;
 
+use RuntimeException;
 use Glider\Schema\Column\Type;
 
 class Column
@@ -55,13 +56,13 @@ class Column
 	protected 	$isPrimary;
 
 	/**
-	* @param 	$name <String>
+	* @param 	$column <String>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(String $name)
+	public function __construct($column)
 	{
-		$this->column = $name;
+		$this->column = $column;
 	}
 
 	/**
@@ -124,7 +125,7 @@ class Column
 	*/
 	public function setAutoIncrement()
 	{
-
+		//
 	}
 
 	/**
@@ -141,6 +142,17 @@ class Column
 	}
 
 	/**
+	* Return column name.
+	*
+	* @access 	public
+	* @return 	String
+	*/
+	public function getName()
+	{
+		return $this->column->Field;
+	}
+
+	/**
 	* Return column type.
 	*
 	* @access 	public
@@ -148,7 +160,7 @@ class Column
 	*/
 	public function getType()
 	{
-		return $this->type;
+		return $this->column->Type;
 	}
 
 	/**
@@ -159,7 +171,11 @@ class Column
 	*/
 	public function getLength()
 	{
-		return $this->length;
+		$type = $this->getType();
+		if (preg_match("/\(.*[0-9]\)/", $type, $match)) {
+			$match = $match[0];
+			return str_replace(['(', ')'], '', $match);
+		}
 	}
 
 	/**
@@ -168,9 +184,18 @@ class Column
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function getDefaultValue()
+	public function getDefault()
 	{
-		return $this->defaultValue;
+		return $this->column->Default;
+	}
+
+	/**
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isNull() : Bool
+	{
+		return $this->column->NULL == 'NO' ? false : true;
 	}
 
 	/**
@@ -181,7 +206,12 @@ class Column
 	*/
 	public function toSql() : String
 	{
-		//
+		$column = '';
+		if (!is_string($this->column)) {
+			throw new RuntimeException('Cannot convert column object to string.');
+		}
+
+		return $column;
 	}
 
 	/**
@@ -192,6 +222,31 @@ class Column
 	* @return 	void
 	*/
 	public function defineColumn(String $definition)
+	{
+		//
+	}
+
+	/**
+	* Set column attribute.
+	*
+	* @param 	$attribute <String>
+	* @param 	$value <Mixed>
+	* @access 	protected
+	* @return 	void
+	*/
+	protected function setAttribute(String $attribute, $value)
+	{
+		//
+	}
+
+	/**
+	* Return column attribute.
+	*
+	* @param 	$attribute <String>
+	* @access 	protected
+	* @return 	Mixed
+	*/
+	protected function getAttribute(String $attribute)
 	{
 		//
 	}

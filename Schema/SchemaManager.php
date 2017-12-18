@@ -89,12 +89,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function hasTable(String $table) : Bool
 	{
-		$hasTable = $this->queryBuilder->query(Expressions::showTable($table));
-		if ($hasTable && $hasTable->numRows() > 0) {
-			return true;
-		}
-
-		return false;
+		return SchemaManager::table($table)->exists();
 	}
 
 	/**
@@ -110,15 +105,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function hasColumn(String $table, String $column) : Bool
 	{
-		if ($result = $this->runQueryWithExpression(Expressions::hasColumn($table, $column))) {
-			if ($result->numRows() > 0) {
-				return true;
-			}
-
-			return false;
-		}
-
-		return false;
+		return SchemaManager::table($table)->hasColumn($column);
 	}
 
 	/**
@@ -126,7 +113,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function getColumns(String $table)
 	{
-		return $this->queryBuilder->queryWithBinding(Expressions::getColumns($table))->get()->all();
+		return SchemaManager::table($table)->getColumns();
 	}
 
 	/**
@@ -134,7 +121,15 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function getColumnNames(String $table)
 	{
-		return $this->getColumnKeys($table, 'Field');
+		return SchemaManager::table($table)->getColumnNames();
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getColumnTypes(String $table)
+	{
+		return SchemaManager::table($table)->getColumnTypes();
 	}
 
 	/**
@@ -150,17 +145,9 @@ class SchemaManager implements SchemaManagerContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function getColumn(String $table, String $columnName)
+	public function getColumn(String $table, String $columnName) : Column
 	{
-		if (!$columns = $this->getColumns($table)) {
-			return false;
-		}
-
-		foreach($columns as $column) {
-			if ($column->Field == $columnName) {
-				return $column;
-			}
-		}
+		return SchemaManager::table($table)->getColumn($columnName);
 	}
 
 	/**
@@ -168,7 +155,7 @@ class SchemaManager implements SchemaManagerContract
 	*/
 	public function setTableEngine(String $engine)
 	{
-		
+		return SchemaManager::table($table)->setEngine($engine);
 	}
 
 	/**
@@ -183,31 +170,10 @@ class SchemaManager implements SchemaManagerContract
 	}
 
 	/**
-	* @param 	$table <String>
-	* @param 	$key <String>
-	* @access 	protected
-	* @return 	Mixed
-	*/
-	protected function getColumnKeys(String $table, String $key)
-	{
-		if (!$columns = $this->getColumns($table)) {
-			return false;
-		}
-
-		$keys = array_map(function($column) use ($key) {
-			if (isset($column->$key)) {
-				return $column->$key;
-			}
-		}, $columns);
-
-		return $keys;
-	}
-
-	/**
 	* {@inheritDoc}
 	*/
-	public function table(String $table, Closure $column)
+	public static function table(String $table)
 	{
-
+		return Table::getInstance($table);
 	}
 }

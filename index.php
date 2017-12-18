@@ -5,6 +5,11 @@ ini_set('display_errors', 1);
 use Glider\Schema\SchemaManager;
 use Glider\Factory;
 
+function pre($a) {
+	print '<pre>';
+	print_r($a);
+}
+
 include 'Exceptions/ConnectionFailedException.php';
 include 'ClassLoader.php';
 include 'Result/Contract/ResultMapperContract.php';
@@ -52,11 +57,12 @@ include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
 include 'Schema/Platforms/MysqliSchemaManager.php';
 include 'Schema/Contract/BaseTableContract.php';
+include 'Schema/Column.php';
 include 'Schema/Table.php';
 include 'Factory.php';
 
-$schema = Factory::getSchema('dsfsd');
-$has = $schema->getAllTables('anroidandroidandroid');
+$schema = Factory::getSchema();
+$table = SchemaManager::table('users');
 
 print '<pre>';
-print_r($has);
+print_r($schema->getColumn('users', 'id'));

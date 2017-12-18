@@ -91,4 +91,16 @@ class Expressions
 		return 'DROP DATABASE IF EXISTS ' . $databaseName;
 	}
 
+	/**
+	* @param 	$table <String>
+	* @param 	$engine <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function setEngine(String $table, String $engine) : String
+	{
+		return 'ALTER TABLE ' . $table . ' ENGINE = ' . $engine;
+	}
+
 }

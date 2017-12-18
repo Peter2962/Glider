@@ -2,6 +2,7 @@
 namespace Glider\Schema\Contract;
 
 use Closure;
+use Glider\Schema\Column;
 use Glider\Query\Builder\QueryBuilder;
 use Glider\Connection\ConnectionManager;
 
@@ -110,6 +111,15 @@ interface SchemaManagerContract
 	public function getColumnNames(String $table);
 
 	/**
+	* Return an array of column types.
+	*
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getColumnTypes(String $table);
+
+	/**
 	* Returns a column in a table.
 	*
 	* @param 	$table <String>
@@ -117,7 +127,7 @@ interface SchemaManagerContract
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function getColumn(String $table, String $column);
+	public function getColumn(String $table, String $column) : Column;
 
 	/**
 	* Returns a column type in a table.
@@ -137,6 +147,14 @@ interface SchemaManagerContract
 	* @access 	public
 	* @return 	void
 	*/
-	// public function table(String $tableName, Closure $column);
+
+	/**
+	* Sets table storage engine.
+	*
+	* @param 	$engine <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function setTableEngine(String $engine);
 
 }

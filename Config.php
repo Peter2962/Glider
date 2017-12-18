@@ -5,11 +5,11 @@ return [
 		'host' => 'localhost',
 		'alias' => 'mysqli',
 		'username' => 'root',
-		'password' => 'root',
+		'password' => '',
 		'database' => 'project',
 		'charset' => 'utf8',
 		'collation' => '',
-		'domain' => 'glider.app',
+		'domain' => 'glider.site',
 		'auto_commit' => false,
 		'prefix' => '',
 		'alt' => 'dev'
