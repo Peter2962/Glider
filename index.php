@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 // error_reporting(1);
 
 use Glider\Schema\SchemaManager;
+use Glider\Schema\Scheme;
 use Glider\Factory;
 
 function pre($a) {
@@ -55,14 +56,50 @@ include 'Connection/ConnectionManager.php';
 include 'Schema/Expressions.php';
 include 'Schema/Contract/SchemaManagerContract.php';
 include 'Schema/SchemaManager.php';
+include 'Schema/Scheme.php';
 include 'Schema/Platforms/MysqliSchemaManager.php';
 include 'Schema/Contract/BaseTableContract.php';
+include 'Schema/Column/Type/Contract/TypeContract.php';
+include 'Schema/Column/Type/Varchar.php';
+include 'Schema/Column/Type/Char.php';
+include 'Schema/Column/Type/Integer.php';
+include 'Schema/Column/Type/Bit.php';
+include 'Schema/Column/Type/TinyInt.php';
+include 'Schema/Column/Type/BigInt.php';
+include 'Schema/Column/Type/Decimal.php';
+include 'Schema/Column/Type/Double.php';
+include 'Schema/Column/Type/Text.php';
+include 'Schema/Column/Type/TinyText.php';
+include 'Schema/Column/Type/MediumText.php';
+include 'Schema/Column/Type/LongText.php';
+include 'Schema/Column/Type/Blob.php';
+include 'Schema/Column/Type/MediumBlob.php';
+include 'Schema/Column/Type/LongBlob.php';
 include 'Schema/Column.php';
 include 'Schema/Table.php';
 include 'Factory.php';
 
-$schema = Factory::getSchema();
+// $schema = Factory::getSchema();
 $table = SchemaManager::table('users');
 
-print '<pre>';
-print_r($schema->getColumn('users', 'id'));
+$name = 'Name';
+$age = 19;
+$scheme = new Scheme();
+
+$table->create(function(Scheme $scheme) {
+	$scheme->integer('id', 11, false, true, true);
+	$scheme->varchar('name', 50, true);
+	$scheme->char('age', 35, true);
+	$scheme->bit('_val', 11, true);
+	$scheme->tinyint('admin', 11, true);
+	$scheme->bigint('active', 11, true);
+	$scheme->decimal('decimmm', [11, 0], true);
+	$scheme->double('flooaaaaat', [31, 30], true);
+	$scheme->text('txt', null, true);
+	$scheme->tinytext('tytxt', null, true);
+	$scheme->mediumtext('medtxt', null, true);
+	$scheme->longtext('longtxt', null, true);
+	$scheme->blob('blb', null, true);
+	$scheme->mediumblob('medblb', null, true);
+	$scheme->longblob('lngblb', null, true);
+});

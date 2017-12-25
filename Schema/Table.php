@@ -1,9 +1,11 @@
 <?php
 namespace Glider\Schema;
 
+use Closure;
 use Glider\Factory;
 use RuntimeException;
 use Glider\Schema\Column;
+use Glider\Schema\Scheme;
 use Glider\Schema\Expressions;
 use Glider\Schema\Contract\BaseTableContract;
 
@@ -55,7 +57,7 @@ class Table implements BaseTableContract
 		}
 
 		return $this->runQueryWithExpression(Expressions::setEngine($this->tableName, $engine), 0);
-	}	
+	}
 
 	/**
 	* {@inheritDoc}
@@ -68,6 +70,26 @@ class Table implements BaseTableContract
 		}
 
 		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function create(Closure $scheme)
+	{
+		$schemeObject = new Scheme();
+
+		$create = function() use ($scheme, $schemeObject) {
+
+			return $scheme($schemeObject);
+
+		};
+
+		$create();
+		$commands = $schemeObject->getDefinition();
+		$expresison = Expressions::createTable($this->tableName, $commands);
+
+		return $this->runQueryWithExpression($expresison);
 	}
 
 	/**

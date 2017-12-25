@@ -103,4 +103,9 @@ class Expressions
 		return 'ALTER TABLE ' . $table . ' ENGINE = ' . $engine;
 	}
 
+	public static function createTable(String $table, $definition) : String
+	{
+		return 'CREATE TABLE IF NOT EXISTS ' . $table . '(' . $definition . ')';
+	}
+
 }
