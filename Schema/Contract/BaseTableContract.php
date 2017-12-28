@@ -45,6 +45,15 @@ interface BaseTableContract
 	public function create(Closure $scheme);
 
 	/**
+	* Modifies or alters a table.
+	*
+	* @param 	$scheme <Closure>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function modify(Closure $scheme);
+
+	/**
 	* Drops table.
 	*
 	* @access 	public

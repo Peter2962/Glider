@@ -158,9 +158,13 @@ class Column
 	* @access 	public
 	* @return 	String
 	*/
-	public function getType()
+	public function getType($withLength=true)
 	{
-		return $this->column->Type;
+		$type = $this->column->Type;
+
+		$type = preg_replace('/\(.*[0-9]\)/', '', $type);
+
+		return $type;
 	}
 
 	/**
@@ -171,11 +175,14 @@ class Column
 	*/
 	public function getLength()
 	{
-		$type = $this->getType();
+		$type = $this->column->Type;
+
 		if (preg_match("/\(.*[0-9]\)/", $type, $match)) {
 			$match = $match[0];
 			return str_replace(['(', ')'], '', $match);
 		}
+
+		return null;
 	}
 
 	/**

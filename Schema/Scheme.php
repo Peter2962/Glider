@@ -44,6 +44,19 @@ class Scheme
 	protected static $commands;
 
 	/**
+	* @var 		$commandsArray
+	* @access 	protected
+	* @static
+	*/
+	protected static $commandsArray = [];
+
+	/**
+	* @var 		$indexes
+	* @access 	protected
+	*/
+	protected 	$indexes = ['default' => 'INDEX', 'unique' => 'UNIQUE INDEX'];
+
+	/**
 	* @var 		$typeNamespace
 	* @access 	protected
 	*/
@@ -59,153 +72,163 @@ class Scheme
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function varchar(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function varchar(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Varchar', $name, $length, $null, $autoIncrement, $isPrimary, $isPrimary);
+		return $this->setType('Varchar', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function char(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function char(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Char', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Char', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function integer(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function integer(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Integer', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Integer', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function bit(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function bit(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Bit', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Bit', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function tinyInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function tinyInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('TinyInt', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('TinyInt', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function smallInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function smallInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('SmallInt', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('SmallInt', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function mediumInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function mediumInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('MediumInt', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('MediumInt', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function bigInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function bigInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('BigInt', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('BigInt', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function decimal(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function decimal(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Decimal', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Decimal', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function double(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function double(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Double', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Double', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function text(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function text(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Text', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Text', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function tinyText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function tinyText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('TinyText', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('TinyText', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function mediumText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function mediumText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('MediumText', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('MediumText', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function longText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function longText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('LongText', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('LongText', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function blob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function blob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('Blob', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('Blob', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function mediumBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function mediumBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('MediumBlob', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('MediumBlob', $name, $length, $null, $autoIncrement, $options);
 	}
 
 	/**
 	* @access 	public
 	* @return 	Glider\Schema\Scheme
 	*/
-	public function longBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Bool $isPrimary=false)
+	public function longBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
-		return $this->setType('LongBlob', $name, $length, $null, $autoIncrement, $isPrimary);
+		return $this->setType('LongBlob', $name, $length, $null, $autoIncrement, $options);
+	}
+
+	/**
+	* @param 	$options <Array>
+	* @access 	public
+	* @return 	Glider\Schema\Scheme
+	*/
+	public function foreign(Array $options=[])
+	{
+		//
 	}
 
 	/**
@@ -230,7 +253,7 @@ class Scheme
 	*/
 	public static function getCommandsArray() : Array
 	{
-		return Scheme::$commands;
+		return Scheme::$commandsArray;
 	}
 
 	/**
@@ -243,12 +266,15 @@ class Scheme
 	* @access 	protected
 	* @return 	String
 	*/
-	protected function setType(String $type, String $name, $length, Bool $null, Bool $autoIncrement, Bool $primary)
+	protected function setType(String $type, String $name, $length, Bool $null, Bool $autoIncrement, Array $options)
 	{
 		$definition = $name;
+		
 		$isNull = ' NOT NULL';
 		$canAutoIncrement = ' AUTO_INCREMENT';
-		$isPrimary = ' PRIMARY KEY';
+
+		$isPrimary =  (isset($options['primary']) && $options['primary'] == true) ? ' PRIMARY KEY' : '';
+		$index = '';
 
 		$type = ucfirst($type);
 
@@ -262,7 +288,7 @@ class Scheme
 		$typeClass = new $type();
 		$dataType = $typeClass->getName();
 
-		$diffTypes = ['DECIMAL', 'DOUBLE', 'TEXT', 'LONGTEXT', 'MEDIUMTEXT', 'LONGTEXT'];
+		$diffTypes = ['DECIMAL', 'DOUBLE', 'TEXT', 'LONGTEXT', 'MEDIUMTEXT', 'LONGTEXT', 'FOREIGN'];
 
 		if ($length < $typeClass->getMinimumLength() || $length > $typeClass->getMaximumLength() && !in_array($dataType, $diffTypes)) {
 
@@ -288,9 +314,15 @@ class Scheme
 
 		}
 
-		if ($primary == false) {
+		if (isset($options['index'])) {
 
-			$isPrimary = '';
+			if (!in_array($options['index'], array_keys($this->indexes))) {
+
+				throw new RuntimeException(sprintf('Cannot set index with provided key %s', $options['index']));
+
+			}
+
+			$index = ' ' . $this->indexes[$index];
 
 		}
 
@@ -298,7 +330,7 @@ class Scheme
 		$definition = $this->getLength($definition, $length);
 		$definition = $definition . $isNull . $isPrimary . $canAutoIncrement;
 
-		// Scheme::$commands[$dataType][] = $definition;
+		Scheme::$commandsArray[$name] = $definition;
 		Scheme::$commands[] = $definition;
 	}
 

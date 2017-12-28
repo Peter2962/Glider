@@ -38,6 +38,31 @@ class Expressions
 
 	/**
 	* @param 	$table <String>
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function dropColumn(String $table, String $column) : String
+	{
+		return 'ALTER TABLE ' . $table . ' DROP COLUMN ' . $column;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$oldColumn <String>
+	* @param 	$newColumn <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function renameColumn(String $table, String $oldColumn, String $newColumn) : String
+	{
+		return 'ALTER TABLE ' . $table . ' CHANGE ' . $oldColumn . ' ' . $newColumn;
+	}
+
+	/**
+	* @param 	$table <String>
 	* @access 	public
 	* @return 	String
 	* @static
@@ -103,9 +128,69 @@ class Expressions
 		return 'ALTER TABLE ' . $table . ' ENGINE = ' . $engine;
 	}
 
+	/**
+	* @param 	$table <String>
+	* @param 	$definition <Mixed>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
 	public static function createTable(String $table, $definition) : String
 	{
+		if (is_array($definition)) {
+
+			$definition = implode(',', $definition);
+
+		}
+
 		return 'CREATE TABLE IF NOT EXISTS ' . $table . '(' . $definition . ')';
+	}
+
+	/**
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function dropTable(String $table) : String
+	{
+		return 'DROP TABLE IF EXISTS ' . $table;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$newName <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function renameTable(String $table, String $newName) : String
+	{
+		return 'RENAME TABLE ' . $table . ' TO ' . $newName;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function modifyColumn(String $table, String $column) : String
+	{
+		return 'ALTER TABLE ' . $table . ' MODIFY COLUMN ' . $column;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function addColumn(String $table, String $column) : String
+	{
+		return 'ALTER TABLE ' . $table . ' ADD COLUMN ' . $column;
 	}
 
 }
