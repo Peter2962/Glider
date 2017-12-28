@@ -1,0 +1,16 @@
+{
+	"name": "Glider",
+	"description": "Glider",
+	"keywords": ["php", "php7", "database"],
+	"author": [
+		{
+			"name":"PhoxPHP",
+			"email":"admin@phoxphp.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"sr"
+		}
+	}
+}

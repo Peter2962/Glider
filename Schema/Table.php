@@ -1,9 +1,11 @@
 <?php
 namespace Glider\Schema;
 
+use Closure;
 use Glider\Factory;
 use RuntimeException;
 use Glider\Schema\Column;
+use Glider\Schema\Scheme;
 use Glider\Schema\Expressions;
 use Glider\Schema\Contract\BaseTableContract;
 
@@ -55,7 +57,7 @@ class Table implements BaseTableContract
 		}
 
 		return $this->runQueryWithExpression(Expressions::setEngine($this->tableName, $engine), 0);
-	}	
+	}
 
 	/**
 	* {@inheritDoc}
@@ -73,8 +75,68 @@ class Table implements BaseTableContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function drop() {
+	public function create(Closure $scheme)
+	{
+		$schemeObject = new Scheme();
 
+		$create = function() use ($scheme, $schemeObject) {
+
+			return $scheme($schemeObject);
+
+		};
+
+		$create();
+		$commands = $schemeObject->getDefinition();
+		$expresison = Expressions::createTable($this->tableName, $commands);
+
+		return $this->runQueryWithExpression($expresison);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function modify(Closure $scheme)
+	{
+		$schemeObject = new Scheme();
+
+		$create = function() use ($scheme, $schemeObject) {
+
+			return $scheme($schemeObject);
+
+		};
+
+		$create();
+		$commands = $schemeObject->getCommandsArray();
+
+		$commandKeys = array_keys($commands);
+		if (sizeof($commandKeys) < 1) {
+
+			return null;
+
+		}
+
+		array_map(function($key) use ($commands) {
+
+
+			if ($this->hasColumn($key)) {
+
+				$this->modifyColumn($commands[$key]);
+
+			}else{
+
+				// Create column if it does not exist in table.
+				$this->addColumn($commands[$key]);
+
+			}
+
+		}, $commandKeys);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function drop() {
+		return $this->runQueryWithExpression(Expressions::dropTable($this->tableName));
 	}
 
 	/**
@@ -82,7 +144,15 @@ class Table implements BaseTableContract
 	*/
 	public function rename(String $newName)
 	{
+		return $this->runQueryWithExpression(Expressions::renameTable($this->tableName, $newName));
+	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	public function dropColumn(String $column)
+	{
+		return $this->runQueryWithExpression(Expressions::dropColumn($this->tableName, $column));
 	}
 
 	/**
@@ -163,7 +233,15 @@ class Table implements BaseTableContract
 	*/
 	public function renameColumn(String $column, String $newName)
 	{
+		$columnObject = $this->getColumn($column);
+		$newColumn = $newName . ' ' . $columnObject->getType();
 
+		$length = (Int) $columnObject->getLength();
+		if ($length > 0) {
+			$newColumn = $newColumn . '(' . $length .')';
+		}
+
+		return $this->runQueryWithExpression(Expressions::renameColumn($this->tableName, $column, $newColumn));
 	}
 
 	/**
@@ -175,6 +253,26 @@ class Table implements BaseTableContract
 	public static function getInstance(String $tableName=null)
 	{
 		return new self($tableName);
+	}
+
+	/**
+	* @param 	$column <String>
+	* @access 	protected
+	* @return 	Mixed
+	*/
+	protected function modifyColumn(String $column)
+	{
+		return $this->runQueryWithExpression(Expressions::modifyColumn($this->tableName, $column));
+	}
+
+	/**
+	* @param 	$column <String>
+	* @access 	protected
+	* @return 	Mixed
+	*/
+	protected function addColumn(String $column)
+	{
+		return $this->runQueryWithExpression(Expressions::addColumn($this->tableName, $column));
 	}
 
 	/**

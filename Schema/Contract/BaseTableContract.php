@@ -1,6 +1,8 @@
 <?php
 namespace Glider\Schema\Contract;
 
+use Closure;
+
 interface BaseTableContract
 {
 
@@ -32,6 +34,24 @@ interface BaseTableContract
 	* @return 	Boolean
 	*/
 	public function exists();
+
+	/**
+	* Creates table.
+	*
+	* @param 	$scheme <Closure>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function create(Closure $scheme);
+
+	/**
+	* Modifies or alters a table.
+	*
+	* @param 	$scheme <Closure>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function modify(Closure $scheme);
 
 	/**
 	* Drops table.
