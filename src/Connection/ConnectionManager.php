@@ -167,7 +167,8 @@ class ConnectionManager implements ConnectionInterface
 	* @access 	private
 	* @return 	Glider\Connection\QueuedConnections
 	*/
-	private function queue() : QueuedConnections {
+	private function queue() : QueuedConnections
+	{
 		return new QueuedConnections();
 	}
 
