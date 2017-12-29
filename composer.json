@@ -1,13 +1,18 @@
 {
 	"name": "phoxphp/glider",
 	"description": "Glider",
+	"type": "project",
 	"keywords": ["php", "php7", "database"],
 	"author": [
 		{
-			"name":"PhoxPHP",
-			"email":"admin@phoxphp.com"
+			"name": "PhoxPHP",
+			"email": "admin@phoxphp.com",
+			"role": "developer"
 		}
 	],
+	"require": {
+		"php": ">=7.0.6"
+	},
 	"autoload": {
 		"psr-4": {
 			"Glider\\": "src"
