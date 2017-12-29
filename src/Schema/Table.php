@@ -1,13 +1,13 @@
 <?php
-namespace Glider\Schema;
+namespace Kit\Glider\Schema;
 
 use Closure;
-use Glider\Factory;
 use RuntimeException;
-use Glider\Schema\Column;
-use Glider\Schema\Scheme;
-use Glider\Schema\Expressions;
-use Glider\Schema\Contract\BaseTableContract;
+use Kit\Glider\Factory;
+use Kit\Glider\Schema\Scheme;
+use Kit\Glider\Schema\Column;
+use Kit\Glider\Schema\Expressions;
+use Kit\Glider\Schema\Contract\BaseTableContract;
 
 class Table implements BaseTableContract
 {
@@ -277,7 +277,7 @@ class Table implements BaseTableContract
 
 	/**
 	* @access 	protected
-	* @return 	Glider\Query\Builder\QueryBuilder
+	* @return 	Kit\Glider\Query\Builder\QueryBuilder
 	*/
 	protected function builder()
 	{
@@ -292,7 +292,7 @@ class Table implements BaseTableContract
 	protected function _column($column)
 	{
 		if (!is_string($column) && !$column instanceof Column) {
-			throw new RuntimeException(sprintf('Column must either be a string or instance of %s', 'Glider\Schema\Column'));
+			throw new RuntimeException(sprintf('Column must either be a string or instance of %s', 'Kit\Glider\Schema\Column'));
 		}
 
 		$name = $column;

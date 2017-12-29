@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Schema\Column;
+namespace Kit\Glider\Schema\Column;
 
 class Type
 {

@@ -1,27 +1,27 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Processor\Mysqli\MysqliProcessor
+* @package 	Kit\Glider\Processor\Mysqli\MysqliProcessor
 */
 
-namespace Glider\Processor\Mysqli;
+namespace Kit\Glider\Processor\Mysqli;
 
 use StdClass;
 use Exception;
 use RuntimeException;
 use mysqli_sql_exception;
-use Glider\Query\Parameters;
-use Glider\Result\Collection;
-use Glider\Result\ResultMapper;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Result\Platforms\MysqliResult;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Processor\AbstractProcessorProvider;
-use Glider\Processor\Exceptions\QueryException;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Statements\Platforms\MysqliStatement;
-use Glider\Result\Contract\ResultMapperContract;
-use Glider\Results\Contract\ResultObjectProvider;
+use Kit\Glider\Query\Parameters;
+use Kit\Glider\Result\Collection;
+use Kit\Glider\Result\ResultMapper;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Result\Platforms\MysqliResult;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Processor\AbstractProcessorProvider;
+use Kit\Glider\Processor\Exceptions\QueryException;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Statements\Platforms\MysqliStatement;
+use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Results\Contract\ResultObjectProvider;
 
 class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
 {
@@ -176,11 +176,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* Resolves query object returning: query, parameters and connection.
 	*
-	* @param 	$queryBuilder Glider\Query\Builder\QueryBuilder
-	* @param 	$parameterBag Glider\Query\Parameters
+	* @param 	$queryBuilder Kit\Glider\Query\Builder\QueryBuilder
+	* @param 	$parameterBag Kit\Glider\Query\Parameters
 	* @access 	private
 	* @return 	Object
-	* @throws 	Glider\Processor\Exceptions\QueryException;
+	* @throws 	Kit\Glider\Processor\Exceptions\QueryException;
 	*/
 	private function resolveQueryObject(QueryBuilder $queryBuilder, Parameters $parameterBag) : StdClass
 	{

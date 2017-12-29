@@ -1,21 +1,21 @@
 <?php
-namespace Glider\Query\Builder;
+namespace Kit\Glider\Query\Builder;
 
 use RuntimeException;
-use Glider\ClassLoader;
-use Glider\Query\Parameters;
+use Kit\Glider\ClassLoader;
+use Kit\Glider\Query\Parameters;
 use InvalidArgumentException;
-use Glider\Query\Builder\Type;
-use Glider\Result\ResultMapper;
-use Glider\Query\Builder\QueryBinder;
-use Glider\Query\Builder\SqlGenerator;
-use Glider\Connection\ConnectionManager;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Result\Contract\ResultMapperContract;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Events\Subscribers\BuildEventsSubscriber;
-use Glider\Query\Builder\Contract\QueryBuilderProvider;
+use Kit\Glider\Query\Builder\Type;
+use Kit\Glider\Result\ResultMapper;
+use Kit\Glider\Query\Builder\QueryBinder;
+use Kit\Glider\Query\Builder\SqlGenerator;
+use Kit\Glider\Connection\ConnectionManager;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Events\Subscribers\BuildEventsSubscriber;
+use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 class QueryBuilder implements QueryBuilderProvider
 {
@@ -120,7 +120,7 @@ class QueryBuilder implements QueryBuilderProvider
 		$this->provider = $connectionManager->getConnection();
 		$this->connector = $this->provider->connector();
 		$this->processorProvider = $this->provider->processor();
-		$this->generator = $classLoader->getInstanceOfClass('Glider\Query\Builder\SqlGenerator');
+		$this->generator = $classLoader->getInstanceOfClass('Kit\Glider\Query\Builder\SqlGenerator');
 		$this->binder = new QueryBinder();
 		$this->parameterBag = new Parameters();
 		$this->allowedOperators = ['AND', 'OR', '||', '&&']; // Will add more here.

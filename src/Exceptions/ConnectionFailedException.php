@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Exceptions;
+namespace Kit\Glider\Exceptions;
 
 use RuntimeException;
 

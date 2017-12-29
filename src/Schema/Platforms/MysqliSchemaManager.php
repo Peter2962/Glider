@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Schema\Platforms;
+namespace Kit\Glider\Schema\Platforms;
 
-use Glider\Schema\SchemaManager;
-use Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Schema\SchemaManager;
+use Kit\Glider\Query\Builder\QueryBuilder;
 
 class MysqliSchemaManager extends SchemaManager
 {

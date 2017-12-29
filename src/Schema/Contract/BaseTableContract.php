@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Schema\Contract;
+namespace Kit\Glider\Schema\Contract;
 
 use Closure;
 
@@ -73,7 +73,7 @@ interface BaseTableContract
 	/**
 	* Checks if a table has column.
 	*
-	* @param 	$column <String>|<Glider\Schema\Column>
+	* @param 	$column <String>|<Kit\Glider\Schema\Column>
 	* @access 	public
 	* @return 	Boolean
 	*/
@@ -114,7 +114,7 @@ interface BaseTableContract
 	/**
 	* Return table column.
 	*
-	* @param 	$column <Mixed> String|Glider\Schema\Column
+	* @param 	$column <Mixed> String|Kit\Glider\Schema\Column
 	* @access 	public
 	* @return 	Mixed
 	*/

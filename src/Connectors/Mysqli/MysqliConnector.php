@@ -1,13 +1,13 @@
 <?php
-namespace Glider\Connectors\Mysqli;
+namespace Kit\Glider\Connectors\Mysqli;
 
 use mysqli;
 use StdClass;
-use Glider\Events\EventManager;
-use Glider\Events\Contract\Subscriber;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Events\Subscribers\ConnectionAttemptSubscriber;
+use Kit\Glider\Events\EventManager;
+use Kit\Glider\Events\Contract\Subscriber;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Events\Subscribers\ConnectionAttemptSubscriber;
 
 class MysqliConnector implements ConnectorProvider
 {

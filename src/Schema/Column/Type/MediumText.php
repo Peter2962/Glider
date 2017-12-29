@@ -1,7 +1,7 @@
 <?php
-namespace Glider\Schema\Column\Type;
+namespace Kit\Glider\Schema\Column\Type;
 
-use Glider\Schema\Column\Type\Contract\TypeContract;
+use Kit\Glider\Schema\Column\Type\Contract\TypeContract;
 
 class MediumText implements TypeContract
 {

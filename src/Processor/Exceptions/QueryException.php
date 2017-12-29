@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Processor\Exceptions;
+namespace Kit\Glider\Processor\Exceptions;
 
 use StdClass;
 use Exception;

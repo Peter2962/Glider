@@ -1,16 +1,16 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Result\Collection
+* @package 	Kit\Glider\Result\Collection
 */
 
-namespace Glider\Result;
+namespace Kit\Glider\Result;
 
 use Closure;
 use StdClass;
-use Glider\Result\Contract\CollectionContract;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Result\Exceptions\FunctionNotFoundException;
+use Kit\Glider\Result\Contract\CollectionContract;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Result\Exceptions\FunctionNotFoundException;
 
 class Collection implements CollectionContract
 {

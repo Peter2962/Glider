@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Schema;
+namespace Kit\Glider\Schema;
 
 class Expressions
 {

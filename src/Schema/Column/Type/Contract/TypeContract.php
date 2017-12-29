@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Schema\Column\Type\Contract;
+namespace Kit\Glider\Schema\Column\Type\Contract;
 
 interface TypeContract
 {

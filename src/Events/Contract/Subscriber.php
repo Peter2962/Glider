@@ -4,7 +4,7 @@
 * attached to the event manager.
 */
 
-namespace Glider\Events\Contract;
+namespace Kit\Glider\Events\Contract;
 
 interface Subscriber
 {

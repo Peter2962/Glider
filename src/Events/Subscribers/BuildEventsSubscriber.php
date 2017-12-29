@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Events\Subscribers;
+namespace Kit\Glider\Events\Subscribers;
 
 use RuntimeException;
-use Glider\Events\Contract\Subscriber;
+use Kit\Glider\Events\Contract\Subscriber;
 
 class BuildEventsSubscriber implements Subscriber
 {

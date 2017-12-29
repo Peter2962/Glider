@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Schema;
+namespace Kit\Glider\Schema;
 
 use RuntimeException;
-use Glider\Schema\Column\Type;
+use Kit\Glider\Schema\Column\Type;
 
 class Column
 {
@@ -70,7 +70,7 @@ class Column
 	*
 	* @param 	$type
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setType($type) : Column
 	{
@@ -83,7 +83,7 @@ class Column
 	*
 	* @param 	$isPrimary <Boolean>
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setPrimary(Bool $isPrimary=false) : Column
 	{
@@ -96,7 +96,7 @@ class Column
 	*
 	* @param 	$length <Integer>
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setLength(int $length) : Column
 	{
@@ -109,7 +109,7 @@ class Column
 	*
 	* @param 	$defaultValue <Mixed>
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setDefaultValue($defaultValue=null) : Column
 	{
@@ -121,7 +121,7 @@ class Column
 	* Auto increments column.
 	*
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setAutoIncrement()
 	{
@@ -133,7 +133,7 @@ class Column
 	*
 	* @param 	$isNull <Boolean>
 	* @access 	public
-	* @return 	Glider\Schema\Column
+	* @return 	Kit\Glider\Schema\Column
 	*/
 	public function setIsNull(Bool $isNull=false)
 	{

@@ -1,10 +1,10 @@
 <?php
-namespace Glider\Events\Subscribers;
+namespace Kit\Glider\Events\Subscribers;
 
 use RuntimeException;
 use InvalidArgumentException;
-use Glider\Events\Contract\Subscriber;
-use Glider\Exceptions\ConnectionFailedException;
+use Kit\Glider\Events\Contract\Subscriber;
+use Kit\Glider\Exceptions\ConnectionFailedException;
 
 class ConnectionAttemptSubscriber implements Subscriber
 {

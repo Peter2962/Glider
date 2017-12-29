@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Result\Platforms;
+namespace Kit\Glider\Result\Platforms;
 
 use mysqli_result;
-use Glider\Result\Contract\PlatformResultContract;
+use Kit\Glider\Result\Contract\PlatformResultContract;
 
 class MysqliResult implements PlatformResultContract
 {

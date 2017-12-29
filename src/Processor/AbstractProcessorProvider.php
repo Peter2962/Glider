@@ -1,7 +1,7 @@
 <?php
-namespace Glider\Processor;
+namespace Kit\Glider\Processor;
 
-use Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
 
 abstract class AbstractProcessorProvider
 {

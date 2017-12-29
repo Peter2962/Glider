@@ -1,12 +1,12 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Statements\Platforms\MysqliStatement
+* @package 	Kit\Glider\Statements\Platforms\MysqliStatement
 */
 
-namespace Glider\Statements\Platforms;
+namespace Kit\Glider\Statements\Platforms;
 
-use Glider\Statements\Contract\StatementContract;
+use Kit\Glider\Statements\Contract\StatementContract;
 
 class MysqliStatement implements StatementContract
 {

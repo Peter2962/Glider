@@ -7,27 +7,27 @@
 * registered. All platform providers must implement this interface.
 */
 
-namespace Glider\Platform\Contract;
+namespace Kit\Glider\Platform\Contract;
 
-use Glider\Events\EventManager;
-use Glider\Connection\PlatformResolver;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Schema\Contract\SchemaManagerContract;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Connection\Contract\ConnectionInterface;
-use Glider\Transactions\Contract\TransactionProvider;
-use Glider\Query\Builder\Contract\QueryBuilderProvider;
+use Kit\Glider\Events\EventManager;
+use Kit\Glider\Connection\PlatformResolver;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Schema\Contract\SchemaManagerContract;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Connection\Contract\ConnectionInterface;
+use Kit\Glider\Transactions\Contract\TransactionProvider;
+use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 interface PlatformProvider
 {
 
 	/**
-	* The constructor accepts two arguments: Glider\Connection\PlatformResolver which
-	* passes the configuration to it and Glider\Events\EventManager which handles the
+	* The constructor accepts two arguments: Kit\Glider\Connection\PlatformResolver which
+	* passes the configuration to it and Kit\Glider\Events\EventManager which handles the
 	* platform events.
 	*
-	* @param 	$platform Glider\Connection\PlatformResolver
-	* @param 	$eventManager Glider\Events\EventManager	
+	* @param 	$platform Kit\Glider\Connection\PlatformResolver
+	* @param 	$eventManager Kit\Glider\Events\EventManager	
 	* @access 	public
 	* @return 	void
 	*/
@@ -38,7 +38,7 @@ interface PlatformProvider
 	* a connection with the database.
 	*
 	* @access 	public
-	* @return 	Object Glider\Connectors\Contract\ConnectorProvider
+	* @return 	Object Kit\Glider\Connectors\Contract\ConnectorProvider
 	*/
 	public function connector() : ConnectorProvider;
 
@@ -47,7 +47,7 @@ interface PlatformProvider
 	* transactions while executing a query.
 	*
 	* @access 	public
-	* @return 	Object Glider\Transaction\Contract\TransactionProvider
+	* @return 	Object Kit\Glider\Transaction\Contract\TransactionProvider
 	*/
 	public function transaction() : TransactionProvider;
 
@@ -55,7 +55,7 @@ interface PlatformProvider
 	* The platform's processor provider that will be used to execute queries.
 	*
 	* @access 	public
-	* @return 	Glider\Processor\Contract\ProcessorProvider
+	* @return 	Kit\Glider\Processor\Contract\ProcessorProvider
 	*/
 	public function processor() : ProcessorProvider;
 
@@ -63,9 +63,9 @@ interface PlatformProvider
 	* Returns platform's schema manager.
 	*
 	* @param 	$connectionId <String>
-	* @param 	$queryBuilder <Glider\Query\Builder\QueryBuilder>
+	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
-	* @return 	Glider\Schema\Contract\SchemaManagerContract
+	* @return 	Kit\Glider\Schema\Contract\SchemaManagerContract
 	*/
 	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract;
 
@@ -73,10 +73,10 @@ interface PlatformProvider
 	* The platform's query builder provider that will be used to build up
 	* queries. Glider has a default query builder but we are doing this because
 	* a platform might require a different query builder.
-	* This method accepts an argument: Glider\Connection\Contract\ConnectionInterface.
+	* This method accepts an argument: Kit\Glider\Connection\Contract\ConnectionInterface.
 	*
 	* @access 	public
-	* @return 	Glider\Query\Builder\Contract\QueryBuilderProivder
+	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
 	public function queryBuilder(ConnectionInterface $connectorProvider) : QueryBuilderProvider;
 

@@ -1,17 +1,17 @@
 <?php
-namespace Glider\Connection;
+namespace Kit\Glider\Connection;
 
 use StdClass;
 use ReflectionClass;
 use RuntimeException;
-use Glider\Connection\Domain;
-use Glider\Events\EventManager;
-use Glider\Events\Contract\Subscriber;
-use Glider\Connection\ConnectionManager;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Connection\Contract\ConnectionInterface;
-use Glider\Events\Subscribers\ConnectionAttemptSubscriber;
+use Kit\Glider\Connection\Domain;
+use Kit\Glider\Events\EventManager;
+use Kit\Glider\Events\Contract\Subscriber;
+use Kit\Glider\Connection\ConnectionManager;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Connection\Contract\ConnectionInterface;
+use Kit\Glider\Events\Subscribers\ConnectionAttemptSubscriber;
 
 class PlatformResolver
 {
@@ -47,7 +47,7 @@ class PlatformResolver
 	private 	$preparedConnection;
 
 	/**
-	* @param 	$contract Glider\Connectors\Contract\ConnectionInterface
+	* @param 	$contract Kit\Glider\Connectors\Contract\ConnectionInterface
 	* @access 	public
 	* @return 	void
 	*/
@@ -61,9 +61,9 @@ class PlatformResolver
 	/**
 	* Resolve provided connection's platform.
 	*
-	* @param 	$eventManager Glider\Events\EventManager
+	* @param 	$eventManager Kit\Glider\Events\EventManager
 	* @access 	public
-	* @return 	Object Glider\Platform\Contract\PlatformProvider
+	* @return 	Object Kit\Glider\Platform\Contract\PlatformProvider
 	*/
 	public function resolvePlatform(EventManager $eventManager)
 	{
@@ -97,7 +97,7 @@ class PlatformResolver
 	/**
 	* Resolves a connector's provider and returns it's object.
 	*
-	* @param 	$eventManager Glider\Events\EventManager 	
+	* @param 	$eventManager Kit\Glider\Events\EventManager 	
 	* @param 	$platform <Array>
 	* @access 	private
 	* @return 	Mixed

@@ -1,7 +1,7 @@
 <?php
 return [
 	'default' => [
-		'provider' => Glider\Platform\Mysqli\MysqliProvider::class,
+		'provider' => Kit\Glider\Platform\Mysqli\MysqliProvider::class,
 		'host' => 'localhost',
 		'alias' => 'mysqli',
 		'username' => 'root',
@@ -15,7 +15,7 @@ return [
 		'alt' => 'dev'
 	],
 	'dev' => [
-		'provider' => Glider\Platform\Pdo\PdoProvider::class,
+		'provider' => Kit\Glider\Platform\Pdo\PdoProvider::class,
 		'host' => 'localhost',
 		'alias' => 'pdo',
 		'username' => 'root',

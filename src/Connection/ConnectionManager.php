@@ -1,19 +1,19 @@
 <?php
-namespace Glider\Connection;
+namespace Kit\Glider\Connection;
 
 use Str;
 use Closure;
 use RuntimeException;
-use Glider\ClassLoader;
-use Glider\Configurator;
-use Glider\Events\EventManager;
-use Glider\Connection\DomainBag;
-use Glider\Connection\PlatformResolver;
-use Glider\Connection\ActiveConnection;
-use Glider\Connection\ConnectionLoader;
-use Glider\Connection\QueuedConnections;
-use Glider\Connection\Contract\ConnectionInterface;
-use Glider\Connectors\Contract\ConnectorProviderInterface;
+use Kit\Glider\ClassLoader;
+use Kit\Glider\Configurator;
+use Kit\Glider\Events\EventManager;
+use Kit\Glider\Connection\DomainBag;
+use Kit\Glider\Connection\PlatformResolver;
+use Kit\Glider\Connection\ActiveConnection;
+use Kit\Glider\Connection\ConnectionLoader;
+use Kit\Glider\Connection\QueuedConnections;
+use Kit\Glider\Connection\Contract\ConnectionInterface;
+use Kit\Glider\Connectors\Contract\ConnectorProviderInterface;
 
 class ConnectionManager implements ConnectionInterface
 {
@@ -165,7 +165,7 @@ class ConnectionManager implements ConnectionInterface
 
 	/**
 	* @access 	private
-	* @return 	Glider\Connection\QueuedConnections
+	* @return 	Kit\Glider\Connection\QueuedConnections
 	*/
 	private function queue() : QueuedConnections
 	{
@@ -193,7 +193,7 @@ class ConnectionManager implements ConnectionInterface
 
 	/**
 	* @access 	private
-	* @return 	Glider\ConnectionManager
+	* @return 	Kit\Glider\ConnectionManager
 	*/
 	private function fromQueue() : ConnectionManager
 	{

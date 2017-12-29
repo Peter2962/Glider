@@ -13,22 +13,22 @@
 * @method query
 */
 
-namespace Glider\Processor\Contract;
+namespace Kit\Glider\Processor\Contract;
 
-use Glider\Query\Parameters;
-use Glider\Result\Collection;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Query\Builder\SqlGenerator;
-use Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Query\Parameters;
+use Kit\Glider\Result\Collection;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Query\Builder\SqlGenerator;
+use Kit\Glider\Platform\Contract\PlatformProvider;
 
 interface ProcessorProvider
 {
 
 	/**
-	* The constructor accepts Glider\Platform\Contract\PlatformProvider as the only
+	* The constructor accepts Kit\Glider\Platform\Contract\PlatformProvider as the only
 	* argument.
 	*
-	* @param 	$platformProvider Glider\Platform\Contract\PlatformProvider
+	* @param 	$platformProvider Kit\Glider\Platform\Contract\PlatformProvider
 	* @access 	public
 	* @return 	void
 	*/
@@ -36,18 +36,18 @@ interface ProcessorProvider
 
 	/**
 	* The fetch method is used to fetch results from the database. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and Parameters <Glider\Query\Parameters> as an argument.
+	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
-	* @param 	$queryBuiler Glider\Query\Builder\QueryBuilder
+	* @param 	$queryBuiler Kit\Glider\Query\Builder\QueryBuilder
 	* @access 	public
-	* @return 	Glider\Result\Collection
+	* @return 	Kit\Glider\Result\Collection
 	*/
 	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Collection;
 
 	/**
 	* This method creates/saves new data. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
-	* Parameters <Glider\Query\Parameters> as an argument.
+	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and
+	* Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
 	* @return 	void
@@ -56,8 +56,8 @@ interface ProcessorProvider
 
 	/**
 	* Update data in the database. This method accepts instance
-	* of QueryBuilder<Glider\Query\Builder\QueryBuilder> and
-	* Parameters <Glider\Query\Parameters> as an argument.
+	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and
+	* Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
 	* @return 	void
@@ -74,7 +74,7 @@ interface ProcessorProvider
 
 	/**
 	* Runs a custom query using the platform's query method.
-	* To be able to use this, make sure Glider\Platform\Contract\PlatformProvider::isQueryCompatible
+	* To be able to use this, make sure Kit\Glider\Platform\Contract\PlatformProvider::isQueryCompatible
 	* returns true.
 	* The first parameter is the query string and second parameter is the mysqli return type.
 	* The second parameter accepts either 1 or 2. If the value is set to 1, it will return an instance

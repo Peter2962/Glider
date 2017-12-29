@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Result\Exceptions;
+namespace Kit\Glider\Result\Exceptions;
 
 use Exception;
 

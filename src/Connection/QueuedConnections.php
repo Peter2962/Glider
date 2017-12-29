@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Connection;
+namespace Kit\Glider\Connection;
 
-use Glider\Configurator;
-use Glider\Connection\ConnectionLoader;
+use Kit\Glider\Configurator;
+use Kit\Glider\Connection\ConnectionLoader;
 
 class QueuedConnections
 {
@@ -12,7 +12,7 @@ class QueuedConnections
 	/**
 	* Returns an array of queued connections.
 	*
-	* @param 	$connectionLoader Glider\Connection\ConnectionLoader
+	* @param 	$connectionLoader Kit\Glider\Connection\ConnectionLoader
 	* @access 	public
 	* @final
 	* @return 	Array

@@ -1,7 +1,7 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Result\Contract\CollectionContract
+* @package 	Kit\Glider\Result\Contract\CollectionContract
 *
 * Methods:
 * 1. __construct
@@ -16,10 +16,10 @@
 * 10. removeWhere - Remove data from the collection only if it exists.
 */
 
-namespace Glider\Result\Contract;
+namespace Kit\Glider\Result\Contract;
 
 use Closure;
-use Glider\Statements\Contract\StatementProvider;
+use Kit\Glider\Statements\Contract\StatementProvider;
 
 interface CollectionContract
 {
@@ -27,7 +27,7 @@ interface CollectionContract
 	/**
 	* Collection instance constructor.
 	*
-	* @param 	$statementProvider Glider\Statements\Contract\StatementProvider | Array
+	* @param 	$statementProvider Kit\Glider\Statements\Contract\StatementProvider | Array
 	* @param 	$statement <Mixed>
 	* @access 	public
 	* @return 	void
@@ -55,7 +55,7 @@ interface CollectionContract
 	* Resets the saved collection.
 	*
 	* @access 	public
-	* @return 	Glider\Resets\CollectionContract
+	* @return 	Kit\Glider\Resets\CollectionContract
 	*/
 	public function reset() : CollectionContract;
 
@@ -94,7 +94,7 @@ interface CollectionContract
 
 	/**
 	* Return only specific or certain columns from a query result set.
-	* This method returns an instance of Glider\Result\Collection if the collected
+	* This method returns an instance of Kit\Glider\Result\Collection if the collected
 	* result is not empty.
 	* Usage: $result->only('id', 'name');
 	*
@@ -117,7 +117,7 @@ interface CollectionContract
 	*
 	* @param 	$data <Mixed>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function add($data) : CollectionContract;
 
@@ -128,7 +128,7 @@ interface CollectionContract
 	*
 	* @param 	$key <Mixed>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function remove($key) : CollectionContract;
 
@@ -138,7 +138,7 @@ interface CollectionContract
 	* @param 	$key <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function removeWhere(String $key, $value) : CollectionContract;
 
@@ -149,7 +149,7 @@ interface CollectionContract
 	* @param 	$elements <Array>
 	* @param 	$callback <Closure>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function map(Array $elements, Closure $callback) : CollectionContract;
 
@@ -160,8 +160,8 @@ interface CollectionContract
 	*
 	* @param 	$elements <Array>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
-	* @see 		Glider\Result\CollectionContract::all
+	* @return 	Kit\Glider\Result\CollectionContract
+	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function toArray(Array $elements=[]) : CollectionContract;
 
@@ -174,7 +174,7 @@ interface CollectionContract
 	* @param 	$elements <Array>
 	* @param 	$functionName <String>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function invoke(Array $elements, String $functionName) : CollectionContract;
 
@@ -182,9 +182,9 @@ interface CollectionContract
 	* Returns the maximum value in the list. This method returns the maximum value
 	* using the index by default or. If the list is a multidimensional array, the index
 	* that will be used to get the maximum should be passed as the second parameter value.
-	* The first parameter can either be an array or an instance of Glider\Result\CollectionContract.
+	* The first parameter can either be an array or an instance of Kit\Glider\Result\CollectionContract.
 	*
-	* @param 	$elements <Mixed> Array|Glider\Result\CollectionContract
+	* @param 	$elements <Mixed> Array|Kit\Glider\Result\CollectionContract
 	* @param 	$index <String>
 	* @access 	public
 	* @return 	Mixed
@@ -195,9 +195,9 @@ interface CollectionContract
 	* Returns the minimum value in the list. This method returns the minimum value
 	* using the index by default or. If the list is a multidimensional array, the index
 	* that will be used to get the minimum should be passed as the second parameter value.
-	* The first parameter can either be an array or an instance of Glider\Result\CollectionContract.
+	* The first parameter can either be an array or an instance of Kit\Glider\Result\CollectionContract.
 	*
-	* @param 	$elements <Mixed> Array|Glider\Result\CollectionContract
+	* @param 	$elements <Mixed> Array|Kit\Glider\Result\CollectionContract
 	* @param 	$index <String>
 	* @access 	public
 	* @return 	Mixed
@@ -212,8 +212,8 @@ interface CollectionContract
 	*
 	* @param 	$key <String>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
-	* @see 		Glider\Result\CollectionContract::all
+	* @return 	Kit\Glider\Result\CollectionContract
+	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function groupBy(String $key) : CollectionContract;
 
@@ -222,8 +222,8 @@ interface CollectionContract
 	*
 	* @param 	$to <Integer>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
-	* @see 		Glider\Result\CollectionContract::all
+	* @return 	Kit\Glider\Result\CollectionContract
+	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function partition(int $to) : CollectionContract;
 
@@ -233,7 +233,7 @@ interface CollectionContract
 	*
 	* @param 	$conditions <Array>
 	* @access 	public
-	* @return 	Glider\Result\CollectionContract
+	* @return 	Kit\Glider\Result\CollectionContract
 	*/
 	public function where(Array $conditions=[]) : CollectionContract;
 
