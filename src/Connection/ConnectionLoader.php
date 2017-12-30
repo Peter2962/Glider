@@ -11,15 +11,18 @@ class ConnectionLoader
 	* @return 	Array
 	*/
 	public function getConnectionsFromResource() : Array
-	{
-		if (!file_exists('Config.php')) {
+	{	
+		$baseDir = dirname(__DIR__);
+		$configLocation = $baseDir . '/Config.php';
+	
+		if (!file_exists($configLocation)) {
 
 			throw new Exception('Unable to load database configuration file.');
 
 		}
 
-		$resourceConfig = include 'Config.php';
-		
+		$resourceConfig = include $configLocation;
+
 		if (gettype($resourceConfig) !== 'array') {
 
 			throw new Exception('Invalid configuration type.');
@@ -31,7 +34,7 @@ class ConnectionLoader
 
 	public static function getGroupedConnections()
 	{
-
+		//
 	}
 
 }

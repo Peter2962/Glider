@@ -222,6 +222,16 @@ class Scheme
 	}
 
 	/**
+	* @param 	$name <String>
+	* @access 	public
+	* @return 	Kit\Glider\Schema\Scheme
+	*/
+	public function index(String $name)
+	{
+		//
+	}
+
+	/**
 	* @param 	$options <Array>
 	* @access 	public
 	* @return 	Kit\Glider\Schema\Scheme
@@ -314,24 +324,14 @@ class Scheme
 
 		}
 
-		if (isset($options['index'])) {
-
-			if (!in_array($options['index'], array_keys($this->indexes))) {
-
-				throw new RuntimeException(sprintf('Cannot set index with provided key %s', $options['index']));
-
-			}
-
-			$index = ' ' . $this->indexes[$index];
-
-		}
-
 		$definition = $name . ' ' . $typeClass->getName();
 		$definition = $this->getLength($definition, $length);
 		$definition = $definition . $isNull . $isPrimary . $canAutoIncrement;
 
 		Scheme::$commandsArray[$name] = $definition;
 		Scheme::$commands[] = $definition;
+
+		return $this;
 	}
 
 	/**
