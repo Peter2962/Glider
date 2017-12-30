@@ -88,17 +88,27 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			call_user_func_array([$statement, 'bind_result'], $params);
 
 			while($statement->fetch()) {
+
 				$resultStdClass = new StdClass();
 
 				if ($queryBuilder->resultMappingEnabled()) {
+
 					$mapper = $queryBuilder->getResultMapper();
+					
 					$mapper = new $mapper();
+					
 					if ($mapper instanceof ResultMapper) {
+					
 						$resultStdClass = $mapper;
+					
 						if (!$resultStdClass->register()) {
+					
 							continue;
+					
 						}
+					
 					}
+				
 				}
 
 				foreach($mappedFields as $field) {
@@ -122,10 +132,13 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			}
 
 		}catch(mysqli_sql_exception $sqlExp) {
+
 			throw new QueryException($sqlExp->getMessage(), $resolvedQueryObject->queryObject);
+		
 		}
 
 		$this->result = $result;
+		
 		return new Collection($this, $statement);
 	}
 
@@ -163,11 +176,15 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$queryObject = $this->connection->query($queryString);
 
 		if (!$queryObject) {
+		
 			return false;
+		
 		}
 
 		if ($returnType == 1) {
+
 			return new MysqliResult($queryObject);
+		
 		}
 
 		return new MysqliStatement($queryObject);
@@ -191,17 +208,25 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		if ($parameterBag->size() > 0) {
 
 			foreach(array_values($parameterBag->getAll()) as $param) {
+				
 				$isset = false;
 
 				if (is_array($param)) {
+
 					foreach($param as $p) {
+					
 						$parameterTypes .= $parameterBag->getType($p);
+
 						$isset = true;
+					
 					}
+				
 				}
 
 				if ($isset == true) {
+				
 					continue;
+				
 				}
 
 				$parameterTypes .= $parameterBag->getType($param);
@@ -242,8 +267,10 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$query = $queryObject->query;
 
 		if (!$this->platformProvider->isAutoCommitEnabled()) {
+
 			// Only start transaction manually if auto commit is not enabled.
 			$transaction = $this->platformProvider->transaction();
+
 		}
 
 		// Turn error reporting on for mysqli
@@ -262,8 +289,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			}
 
 			$statement->execute();
+
 		}catch(mysqli_sql_exception $sqlExp) {
+
 			throw new QueryException($sqlExp->getMessage(), $queryObject);
+
 		}
 
 		$std->statement = $statement;

@@ -3,8 +3,8 @@ namespace Kit\Glider\Query\Builder;
 
 use RuntimeException;
 use Kit\Glider\ClassLoader;
-use Kit\Glider\Query\Parameters;
 use InvalidArgumentException;
+use Kit\Glider\Query\Parameters;
 use Kit\Glider\Query\Builder\Type;
 use Kit\Glider\Result\ResultMapper;
 use Kit\Glider\Query\Builder\QueryBinder;
