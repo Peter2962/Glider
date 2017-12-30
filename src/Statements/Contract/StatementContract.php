@@ -1,6 +1,6 @@
 <?php
 /**
-* @package 	Glider\Statements\Contract\StatementContract
+* @package 	Kit\Glider\Statements\Contract\StatementContract
 * @version 	0.1.0
 *
 * StatementContract helps to formulize a platform's statement. It gives
@@ -16,14 +16,14 @@
 * @method sqlState
 */
 
-namespace Glider\Statements\Contract;
+namespace Kit\Glider\Statements\Contract;
 
 use mysqli_stmt;
-use Glider\Query\Parameters;
-use Glider\Result\Collection;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Query\Builder\SqlGenerator;
-use Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Query\Parameters;
+use Kit\Glider\Result\Collection;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Query\Builder\SqlGenerator;
+use Kit\Glider\Platform\Contract\PlatformProvider;
 
 interface StatementContract
 {

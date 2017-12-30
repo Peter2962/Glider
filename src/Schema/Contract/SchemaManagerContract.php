@@ -1,10 +1,10 @@
 <?php
-namespace Glider\Schema\Contract;
+namespace Kit\Glider\Schema\Contract;
 
 use Closure;
-use Glider\Schema\Column;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Connection\ConnectionManager;
+use Kit\Glider\Schema\Column;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Connection\ConnectionManager;
 
 interface SchemaManagerContract
 {
@@ -13,7 +13,7 @@ interface SchemaManagerContract
 	* Constructor accepts an optional parameter which is the connection id.
 	*
 	* @param 	$connectionId <String>
-	* @param 	$queryBuilder <Glider\Query\Builder\QueryBuilder>
+	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
 	* @return 	void
 	*/

@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Transactions\Mysqli;
+namespace Kit\Glider\Transactions\Mysqli;
 
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Transactions\Contract\TransactionProvider;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Transactions\Contract\TransactionProvider;
 
 class MysqliTransaction implements TransactionProvider
 {

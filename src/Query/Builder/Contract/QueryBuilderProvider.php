@@ -8,19 +8,19 @@
 * that will be used.
 */
 
-namespace Glider\Query\Builder\Contract;
+namespace Kit\Glider\Query\Builder\Contract;
 
-use Glider\Connection\ConnectionManager;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Connection\ConnectionManager;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Result\Contract\ResultMapperContract;
 
 interface QueryBuilderProvider
 {
 
 	/**
-	* The constructor accepts Glider\Connection\ConnectionManager as it's argument.
+	* The constructor accepts Kit\Glider\Connection\ConnectionManager as it's argument.
 	*
-	* @param 	$connectorProvider Glider\Connection\ConnectionManager
+	* @param 	$connectorProvider Kit\Glider\Connection\ConnectionManager
 	* @access 	public
 	* @return 	void
 	*/
@@ -32,7 +32,7 @@ interface QueryBuilderProvider
 	* @param 	$query <String>
 	* @param 	$useDefaultQueryMethod <Boolean>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilder
+	* @return 	Kit\Glider\Query\Builder\QueryBuilder
 	*/
 	public function queryWithBinding(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
 
@@ -55,7 +55,7 @@ interface QueryBuilderProvider
 	* @param 	$key <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilder
+	* @return 	Kit\Glider\Query\Builder\QueryBuilder
 	*/
 	public function setParam(String $key, $value) : QueryBuilderProvider;
 
@@ -70,11 +70,11 @@ interface QueryBuilderProvider
 
 	/**
 	* Sets the ResultMapper class to use. This method accepts either an array r
-	* instance of Glider\Result\Contract\ResultMapperContract as it's parameter.
+	* instance of Kit\Glider\Result\Contract\ResultMapperContract as it's parameter.
 	*
 	* @param 	$resultMapper;
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilder
+	* @return 	Kit\Glider\Query\Builder\QueryBuilder
 	*/
 	public function setResultMapper($resultMapper) : QueryBuilderProvider;
 
@@ -117,7 +117,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function setOperator(String $operator) : QueryBuilderProvider;
 
@@ -128,7 +128,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$arguments <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\Contract\QueryBuilderProvider 
+	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider 
 	*/
 	public function select(...$arguments) : QueryBuilderProvider;
 
@@ -138,7 +138,7 @@ interface QueryBuilderProvider
 	* @param 	$arguments <Array>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\Contract\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider
 	*/
 	public function least(Array $arguments, String $alias) : QueryBuilderProvider;
 
@@ -148,7 +148,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function from(String $table) : QueryBuilderProvider;
 
@@ -161,7 +161,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function avg(String $column, String $alias) : QueryBuilderProvider;
 
@@ -174,7 +174,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function count(String $column, String $alias) : QueryBuilderProvider;
 
@@ -188,7 +188,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function sum(String $column, String $alias) : QueryBuilderProvider;
 
@@ -198,7 +198,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function max(String $column, String $alias) : QueryBuilderProvider;
 
@@ -208,7 +208,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function min(String $column, String $alias) : QueryBuilderProvider;
 
@@ -219,7 +219,7 @@ interface QueryBuilderProvider
 	* @param 	$alias <String>
 	* @param 	$separator <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function groupConcat(String $expression, String $alias, String $separator) : QueryBuilderProvider;
 
@@ -228,11 +228,11 @@ interface QueryBuilderProvider
 	* This method accepts two parameters. The `setParam` does not need to be called. It will
 	* be handled automatically in the method.
 	*
-	* @see 		Glider\Query\Builder\QueryBuilder::where
+	* @see 		Kit\Glider\Query\Builder\QueryBuilder::where
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function where(String $column, $value='') : QueryBuilderProvider;
 
@@ -242,7 +242,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function orWhere(String $column, $value='') : QueryBuilderProvider;
 
@@ -252,7 +252,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function andWhere(String $column, $value='') : QueryBuilderProvider;
 
@@ -262,7 +262,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -272,7 +272,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function orWhereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -282,7 +282,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function andWhereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -292,7 +292,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$values <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereIn(String $column, Array $values) : QueryBuilderProvider;
 
@@ -302,7 +302,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$values <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereNotIn(String $column, Array $values) : QueryBuilderProvider;
 
@@ -313,7 +313,7 @@ interface QueryBuilderProvider
 	* @param 	$leftValue <Mixed>
 	* @param 	$rightValue <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
 
@@ -324,7 +324,7 @@ interface QueryBuilderProvider
 	* @param 	$leftValue <Mixed>
 	* @param 	$rightValue <Mixed>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereNotBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
 
@@ -344,7 +344,7 @@ interface QueryBuilderProvider
 	* @param 	$pattern <String>
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
 
@@ -357,7 +357,7 @@ interface QueryBuilderProvider
 	* @param 	$pattern <String>
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function whereNotLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
 
@@ -367,7 +367,7 @@ interface QueryBuilderProvider
 	* @param 	$limit <Integer>
 	* @param 	$offset <Integer>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function limit(Int $limit, Int $offset=0) : QueryBuilderProvider;
 
@@ -376,7 +376,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$columns <Array>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function orderBy(Array $columns) : QueryBuilderProvider;
 
@@ -385,7 +385,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$columns <Array>
 	* @access 	public
-	* @return 	Glider\Query\Builder\QueryBuilderProvider
+	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
 	*/
 	public function orderByField(Array $columns) : QueryBuilderProvider;
 

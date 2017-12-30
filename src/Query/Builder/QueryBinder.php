@@ -7,10 +7,10 @@
 * be used by the SqlGenerator to generate query.
 */
 
-namespace Glider\Query\Builder;
+namespace Kit\Glider\Query\Builder;
 
 use RuntimeException;
-use Glider\Query\Builder\SqlGenerator;
+use Kit\Glider\Query\Builder\SqlGenerator;
 
 class QueryBinder
 {

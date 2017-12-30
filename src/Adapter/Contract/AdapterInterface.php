@@ -1,4 +1,4 @@
 <?php
-namespace Glider\Adapter\Contract;
+namespace Kit\Glider\Adapter\Contract;
 
 interface AdapterInterface {}

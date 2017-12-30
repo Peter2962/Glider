@@ -3,7 +3,7 @@
 * This class helps to set and get query parameters.
 */
 
-namespace Glider\Query;
+namespace Kit\Glider\Query;
 
 class Parameters
 {

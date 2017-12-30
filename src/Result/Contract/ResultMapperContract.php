@@ -4,7 +4,7 @@
 * @version 	0.1.0
 */
 
-namespace Glider\Result\Contract;
+namespace Kit\Glider\Result\Contract;
 
 interface ResultMapperContract
 {

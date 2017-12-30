@@ -1,27 +1,27 @@
 <?php
 /**
 * @author 	Peter Taiwo
-* @package 	Glider\Processor\Mysqli\MysqliProcessor
+* @package 	Kit\Glider\Processor\Mysqli\MysqliProcessor
 */
 
-namespace Glider\Processor\Mysqli;
+namespace Kit\Glider\Processor\Mysqli;
 
 use StdClass;
 use Exception;
 use RuntimeException;
 use mysqli_sql_exception;
-use Glider\Query\Parameters;
-use Glider\Result\Collection;
-use Glider\Result\ResultMapper;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Result\Platforms\MysqliResult;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Processor\AbstractProcessorProvider;
-use Glider\Processor\Exceptions\QueryException;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Statements\Platforms\MysqliStatement;
-use Glider\Result\Contract\ResultMapperContract;
-use Glider\Results\Contract\ResultObjectProvider;
+use Kit\Glider\Query\Parameters;
+use Kit\Glider\Result\Collection;
+use Kit\Glider\Result\ResultMapper;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Result\Platforms\MysqliResult;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Processor\AbstractProcessorProvider;
+use Kit\Glider\Processor\Exceptions\QueryException;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Statements\Platforms\MysqliStatement;
+use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Results\Contract\ResultObjectProvider;
 
 class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
 {
@@ -88,17 +88,27 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			call_user_func_array([$statement, 'bind_result'], $params);
 
 			while($statement->fetch()) {
+
 				$resultStdClass = new StdClass();
 
 				if ($queryBuilder->resultMappingEnabled()) {
+
 					$mapper = $queryBuilder->getResultMapper();
+					
 					$mapper = new $mapper();
+					
 					if ($mapper instanceof ResultMapper) {
+					
 						$resultStdClass = $mapper;
+					
 						if (!$resultStdClass->register()) {
+					
 							continue;
+					
 						}
+					
 					}
+				
 				}
 
 				foreach($mappedFields as $field) {
@@ -122,10 +132,13 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			}
 
 		}catch(mysqli_sql_exception $sqlExp) {
+
 			throw new QueryException($sqlExp->getMessage(), $resolvedQueryObject->queryObject);
+		
 		}
 
 		$this->result = $result;
+		
 		return new Collection($this, $statement);
 	}
 
@@ -163,11 +176,15 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$queryObject = $this->connection->query($queryString);
 
 		if (!$queryObject) {
+		
 			return false;
+		
 		}
 
 		if ($returnType == 1) {
+
 			return new MysqliResult($queryObject);
+		
 		}
 
 		return new MysqliStatement($queryObject);
@@ -176,11 +193,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* Resolves query object returning: query, parameters and connection.
 	*
-	* @param 	$queryBuilder Glider\Query\Builder\QueryBuilder
-	* @param 	$parameterBag Glider\Query\Parameters
+	* @param 	$queryBuilder Kit\Glider\Query\Builder\QueryBuilder
+	* @param 	$parameterBag Kit\Glider\Query\Parameters
 	* @access 	private
 	* @return 	Object
-	* @throws 	Glider\Processor\Exceptions\QueryException;
+	* @throws 	Kit\Glider\Processor\Exceptions\QueryException;
 	*/
 	private function resolveQueryObject(QueryBuilder $queryBuilder, Parameters $parameterBag) : StdClass
 	{
@@ -191,17 +208,25 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		if ($parameterBag->size() > 0) {
 
 			foreach(array_values($parameterBag->getAll()) as $param) {
+				
 				$isset = false;
 
 				if (is_array($param)) {
+
 					foreach($param as $p) {
+					
 						$parameterTypes .= $parameterBag->getType($p);
+
 						$isset = true;
+					
 					}
+				
 				}
 
 				if ($isset == true) {
+				
 					continue;
+				
 				}
 
 				$parameterTypes .= $parameterBag->getType($param);
@@ -242,8 +267,10 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$query = $queryObject->query;
 
 		if (!$this->platformProvider->isAutoCommitEnabled()) {
+
 			// Only start transaction manually if auto commit is not enabled.
 			$transaction = $this->platformProvider->transaction();
+
 		}
 
 		// Turn error reporting on for mysqli
@@ -262,8 +289,11 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			}
 
 			$statement->execute();
+
 		}catch(mysqli_sql_exception $sqlExp) {
+
 			throw new QueryException($sqlExp->getMessage(), $queryObject);
+
 		}
 
 		$std->statement = $statement;

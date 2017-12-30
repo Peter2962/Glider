@@ -10,12 +10,12 @@
 *
 */
 
-namespace Glider\Result;
+namespace Kit\Glider\Result;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Glider\Result\Contract\ResultMapperContract;
-use Glider\Result\Exceptions\InvalidPropertyAccessException;
+use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Result\Exceptions\InvalidPropertyAccessException;
 
 abstract Class ResultMapper implements ResultMapperContract
 {

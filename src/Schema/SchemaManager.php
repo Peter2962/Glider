@@ -1,13 +1,13 @@
 <?php
-namespace Glider\Schema;
+namespace Kit\Glider\Schema;
 
 use Closure;
-use Glider\Schema\Table;
-use Glider\Schema\Column;
-use Glider\Schema\Expressions;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Connection\ConnectionManager;
-use Glider\Schema\Contract\SchemaManagerContract;
+use Kit\Glider\Schema\Table;
+use Kit\Glider\Schema\Column;
+use Kit\Glider\Schema\Expressions;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Connection\ConnectionManager;
+use Kit\Glider\Schema\Contract\SchemaManagerContract;
 
 class SchemaManager implements SchemaManagerContract
 {

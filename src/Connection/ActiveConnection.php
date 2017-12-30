@@ -1,9 +1,9 @@
 <?php
-namespace Glider\Connection;
+namespace Kit\Glider\Connection;
 
-use Glider\Connection\Connector;
-use Glider\Adapter\Contract\AdapterInterface;
-use Glider\Conenctors\Contract\ConnectorProviderInterface;
+use Kit\Glider\Connection\Connector;
+use Kit\Glider\Adapter\Contract\AdapterInterface;
+use Kit\Glider\Conenctors\Contract\ConnectorProviderInterface;
 
 /**
 * Represents the connection that is being used.
@@ -19,7 +19,7 @@ abstract class ActiveConnection
 	private static $activated = 0;
 
 	/**
-	* @param 	$connector Glider\Connection\Connector
+	* @param 	$connector Kit\Glider\Connection\Connector
 	* @access 	public
 	* @return 	void
 	* @static

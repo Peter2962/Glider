@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Contract;
+namespace Kit\Glider\Contract;
 
 interface ConfiguratorInterface
 {

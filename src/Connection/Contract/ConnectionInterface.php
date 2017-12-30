@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Connection\Contract;
+namespace Kit\Glider\Connection\Contract;
 
 use Closure;
 

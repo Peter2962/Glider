@@ -6,11 +6,11 @@
 * Note that this is just a simple event architecture class for Glider.
 */
 
-namespace Glider\Events;
+namespace Kit\Glider\Events;
 
 use Closure;
-use Glider\ClassLoader;
-use Glider\Events\Contract\Subscriber;
+use Kit\Glider\ClassLoader;
+use Kit\Glider\Events\Contract\Subscriber;
 
 class EventManager
 {
@@ -71,7 +71,7 @@ class EventManager
 	* Dispatches an event with the @param $eventId only if it exists.
 	*
 	* @param 	$eventId <String>
-	* @param 	$subscriber Glider\Events\Contract\Subscriber
+	* @param 	$subscriber Kit\Glider\Events\Contract\Subscriber
 	* @access 	public
 	* @return 	void
 	*/
@@ -88,7 +88,7 @@ class EventManager
 	* This method attaches an event through it's subscribe object. List of events
 	* are loaded from the subscriber and added to the listeners.
 	*
-	* @param 	$subscriber Glider\Events\Contract\Subcriber
+	* @param 	$subscriber Kit\Glider\Events\Contract\Subcriber
 	* @access 	public
 	* @return 	void
 	*/

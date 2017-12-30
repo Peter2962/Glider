@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Query\Builder;
+namespace Kit\Glider\Query\Builder;
 
 abstract class Type
 {

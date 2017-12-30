@@ -7,9 +7,9 @@
 * This interface helps to configure a connector.
 */
 
-namespace Glider\Connectors\Contract;
+namespace Kit\Glider\Connectors\Contract;
 
-use Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Platform\Contract\PlatformProvider;
 
 interface ConnectorProvider {
 

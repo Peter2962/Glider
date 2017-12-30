@@ -1,5 +1,5 @@
 <?php
-namespace Glider;
+namespace Kit\Glider;
 
 use StdClass;
 use ReflectionCLass;
@@ -49,6 +49,7 @@ class ClassLoader
 
 		$resolvedParameters = array_map(function($param) use ($reflectedClass) {
 			$type = $param->getType();
+
 			if (preg_match("/(.*?)\\\/", $type)) {
 				$type = (String) $type;
 				return new $type;
@@ -59,6 +60,7 @@ class ClassLoader
 			}
 
 			return $param->getDefaultValue();
+			
 		}, $methodParameters);
 
 		$resolvedParameters = array_filter($resolvedParameters);

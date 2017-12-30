@@ -7,9 +7,9 @@
 * provider will imitate. This helps to have more control on how to initialize
 * each platform's transaction methods.
 */
-namespace Glider\Transactions\Contract;
+namespace Kit\Glider\Transactions\Contract;
 
-use Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Platform\Contract\PlatformProvider;
 
 interface TransactionProvider
 {
@@ -17,7 +17,7 @@ interface TransactionProvider
 	/**
 	* Constructor accepts `PlatformProvider` contract as an argument.
 	*
-	* @param 	$platformProvider Glider\Platform\Contract\PlatformProvider
+	* @param 	$platformProvider Kit\Glider\Platform\Contract\PlatformProvider
 	* @access 	public
 	* @return 	void
 	*/

@@ -1,9 +1,9 @@
 <?php
-namespace Glider;
+namespace Kit\Glider;
 
 use Closure;
-use Glider\Connection\QueuedConnections;
-use Glider\Contract\ConfiguratorInterface;
+use Kit\Glider\Connection\QueuedConnections;
+use Kit\Glider\Contract\ConfiguratorInterface;
 
 class Configurator implements ConfiguratorInterface
 {
@@ -27,7 +27,7 @@ class Configurator implements ConfiguratorInterface
 	/**
 	* Helps to attach a new configuration to the configurator.
 	*
-	* @param 	$connections Glider\Connection\QueuedConnections
+	* @param 	$connections Kit\Glider\Connection\QueuedConnections
 	* @param 	$settings <Closure>
 	* @access 	public
 	* @return 	void

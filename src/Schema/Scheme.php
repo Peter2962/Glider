@@ -1,9 +1,9 @@
 <?php
-namespace Glider\Schema;
+namespace Kit\Glider\Schema;
 
 use RuntimeException;
-use Glider\Schema\Column\ColumnTypeCache;
-use Glider\Schema\Column\Type\Contract\TypeContract;
+use Kit\Glider\Schema\Column\ColumnTypeCache;
+use Kit\Glider\Schema\Column\Type\Contract\TypeContract;
 
 class Scheme
 {
@@ -60,7 +60,7 @@ class Scheme
 	* @var 		$typeNamespace
 	* @access 	protected
 	*/
-	protected 	$typeNamespace = 'Glider\Schema\Column\Type';
+	protected 	$typeNamespace = 'Kit\Glider\Schema\Column\Type';
 
 	/**
 	* @var 		$definition
@@ -70,7 +70,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function varchar(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -79,7 +79,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function char(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -88,7 +88,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function integer(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -97,7 +97,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function bit(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -106,7 +106,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function tinyInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -115,7 +115,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function smallInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -124,7 +124,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function mediumInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -133,7 +133,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function bigInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -142,7 +142,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function decimal(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -151,7 +151,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function double(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -160,7 +160,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function text(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -169,7 +169,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function tinyText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -178,7 +178,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function mediumText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -187,7 +187,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function longText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -196,7 +196,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function blob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -205,7 +205,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function mediumBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -214,7 +214,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function longBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -224,7 +224,7 @@ class Scheme
 	/**
 	* @param 	$options <Array>
 	* @access 	public
-	* @return 	Glider\Schema\Scheme
+	* @return 	Kit\Glider\Schema\Scheme
 	*/
 	public function foreign(Array $options=[])
 	{

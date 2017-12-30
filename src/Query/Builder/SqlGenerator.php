@@ -7,15 +7,15 @@
 * keywords.
 */
 
-namespace Glider\Query\Builder;
+namespace Kit\Glider\Query\Builder;
 
 use StdClass;
-use Glider\Query\Parameters;
-use Glider\Query\Builder\Type;
-use Glider\Query\Builder\QueryBinder;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Query\Exceptions\ParameterNotFoundException;
-use Glider\Query\Exceptions\InvalidParameterCountException;
+use Kit\Glider\Query\Parameters;
+use Kit\Glider\Query\Builder\Type;
+use Kit\Glider\Query\Builder\QueryBinder;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Query\Exceptions\ParameterNotFoundException;
+use Kit\Glider\Query\Exceptions\InvalidParameterCountException;
 
 class SqlGenerator
 {
@@ -29,10 +29,10 @@ class SqlGenerator
 	private 	$disallowedChars = ['?', '&', '%', '$', '#', '+', '!', ')', '(', '-', '^', '=', '/', '>', '<', ':', ';'];
 
 	/**
-	* Constructor accepts Glider\Query\Builder\QueryBinder as an argument. It gets the
+	* Constructor accepts Kit\Glider\Query\Builder\QueryBinder as an argument. It gets the
 	* created queries and then generates sql query from it.
 	*
-	* @param 	$binder Glider\Query\Builder\QueryBinder
+	* @param 	$binder Kit\Glider\Query\Builder\QueryBinder
 	* @access 	public
 	* @return 	void
 	*/
@@ -45,7 +45,7 @@ class SqlGenerator
 	* Converts a query string with named parameters to marked parameters and returs an object.
 	*
 	* @param 	$query <String>
-	* @param 	$parameterBag Glider\Query\Parameters
+	* @param 	$parameterBag Kit\Glider\Query\Parameters
 	* @access 	public
 	* @return 	Object
 	*/

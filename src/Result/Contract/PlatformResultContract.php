@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Result\Contract;
+namespace Kit\Glider\Result\Contract;
 
 interface PlatformResultContract
 {

@@ -1,20 +1,20 @@
 <?php
-namespace Glider\Platform\Mysqli;
+namespace Kit\Glider\Platform\Mysqli;
 
-use Glider\Events\EventManager;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Connection\PlatformResolver;
-use Glider\Processor\Mysqli\MysqliProcessor;
-use Glider\Connectors\Mysqli\MysqliConnector;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Processor\Contract\ProcessorProvider;
-use Glider\Schema\Platforms\MysqliSchemaManager;
-use Glider\Schema\Contract\SchemaManagerContract;
-use Glider\Transactions\Mysqli\MysqliTransaction;
-use Glider\Connectors\Contract\ConnectorProvider;
-use Glider\Connection\Contract\ConnectionInterface;
-use Glider\Transactions\Contract\TransactionProvider;
-use Glider\Query\Builder\Contract\QueryBuilderProvider;
+use Kit\Glider\Events\EventManager;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Connection\PlatformResolver;
+use Kit\Glider\Processor\Mysqli\MysqliProcessor;
+use Kit\Glider\Connectors\Mysqli\MysqliConnector;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Processor\Contract\ProcessorProvider;
+use Kit\Glider\Schema\Platforms\MysqliSchemaManager;
+use Kit\Glider\Schema\Contract\SchemaManagerContract;
+use Kit\Glider\Transactions\Mysqli\MysqliTransaction;
+use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Connection\Contract\ConnectionInterface;
+use Kit\Glider\Transactions\Contract\TransactionProvider;
+use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 class MysqliProvider implements PlatformProvider
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Glider\Connection;
+namespace Kit\Glider\Connection;
 
 abstract class Domain
 {

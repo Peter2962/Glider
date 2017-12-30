@@ -1,8 +1,8 @@
 <?php
-namespace Glider\Result\Mappers;
+namespace Kit\Glider\Result\Mappers;
 
-use Glider\Result\ResultMapper;
-use Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Result\ResultMapper;
+use Kit\Glider\Result\Contract\ResultMapperContract;
 
 class DataResultMapper extends ResultMapper
 {
