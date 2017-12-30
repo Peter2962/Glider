@@ -9,7 +9,7 @@ return [
 		'database' => 'test',
 		'charset' => 'utf8',
 		'collation' => '',
-		'domain' => 'glider.site',
+		'domain' => 'phoxphp.repo',
 		'auto_commit' => false,
 		'prefix' => '',
 		'alt' => 'dev'
