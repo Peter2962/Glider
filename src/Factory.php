@@ -4,18 +4,18 @@
 * @version 	0.1.0
 *
 * This factory handles all database operations provided by
-* Glider. The connection manager @see Glider\Connection\ConnectionManager can also
+* Glider. The connection manager @see Kit\Glider\Connection\ConnectionManager can also
 * be used to handle some operations.
 */
 
-namespace Glider;
+namespace Kit\Glider;
 
-use Glider\Schema\SchemaManager;
-use Glider\Query\Builder\QueryBinder;
-use Glider\Query\Builder\QueryBuilder;
-use Glider\Connection\ConnectionManager;
-use Glider\Platform\Contract\PlatformProvider;
-use Glider\Schema\Contract\SchemaManagerContract;
+use Kit\Glider\Schema\SchemaManager;
+use Kit\Glider\Query\Builder\QueryBinder;
+use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Connection\ConnectionManager;
+use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Schema\Contract\SchemaManagerContract;
 
 class Factory
 {
