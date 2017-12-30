@@ -1,6 +1,8 @@
 <?php
 namespace Kit\Glider\Connection;
 
+use Exception;
+
 class ConnectionLoader
 {
 
@@ -11,12 +13,17 @@ class ConnectionLoader
 	public function getConnectionsFromResource() : Array
 	{
 		if (!file_exists('Config.php')) {
-			return [];
+
+			throw new Exception('Unable to load database configuration file.');
+
 		}
 
 		$resourceConfig = include 'Config.php';
+		
 		if (gettype($resourceConfig) !== 'array') {
-			return [];
+
+			throw new Exception('Invalid configuration type.');
+		
 		}
 		
 		return $resourceConfig;
