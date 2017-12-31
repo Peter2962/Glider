@@ -107,8 +107,8 @@ class Table implements BaseTableContract
 
 		$create();
 		$commands = $schemeObject->getCommandsArray();
-
 		$commandKeys = array_keys($commands);
+
 		if (sizeof($commandKeys) < 1) {
 
 			return null;

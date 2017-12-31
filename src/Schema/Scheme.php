@@ -69,6 +69,11 @@ class Scheme
 	protected	$definition;
 
 	/**
+	* @const 	SET_UNIQUE_KEY 
+	*/
+	const 		SET_UNIQUE_KEY = 1;
+
+	/**
 	* @access 	public
 	* @return 	Kit\Glider\Schema\Scheme
 	*/
@@ -223,12 +228,30 @@ class Scheme
 
 	/**
 	* @param 	$name <String>
+	* @param 	$columns <Array>
+	* @param 	$setUnique <Integer>
 	* @access 	public
 	* @return 	Kit\Glider\Schema\Scheme
 	*/
-	public function index(String $name)
+	public function index(String $name, Array $columns=[], int $setUnique=0)
 	{
-		//
+		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
+
+		$type = 'index';
+
+		if ($setUnique == Scheme::SET_UNIQUE_KEY) {
+
+			$index = 'UNIQUE ' . $index;
+
+			$type = 'unique_index';
+
+		}
+
+		Scheme::$commandsArray[$name] = ['type' => $type, 'definition' => $index];
+
+		Scheme::$commands[] = $index;
+
+		return $this;
 	}
 
 	/**
@@ -328,7 +351,7 @@ class Scheme
 		$definition = $this->getLength($definition, $length);
 		$definition = $definition . $isNull . $isPrimary . $canAutoIncrement;
 
-		Scheme::$commandsArray[$name] = $definition;
+		Scheme::$commandsArray[$name] = ['type' => $dataType, 'definition' => $definition];
 		Scheme::$commands[] = $definition;
 
 		return $this;
