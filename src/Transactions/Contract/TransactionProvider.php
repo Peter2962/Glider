@@ -22,5 +22,33 @@ interface TransactionProvider
 	* @return 	void
 	*/
 	public function __construct(PlatformProvider $platformProvider);
+
+	/**
+	* Begins a transaction. This method accepts an argument which is the current
+	* connection that is being used.
+	*
+	* @param 	$connection <Mixed>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function begin($connection);
+
+	/**
+	* Commits a transaction.
+	*
+	* @param 	$connection <Object>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function commit($connection);
+
+	/**
+	* Rolls back a transaction.
+	*
+	* @param 	$connection <Object>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function rollback($connection);
 	
 }

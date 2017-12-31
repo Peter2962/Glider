@@ -21,4 +21,29 @@ class MysqliTransaction implements TransactionProvider
 		$this->provider = $platformProvider;
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	public function begin($connection)
+	{
+		$connection->autocommit(FALSE);
+		$connection->begin_transaction();
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function commit($connection)
+	{
+		$connection->commit();
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function rollback($connection)
+	{
+		$connection->rollback();
+	}
+
 }

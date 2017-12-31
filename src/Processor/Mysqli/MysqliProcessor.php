@@ -266,13 +266,6 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$std->queryObject = $queryObject;
 		$query = $queryObject->query;
 
-		if (!$this->platformProvider->isAutoCommitEnabled()) {
-
-			// Only start transaction manually if auto commit is not enabled.
-			$transaction = $this->platformProvider->transaction();
-
-		}
-
 		// Turn error reporting on for mysqli
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -280,17 +273,40 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 
 			$hasMappableFields = $sqlGenerator->hasMappableFields($query);
 
-			// Attempt to prepare query, bind parameters dynamically and execute query.
+			if (!$this->platformProvider->isAutoCommitEnabled()) {
+
+				// Only start transaction manually if auto commit is not enabled.
+				$transaction = $this->platformProvider->transaction();
+				$transaction->begin($this->connection);
+
+			}
+
 			$statement = $this->connection->stmt_init();
+			
 			$statement->prepare($query);
 
 			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3]) && !empty($boundParameters)) {
+
 				call_user_func_array([$statement, 'bind_param'], $boundParameters);
+
 			}
 
 			$statement->execute();
 
+			if (!$this->platformProvider->isAutoCommitEnabled()) {
+
+				$transaction->commit($this->connection); // Commit transaction
+				
+			}
+
+
 		}catch(mysqli_sql_exception $sqlExp) {
+
+			if (!$this->platformProvider->isAutoCommitEnabled()) {
+
+				$transaction->rollback($this->connection);
+
+			}
 
 			throw new QueryException($sqlExp->getMessage(), $queryObject);
 
