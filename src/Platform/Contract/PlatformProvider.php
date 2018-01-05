@@ -9,6 +9,7 @@
 
 namespace Kit\Glider\Platform\Contract;
 
+use StdClass;
 use Kit\Glider\Events\EventManager;
 use Kit\Glider\Connection\PlatformResolver;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
@@ -16,6 +17,7 @@ use Kit\Glider\Schema\Contract\SchemaManagerContract;
 use Kit\Glider\Connectors\Contract\ConnectorProvider;
 use Kit\Glider\Connection\Contract\ConnectionInterface;
 use Kit\Glider\Transactions\Contract\TransactionProvider;
+use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
 use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 interface PlatformProvider
@@ -79,6 +81,14 @@ interface PlatformProvider
 	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
 	public function queryBuilder(ConnectionInterface $connectorProvider) : QueryBuilderProvider;
+
+	/**
+	* Returns the platform's index class.
+	*
+	* @access 	public
+	* @return 	Kit\Glider\Schema\Column\Index\Contract\IndexContract
+	*/
+	public function columnIndex(StdClass $index) : IndexContract;
 
 	/**
 	* This method helps to check if a platform supports prepared statement

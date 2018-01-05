@@ -117,16 +117,20 @@ class Table implements BaseTableContract
 
 		array_map(function($key) use ($commands) {
 
+			$command = $commands[$key];
 
-			if ($this->hasColumn($key)) {
+			if (!in_array($command['type'], ['INDEX', 'UNIQUE_INDEX', 'FOREIGN'])) {
 
-				$this->modifyColumn($commands[$key]);
+				if ($this->hasColumn($key)) {
 
-			}else{
+					$this->modifyColumn($commands[$key]['definition']);
 
-				// Create column if it does not exist in table.
-				$this->addColumn($commands[$key]);
+				}else{
 
+					// Create column if it does not exist in table.
+					$this->addColumn($commands[$key]['definition']);
+
+				}
 			}
 
 		}, $commandKeys);
@@ -237,11 +241,78 @@ class Table implements BaseTableContract
 		$newColumn = $newName . ' ' . $columnObject->getType();
 
 		$length = (Int) $columnObject->getLength();
+
 		if ($length > 0) {
+
 			$newColumn = $newColumn . '(' . $length .')';
+
 		}
 
 		return $this->runQueryWithExpression(Expressions::renameColumn($this->tableName, $column, $newColumn));
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getAllIndexes()
+	{
+		if ($result = $this->builder()->queryWithBinding(Expressions::getAllIndexes($this->tableName))->get()) {
+
+			return array_map(function($index) {
+
+				return Factory::getProvider()->columnIndex($index);
+
+			}, $result->all());
+
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDOc}
+	*/
+	public function hasIndex(String $name) : Bool
+	{
+		$indexes = $this->getAllIndexes();
+
+		foreach($indexes as $index) {
+
+			if ($name == $index->getName()) {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function addIndex(String $name, Array $options=[])
+	{
+		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
+
+		$type = 'INDEX';
+
+		if ($setUnique == Scheme::SET_UNIQUE_KEY) {
+
+			$index = 'UNIQUE ' . $index;
+
+			$type = 'UNIQUE_INDEX';
+
+		}
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function renameIndex(String $oldname, String $newName)
+	{
+		//
 	}
 
 	/**

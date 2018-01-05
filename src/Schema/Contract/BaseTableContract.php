@@ -130,4 +130,42 @@ interface BaseTableContract
 	*/
 	public function renameColumn(String $column, String $newName);
 
+	/**
+	* Returns all indexes on a table.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getAllIndexes();
+
+	/**
+	* Checks if a table has column.
+	*
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	void
+	*/
+	public function hasIndex(String $column) : Bool;
+
+	/**
+	* Creates a new index.
+	*
+	* @param 	$name <String>
+	* @param 	$options <Array>
+	* @access 	public
+	* @return 	void
+	*/
+	public function addIndex(String $name, Array $options=[]);
+
+	/**
+	* Renames an index on a table. @param $oldName is the index's current
+	* name while @param $newName is the name which the index will be changed to.
+	*
+	* @param 	$oldName <String>
+	* @param 	$newName <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function renameIndex(String $oldName, String $newName);
+
 }
