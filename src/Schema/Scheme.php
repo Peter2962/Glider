@@ -237,13 +237,13 @@ class Scheme
 	{
 		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
 
-		$type = 'index';
+		$type = 'INDEX';
 
 		if ($setUnique == Scheme::SET_UNIQUE_KEY) {
 
 			$index = 'UNIQUE ' . $index;
 
-			$type = 'unique_index';
+			$type = 'UNIQUE_INDEX';
 
 		}
 

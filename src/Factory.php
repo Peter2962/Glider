@@ -55,7 +55,7 @@ class Factory
 	*
 	* @access 	public
 	* @static
-	* @return 	Object Glider\Query\Builder\QueryBuilder
+	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
 	*/
 	public static function getQueryBuilder()
 	{
@@ -67,11 +67,22 @@ class Factory
 	*
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	Glider\Schema\SchemaManager\SchemaManagerContract
+	* @return 	Kit\Glider\Schema\SchemaManager\SchemaManagerContract
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
 		return self::getInstance()->provider->schemaManager($connectionId, Factory::getQueryBuilder());
+	}
+
+	/**
+	* Returns current provider.
+	*
+	* @access 	public
+	* @return Kit\Glider\Platform\Contract\PlatformProvider
+	*/
+	public static function getProvider() : PlatformProvider
+	{
+		return self::getInstance()->provider;
 	}
 
 	/**

@@ -170,6 +170,28 @@ class Expressions
 	}
 
 	/**
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function getAllIndexes(String $table)
+	{
+		return 'SHOW INDEXES FROM ' . $table;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function hasIndex(String $table, String $index) : String
+	{
+
+	}
+
+	/**
 	* @param 	$table <String>
 	* @param 	$column <String>
 	* @access 	public

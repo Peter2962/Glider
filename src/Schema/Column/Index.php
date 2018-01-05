@@ -5,23 +5,32 @@ class Index
 {
 
 	/**
-	* @access 	public
-	* @return 	String
-	* @static
+	* @var 		$index
+	* @access 	protected
 	*/
-	public static function getDefaultDefinition() : String
-	{
+	protected 	$index;
 
+	/**
+	* Constructs an index
+	*
+	* @param 	$index <Object>
+	* @access 	public
+	* @return 	void
+	*/
+	public function __construct(StdClass $index)
+	{
+		$this->index = $index;
 	}
 
 	/**
-	* @access 	protected
-	* @return 	Object
-	* @static
+	* Returns the table where the index is.
+	*
+	* @access 	public
+	* @return 	String
 	*/
-	protected static function getInstance()
+	public function getTable()
 	{
-		return new self();
+
 	}
 
 	/**
