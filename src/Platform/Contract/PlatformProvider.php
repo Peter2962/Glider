@@ -15,6 +15,7 @@ use Kit\Glider\Connection\PlatformResolver;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
 use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Schema\Column\Contract\ColumnContract;
 use Kit\Glider\Connection\Contract\ConnectionInterface;
 use Kit\Glider\Transactions\Contract\TransactionProvider;
 use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
@@ -81,6 +82,15 @@ interface PlatformProvider
 	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
 	public function queryBuilder(ConnectionInterface $connectorProvider) : QueryBuilderProvider;
+
+	/**
+	* Returns the platform's column class. Different platforms have different column
+	* object definitions so using this will make it easy to control the column attributes.
+	*
+	* @access 	public
+	* @return 	Kit\Glider\Schema\Column\Contract\ColumnContract
+	*/
+	public function column($column) : ColumnContract;
 
 	/**
 	* Returns the platform's index class.

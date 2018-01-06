@@ -151,11 +151,12 @@ interface BaseTableContract
 	* Creates a new index.
 	*
 	* @param 	$name <String>
-	* @param 	$options <Array>
+	* @param 	$columns <Array>
+	* @param 	$setUnique <Integer>
 	* @access 	public
 	* @return 	void
 	*/
-	public function addIndex(String $name, Array $options=[]);
+	public function addIndex(String $name, Array $columns=[], int $setUnique);
 
 	/**
 	* Renames an index on a table. @param $oldName is the index's current

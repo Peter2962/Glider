@@ -181,14 +181,14 @@ class Expressions
 
 	/**
 	* @param 	$table <String>
-	* @param 	$column <String>
+	* @param 	$index <String>
 	* @access 	public
 	* @return 	String
 	* @static
 	*/
-	public static function hasIndex(String $table, String $index) : String
+	public static function addIndex(String $table, String $index) : String
 	{
-
+		return 'ALTER TABLE ' . $table . ' ADD ' . $index;
 	}
 
 	/**
