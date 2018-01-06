@@ -174,7 +174,6 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	public function query(String $queryString, int $returnType=1)
 	{
 
-
 		// Turn error reporting on for mysqli
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

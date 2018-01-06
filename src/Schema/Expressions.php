@@ -193,6 +193,18 @@ class Expressions
 
 	/**
 	* @param 	$table <String>
+	* @param 	$index <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function dropIndex(String $table, String $index) : String
+	{
+		return 'ALTER TABLE ' . $table . ' DROP INDEX ' . $index;
+	}
+
+	/**
+	* @param 	$table <String>
 	* @param 	$column <String>
 	* @access 	public
 	* @return 	String
@@ -213,6 +225,29 @@ class Expressions
 	public static function addColumn(String $table, String $column) : String
 	{
 		return 'ALTER TABLE ' . $table . ' ADD COLUMN ' . $column;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$column <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function addPrimary(String $table, String $column) : String
+	{
+		return 'ALTER TABLE ' . $table . ' ADD PRIMARY KEY (' . trim($column) . ')';
+	}
+
+	/**
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function dropPrimary(String $table) : String
+	{
+		return 'ALTER TABLE ' . $table . ' DROP PRIMARY KEY';
 	}
 
 }
