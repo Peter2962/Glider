@@ -9,11 +9,13 @@ use Kit\Glider\Schema\Column\Index\MysqliIndex;
 use Kit\Glider\Processor\Mysqli\MysqliProcessor;
 use Kit\Glider\Connectors\Mysqli\MysqliConnector;
 use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Schema\Column\Platform\MysqliColumn;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
 use Kit\Glider\Schema\Platforms\MysqliSchemaManager;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
 use Kit\Glider\Transactions\Mysqli\MysqliTransaction;
 use Kit\Glider\Connectors\Contract\ConnectorProvider;
+use Kit\Glider\Schema\Column\Contract\ColumnContract;
 use Kit\Glider\Connection\Contract\ConnectionInterface;
 use Kit\Glider\Transactions\Contract\TransactionProvider;
 use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
@@ -83,6 +85,14 @@ class MysqliProvider implements PlatformProvider
 	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract
 	{
 		return new MysqliSchemaManager($connectionId, $queryBuilder);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function column($column) : ColumnContract
+	{
+		return new MysqliColumn($column);
 	}
 
 	/**

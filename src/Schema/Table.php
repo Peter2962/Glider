@@ -166,12 +166,14 @@ class Table implements BaseTableContract
 	{
 		$columnName = $this->_column($column);
 
-		if ($result = $this->runQueryWithExpression(Expressions::hasColumn($this->tableName, $columnName))) {
-			if ($result->numRows() > 0) {
+		foreach($this->getColumns() as $col) {
+
+			if ($col->getName() == $column) {
+
 				return true;
+
 			}
 
-			return false;
 		}
 
 		return false;
@@ -185,7 +187,17 @@ class Table implements BaseTableContract
 	*/
 	public function getColumns()
 	{
-		return $this->builder()->queryWithBinding(Expressions::getColumns($this->tableName))->get()->all();
+		$columns = $this->builder()->queryWithBinding(Expressions::getColumns($this->tableName))->get()->all();
+
+		$_columns = [];
+
+		foreach($columns as $column) {
+
+			$_columns[] = Factory::getPlatformColumn($column);
+
+		}
+
+		return $_columns;
 	}
 
 	/**
@@ -201,7 +213,7 @@ class Table implements BaseTableContract
 
 		foreach($columns as $column) {
 			if ($column->Field == $columnName) {
-				return new Column($column);
+				return Factory::getPlatformColumn($column);
 			}
 		}	
 	}
@@ -292,8 +304,9 @@ class Table implements BaseTableContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function addIndex(String $name, Array $options=[])
+	public function addIndex(String $name, Array $columns=[], int $setUnique=0)
 	{
+
 		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
 
 		$type = 'INDEX';
@@ -305,6 +318,8 @@ class Table implements BaseTableContract
 			$type = 'UNIQUE_INDEX';
 
 		}
+
+		return $this->runQueryWithExpression(Expressions::addIndex($this->tableName, $index));
 	}
 
 	/**

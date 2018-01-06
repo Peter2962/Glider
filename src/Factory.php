@@ -15,6 +15,7 @@ use Kit\Glider\Query\Builder\QueryBinder;
 use Kit\Glider\Query\Builder\QueryBuilder;
 use Kit\Glider\Connection\ConnectionManager;
 use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Schema\Column\Contract\ColumnContract;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
 
 class Factory
@@ -67,6 +68,7 @@ class Factory
 	*
 	* @param 	$connectionId <String>
 	* @access 	public
+	* @static
 	* @return 	Kit\Glider\Schema\SchemaManager\SchemaManagerContract
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
@@ -78,11 +80,25 @@ class Factory
 	* Returns current provider.
 	*
 	* @access 	public
+	* @static
 	* @return Kit\Glider\Platform\Contract\PlatformProvider
 	*/
 	public static function getProvider() : PlatformProvider
 	{
 		return self::getInstance()->provider;
+	}
+
+	/**
+	* Returns the platform column class.
+	*
+	* @param 	$column <Object>
+	* @access 	public
+	* @static
+	* @return 	Kit\Glider\Schema\Column\Contract\ColumnContract
+	*/
+	public static function getPlatformColumn($column) : ColumnContract
+	{
+		return self::getInstance()->provider->column($column);
 	}
 
 	/**
