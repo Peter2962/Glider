@@ -2,6 +2,7 @@
 namespace Kit\Glider\Schema\Contract;
 
 use Closure;
+use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
 
 interface BaseTableContract
 {
@@ -148,6 +149,15 @@ interface BaseTableContract
 	public function hasIndex(String $column) : Bool;
 
 	/**
+	* Returns an index in a table.
+	*
+	* @param 	$index <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function getIndex(String $index);
+
+	/**
 	* Creates a new index.
 	*
 	* @param 	$name <String>
@@ -159,14 +169,40 @@ interface BaseTableContract
 	public function addIndex(String $name, Array $columns=[], int $setUnique);
 
 	/**
-	* Renames an index on a table. @param $oldName is the index's current
-	* name while @param $newName is the name which the index will be changed to.
+	* Drops an index on a table.
 	*
-	* @param 	$oldName <String>
-	* @param 	$newName <String>
+	* @param 	$index <Mixed>
 	* @access 	public
 	* @return 	Mixed
 	*/
-	public function renameIndex(String $oldName, String $newName);
+	public function dropIndex($index);
+
+	/**
+	* Checks if an index is unique. This method accepts one argument which can eother be
+	* a string or an instance of IndexContract.
+	*
+	* @param 	$index <Mixed>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function isUnique($index) : Bool;
+
+	/**
+	* Creates a primary key on the table. Method accepts one argument that can either be a string
+	* or an instance of ColumnContract
+	*
+	* @param 	$column <Mixed>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function addPrimary($column);
+
+	/**
+	* Drops a primary key on the table.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function dropPrimary();
 
 }

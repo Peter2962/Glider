@@ -8,6 +8,8 @@ use Kit\Glider\Schema\Scheme;
 use Kit\Glider\Schema\Column;
 use Kit\Glider\Schema\Expressions;
 use Kit\Glider\Schema\Contract\BaseTableContract;
+use Kit\Glider\Schema\Column\Contract\ColumnContract;
+use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
 
 class Table implements BaseTableContract
 {
@@ -304,6 +306,24 @@ class Table implements BaseTableContract
 	/**
 	* {@inheritDoc}
 	*/
+	public function getIndex(String $indexName)
+	{
+		foreach($this->getAllIndexes() as $index) {
+
+			if ($indexName == $index->getName()) {
+
+				return $index;
+
+			}
+
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function addIndex(String $name, Array $columns=[], int $setUnique=0)
 	{
 
@@ -325,9 +345,69 @@ class Table implements BaseTableContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function renameIndex(String $oldname, String $newName)
+	public function dropIndex($index)
 	{
-		//
+		if ($index instanceof IndexContract) {
+
+			$index = $index->getName();
+
+		}
+
+		return $this->runQueryWithExpression(Expressions::dropIndex($this->tableName, $index));
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function isUnique($index) : Bool
+	{
+		if (is_string($index)) {
+
+			if (!$this->hasIndex($index)) {
+
+				throw new RuntimeException(sprintf('Index `%s` does not exist in `%s` table', $index, $this->tableName));
+
+			}
+
+			$index = $this->getIndex($index);
+
+		}
+
+		if ($index->isUnique()) {
+
+			return true;
+
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function addPrimary($column)
+	{
+		if (is_string($column) && !$this->hasColumn($column)) {
+
+				throw new RuntimeException(sprintf('Column `%s` does not exist in `%s` table', $column, $this->tableName));
+
+		}
+
+		if ($column instanceof ColumnContract) {
+
+			$column = $column->getName();
+
+		}
+
+		return $this->runQueryWithExpression(Expressions::addPrimary($this->tableName, $column));
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function dropPrimary()
+	{
+		return $this->runQueryWithExpression(Expressions::dropPrimary($this->tableName));
 	}
 
 	/**
