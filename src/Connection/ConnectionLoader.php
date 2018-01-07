@@ -2,6 +2,7 @@
 namespace Kit\Glider\Connection;
 
 use Exception;
+use App\Config;
 
 class ConnectionLoader
 {
@@ -17,11 +18,14 @@ class ConnectionLoader
 	
 		if (!file_exists($configLocation)) {
 
-			throw new Exception('Unable to load database configuration file.');
+			$resourceConfig = Config::get('database');
 
+		}else{
+
+			$resourceConfig = include $configLocation;
+			
 		}
 
-		$resourceConfig = include $configLocation;
 
 		if (gettype($resourceConfig) !== 'array') {
 
