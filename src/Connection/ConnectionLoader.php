@@ -26,7 +26,6 @@ class ConnectionLoader
 			
 		}
 
-
 		if (gettype($resourceConfig) !== 'array') {
 
 			throw new Exception('Invalid configuration type.');
