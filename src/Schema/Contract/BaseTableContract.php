@@ -37,16 +37,31 @@ interface BaseTableContract
 	public function exists();
 
 	/**
-	* Creates table.
+	* Creates a table.
+	*
+	* Basic Usage:
+	*
+	* Schema::table('mytable')->create(function($scheme){
+	* 		// definitions
+	* 		$scheme->integer('id', false, true, [// options]);
+	* });
 	*
 	* @param 	$scheme <Closure>
 	* @access 	public
 	* @return 	Mixed
+	* @see 		Kit\Glider\Schema\Scheme
 	*/
 	public function create(Closure $scheme);
 
 	/**
 	* Modifies or alters a table.
+	*
+	* Basic Usage:
+	*
+	* Schema::table('mytable')->modify(function($scheme){
+	* 		// definitions
+	* 		$scheme->integer('id', false, true, [// options]);
+	* });
 	*
 	* @param 	$scheme <Closure>
 	* @access 	public
