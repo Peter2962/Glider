@@ -250,4 +250,39 @@ class Expressions
 		return 'ALTER TABLE ' . $table . ' DROP PRIMARY KEY';
 	}
 
+	/**
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function showCreateTable(String $table) : String
+	{
+		return 'SHOW CREATE TABLE ' . $table;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$foreignKey <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function dropForeign(String $table, String $foreignKey) : String
+	{
+		return 'ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $foreignKey;
+	}
+
+	/**
+	* @param 	$table <String>
+	* @param 	$constraintDefinition <String>
+	* @access 	public
+	* @return 	String
+	* @static
+	*/
+	public static function addForeign(String $table, String $constraintDefinition) : String
+	{
+		return 'ALTER TABLE ' . $table . ' ADD ' . $constraintDefinition;
+	}
+
 }
