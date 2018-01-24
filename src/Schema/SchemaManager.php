@@ -153,6 +153,35 @@ class SchemaManager implements SchemaManagerContract
 	/**
 	* {@inheritDoc}
 	*/
+	public function hasForeign(String $table, String $foreignKey) : Bool
+	{
+		return SchemaManager::table($table)->hasForeign($foreignKey);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function dropForeign(String $table, String $foreignKey) : Bool
+	{
+		return SchemaManager::table($table)->dropForeign($foreignKey);
+	}
+
+	/**
+	* Holds instance of table.
+	*
+	* @param 	$table <String>
+	* @access 	public
+	* @static
+	* @return 	void
+	*/
+	public static function table(String $table)
+	{
+		return Table::getInstance($table);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function setTableEngine(String $engine)
 	{
 		return SchemaManager::table($table)->setEngine($engine);
@@ -167,13 +196,5 @@ class SchemaManager implements SchemaManagerContract
 	protected function runQueryWithExpression(String $expresison, int $type=1)
 	{
 		return $this->queryBuilder->query($expresison, $type);
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public static function table(String $table)
-	{
-		return Table::getInstance($table);
 	}
 }

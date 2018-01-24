@@ -217,4 +217,22 @@ interface BaseTableContract
 	*/
 	public function dropPrimary();
 
+	/**
+	* Checks if table has foreign key.
+	*
+	* @param 	$foreignKey <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function hasForeign(String $foreignKey) : Bool;
+
+	/**
+	* Drops a foreign key on a table.
+	*
+	* @param 	$foreignKey <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function dropForeign(String $foreignKey) : Bool;
+
 }

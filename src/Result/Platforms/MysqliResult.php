@@ -52,7 +52,7 @@ class MysqliResult implements PlatformResultContract
 	*/
 	public function fetchArray()
 	{
-
+		//
 	}
 
 	/**

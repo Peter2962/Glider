@@ -133,14 +133,8 @@ class Table implements BaseTableContract
 			}else{
 				switch ($command['type']) {
 					case 'FOREIGN':
-						return null;
-						break;
-					case 'INDEX':
-						return false;
-						break;
-					default:
-						return;
-						break;
+						$this->addForeign($command['definition']);
+					break;
 				}
 			}
 
@@ -420,12 +414,47 @@ class Table implements BaseTableContract
 	}
 
 	/**
+	* {@inheritDoc}
+	*/
+	public function hasForeign(String $foreignKey) : Bool
+	{
+		if ($result = $this->runQueryWithExpression(Expressions::showCreateTable($this->tableName))) {
+			if (is_object($result) && method_exists($result, 'fetchObject')) {
+				$query = $result->fetchObject()->{'Create Table'};
+				$foreignKey = 'CONSTRAINT `' . $foreignKey . '`';
+
+				if (preg_match("/$foreignKey/", $query)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function dropForeign(String $foreignKey) : Bool
+	{
+		if (!$this->hasForeign($foreignKey)) {
+			return false;
+		}
+
+		$this->runQueryWithExpression(Expressions::dropForeign($this->tableName, $foreignKey));
+
+		return true;
+	}
+
+	/**
+	* Get an instace of table class.
+	*
 	* @param 	$tableName <String>
 	* @access 	public
 	* @return 	Object
 	* @static
 	*/
-	public static function getInstance(String $tableName=null)
+	public static function getInstance(String $tableName)
 	{
 		return new self($tableName);
 	}
@@ -518,6 +547,18 @@ class Table implements BaseTableContract
 	protected function engines() : Array
 	{
 		return ['InnoDB', 'MyISAM', 'CSV'];
+	}
+
+	/**
+	* Add foreign key to table.
+	*
+	* @param 	$definition <String>
+	* @access 	protected
+	* @return 	void
+	*/
+	protected function addForeign(String $definition)
+	{
+		$this->runQueryWithExpression(Expressions::addForeign($this->tableName, $definition));
 	}
 
 }

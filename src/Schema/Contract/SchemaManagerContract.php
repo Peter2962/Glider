@@ -157,4 +157,24 @@ interface SchemaManagerContract
 	*/
 	public function setTableEngine(String $engine);
 
+	/**
+	* Checks if a table has a foreign key.
+	*
+	* @param 	$table <String>
+	* @param 	$foreignKey <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function hasForeign(String $table, String $foreignKey) : Bool;
+
+	/**
+	* Drops a foreign key.
+	*
+	* @param 	$table <String>
+	* @param 	$foreignKey <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function dropForeign(String $table, String $foreignKey) : Bool;
+
 }
