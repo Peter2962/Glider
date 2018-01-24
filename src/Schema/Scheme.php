@@ -255,13 +255,50 @@ class Scheme
 	}
 
 	/**
+	* Generates a foreign key constraint.
+	*
+	* @param 	$keyName <String>
 	* @param 	$options <Array>
+	* @param 	$onDelete <String>
+	* @param 	$onUpdate <String>
 	* @access 	public
 	* @return 	Kit\Glider\Schema\Scheme
 	*/
-	public function foreign(Array $options=[])
+	public function foreign(String $keyName, Array $options=[], String $onDelete='NO ACTION', String $onUpdate='NO ACTION')
 	{
-		//
+		$columns = $options['columns'];
+		$referenceTable = $options['references'];
+		$refColumns = $options['refColumns'];
+
+		$clauseList = ['CASCADE', 'RESTRICT', 'NO ACTION'];
+
+		if (is_array($columns)) {
+			$columns = implode(',', $columns);
+		}
+
+		if (is_array($refColumns)) {
+			$refColumns = implode(',', $refColumns);
+		}
+
+		$onDelete = strtoupper($onDelete);
+		$onUpdate = strtoupper($onUpdate);
+
+		if (!in_array($onDelete, $clauseList)) {
+			$onDelete = $clauseList[2];
+		}
+
+		if (!in_array($onUpdate, $clauseList)) {
+			$onUpdate = $clauseList[2];
+		}	
+
+		$definition = 'FOREIGN KEY ' . $keyName . '(' . $columns . ') REFERENCES ' . $referenceTable . '(' . $refColumns . ')';
+		$definition .= ' ON UPDATE ' . $onUpdate . ' ON DELETE ' . $onDelete;
+
+		$options['type'] = 'FOREIGN';
+		$options['definition'] = $definition;
+
+		Scheme::$commandsArray[$keyName] = $options;
+		Scheme::$commands[] = $definition;
 	}
 
 	/**
@@ -274,7 +311,11 @@ class Scheme
 	{
 		$commands = self::$commands;
 
-		return implode($separator, $commands);
+		if (sizeof($commands) > 0) {
+			return implode($separator, $commands);
+		}
+
+		return null;
 	}
 
 	/**
