@@ -41,12 +41,9 @@ class Table implements BaseTableContract
 	/**
 	* {@inheritDoc}
 	*/	
-	public function __construct(String $tableName, Array $columns=[], Array $indexes=[], String $primaryKey=null)
+	public function __construct(String $tableName)
 	{
 		$this->tableName = $tableName;
-		$this->columns = $columns;
-		$this->indexes = $indexes;
-		$this->primaryKey = $primaryKey;
 	}
 
 	/**
@@ -132,6 +129,18 @@ class Table implements BaseTableContract
 					// Create column if it does not exist in table.
 					$this->addColumn($commands[$key]['definition']);
 
+				}
+			}else{
+				switch ($command['type']) {
+					case 'FOREIGN':
+						return null;
+						break;
+					case 'INDEX':
+						return false;
+						break;
+					default:
+						return;
+						break;
 				}
 			}
 
@@ -389,7 +398,7 @@ class Table implements BaseTableContract
 	{
 		if (is_string($column) && !$this->hasColumn($column)) {
 
-				throw new RuntimeException(sprintf('Column `%s` does not exist in `%s` table', $column, $this->tableName));
+			throw new RuntimeException(sprintf('Column `%s` does not exist in `%s` table', $column, $this->tableName));
 
 		}
 
