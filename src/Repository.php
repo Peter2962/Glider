@@ -1,9 +1,9 @@
 <?php
 /**
-* @package 	Factory
+* @package 	Repository
 * @version 	0.1.0
 *
-* This factory handles all database operations provided by
+* This Repository handles all database operations provided by
 * Glider. The connection manager @see Kit\Glider\Connection\ConnectionManager can also
 * be used to handle some operations.
 */
@@ -18,7 +18,7 @@ use Kit\Glider\Platform\Contract\PlatformProvider;
 use Kit\Glider\Schema\Column\Contract\ColumnContract;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
 
-class Factory
+class Repository
 {
 
 	/**
@@ -41,24 +41,33 @@ class Factory
 	protected 	$transaction;
 
 	/**
+	* @var 		$connectionId
+	* @access 	protected
+	*/
+	protected 	$connectionId;
+
+	/**
+	* @param 	$connectionId <String>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(String $connection=null)
+	public function __construct(String $connectionId=null)
 	{
+		$this->connectionId = $connectionId;
 		$connectionManager = new ConnectionManager();
-		$this->provider = $provider = $connectionManager->getConnection($connection);
+		$this->provider = $provider = $connectionManager->getConnection($this->connectionId);
 		$this->transaction = $provider->transaction();
 	}
 
 	/**
 	* Returns instance of query builder.
 	*
+	* @param 	$connectionId <String>
 	* @access 	public
 	* @static
 	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
 	*/
-	public static function getQueryBuilder()
+	public static function getQueryBuilder(String $connectionId=null)
 	{
 		return self::getInstance()->provider->queryBuilder(new ConnectionManager());
 	}
@@ -73,19 +82,20 @@ class Factory
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
-		return self::getInstance()->provider->schemaManager($connectionId, Factory::getQueryBuilder());
+		return self::getInstance($connectionId)->provider->schemaManager($connectionId, Repository::getQueryBuilder());
 	}
 
 	/**
 	* Returns current provider.
 	*
+	* @param 	$connectionId <String>
 	* @access 	public
 	* @static
 	* @return Kit\Glider\Platform\Contract\PlatformProvider
 	*/
-	public static function getProvider() : PlatformProvider
+	public static function getProvider(String $connectionId=null) : PlatformProvider
 	{
-		return self::getInstance()->provider;
+		return self::getInstance($connectionId)->provider;
 	}
 
 	/**
@@ -102,15 +112,16 @@ class Factory
 	}
 
 	/**
-	* Returns a static instance of Glider\Factory.
+	* Returns a static instance of Kit\Glider\Repository.
 	*
+	* @param 	$connectionId <String>
 	* @access 	protected
 	* @static
 	* @return 	Object
 	*/
-	protected static function getInstance()
+	protected static function getInstance(String $connectionId=null)
 	{
-		return new self();
+		return new self($connectionId);
 	}
 
 }

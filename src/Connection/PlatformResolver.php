@@ -86,7 +86,7 @@ class PlatformResolver
 		}
 
 		if (!is_null($resolvedProvider) && $resolvedProvider == false) {
-			throw new RuntimeException('Unable to start connection for database platform.');
+			throw new RuntimeException('Unable to resolve database platform.');
 		}
 
 		// If connection was successfully established, dispatch `connect.created` event.
