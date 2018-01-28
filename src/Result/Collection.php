@@ -36,7 +36,7 @@ class Collection implements CollectionContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function __construct($processorProvider, $statement)
+	public function __construct($processorProvider=null, $statement=null)
 	{
 		if ($processorProvider instanceof ProcessorProvider) {
 			$this->collected = $processorProvider->getResult();

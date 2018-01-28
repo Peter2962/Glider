@@ -114,10 +114,10 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function __construct(ConnectionManager $connectionManager)
+	public function __construct(ConnectionManager $connectionManager, String $connectionId=null)
 	{
 		$classLoader = new ClassLoader();
-		$this->provider = $connectionManager->getConnection();
+		$this->provider = $connectionManager->getConnection($connectionId);
 		$this->connector = $this->provider->connector();
 		$this->processorProvider = $this->provider->processor();
 		$this->generator = $classLoader->getInstanceOfClass('Kit\Glider\Query\Builder\SqlGenerator');

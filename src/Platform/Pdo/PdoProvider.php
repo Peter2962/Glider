@@ -1,23 +1,21 @@
 <?php
-#######################
-# Mysqli Provider class
-#######################
+####################
+# Pdo Provider class
+####################
 
-namespace Kit\Glider\Platform\Mysqli;
+namespace Kit\Glider\Platform\Pdo;
 
 use StdClass;
 use Kit\Glider\Events\EventManager;
+use Kit\Glider\Processor\Pdo\PdoProcessor;
 use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Connectors\Pdo\PdoConnector;
 use Kit\Glider\Connection\PlatformResolver;
-use Kit\Glider\Schema\Column\Index\MysqliIndex;
-use Kit\Glider\Processor\Mysqli\MysqliProcessor;
-use Kit\Glider\Connectors\Mysqli\MysqliConnector;
+use Kit\Glider\Transactions\Pdo\PdoTransaction;
+use Kit\Glider\Schema\Platforms\PdoSchemaManager;
 use Kit\Glider\Platform\Contract\PlatformProvider;
-use Kit\Glider\Schema\Column\Platform\MysqliColumn;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
-use Kit\Glider\Schema\Platforms\MysqliSchemaManager;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
-use Kit\Glider\Transactions\Mysqli\MysqliTransaction;
 use Kit\Glider\Connectors\Contract\ConnectorProvider;
 use Kit\Glider\Schema\Column\Contract\ColumnContract;
 use Kit\Glider\Connection\Contract\ConnectionInterface;
@@ -25,7 +23,7 @@ use Kit\Glider\Transactions\Contract\TransactionProvider;
 use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
 use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
-class MysqliProvider implements PlatformProvider
+class PdoProvider implements PlatformProvider
 {
 
 	/**
@@ -54,7 +52,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function connector() : ConnectorProvider
 	{
-		return new MysqliConnector($this);
+		return new PdoConnector($this);
 	}
 
 	/**
@@ -62,7 +60,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function transaction() : TransactionProvider
 	{
-		return new MysqliTransaction($this);
+		return new PdoTransaction($this);
 	}
 
 	/**
@@ -70,7 +68,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function processor() : ProcessorProvider
 	{
-		return new MysqliProcessor($this);
+		return new PdoProcessor($this);
 	}
 
 	/**
@@ -88,7 +86,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract
 	{
-		return new MysqliSchemaManager($connectionId, $queryBuilder);
+		return new PdoSchemaManager($connectionId, $queryBuilder);
 	}
 
 	/**
@@ -96,7 +94,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function column($column) : ColumnContract
 	{
-		return new MysqliColumn($column);
+
 	}
 
 	/**
@@ -104,7 +102,7 @@ class MysqliProvider implements PlatformProvider
 	*/
 	public function columnIndex(StdClass $index) : IndexContract
 	{
-		return new MysqliIndex($index);
+
 	}
 
 	/**

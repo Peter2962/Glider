@@ -1,4 +1,8 @@
 <?php
+##################################
+# Mysqli database connection class 
+##################################
+
 namespace Kit\Glider\Connectors\Mysqli;
 
 use mysqli;

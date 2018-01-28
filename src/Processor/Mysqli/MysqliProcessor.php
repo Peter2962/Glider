@@ -39,9 +39,6 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	private 	$sqlGenerator;
 
 	/**
-	* We are setting this to protected because we'll be setting the result
-	* internally.
-	*
 	* @var 		$result
 	* @access 	protected
 	*/

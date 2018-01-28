@@ -1,16 +1,15 @@
 <?php
 /**
-* @package 	StatementProvider
+* @package 	ProcessorProvider
 * @version 	0.1.0
 *
-* StatementProvider helps to formulize a platform's statement. It gives
-* each platform an architecture template that is required. The StatementProvider handles
-* query processing. 
+* ProcessorProvider gives each platform an architecture template that is required.
 * @method fetch
 * @method insert
 * @method update
 * @method delete
 * @method query
+* @method getResult
 */
 
 namespace Kit\Glider\Processor\Contract;

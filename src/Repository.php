@@ -69,7 +69,7 @@ class Repository
 	*/
 	public static function getQueryBuilder(String $connectionId=null)
 	{
-		return self::getInstance()->provider->queryBuilder(new ConnectionManager());
+		return self::getInstance($connectionId)->provider->queryBuilder(new ConnectionManager(), $connectionId);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Repository
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
-		return self::getInstance($connectionId)->provider->schemaManager($connectionId, Repository::getQueryBuilder());
+		return self::getInstance($connectionId)->provider->schemaManager($connectionId, Repository::getQueryBuilder($connectionId));
 	}
 
 	/**
