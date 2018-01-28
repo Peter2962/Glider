@@ -27,6 +27,9 @@ return [
 		'prefix' => '',
 		'auto_commit' => true,
 		'alt' => null,
-		'persistent' => true
+		'persistent' => true,
+		'options' => [
+			
+		]
 	]
 ];
