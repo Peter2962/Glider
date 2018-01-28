@@ -78,10 +78,12 @@ interface PlatformProvider
 	* a platform might require a different query builder.
 	* This method accepts an argument: Kit\Glider\Connection\Contract\ConnectionInterface.
 	*
+	* @param 	$connectionProvider <Kit\Glider\Connection\Contract\ConnectionInterface>
+	* @param 	$connectionId <String>
 	* @access 	public
 	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProivder
 	*/
-	public function queryBuilder(ConnectionInterface $connectorProvider) : QueryBuilderProvider;
+	public function queryBuilder(ConnectionInterface $connectorProvider, String $connectionId=null) : QueryBuilderProvider;
 
 	/**
 	* Returns the platform's column class. Different platforms have different column

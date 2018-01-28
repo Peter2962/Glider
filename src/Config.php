@@ -12,7 +12,7 @@ return [
 		'domain' => 'phoxphp.repo',
 		'auto_commit' => false,
 		'prefix' => '',
-		'alt' => 'dev'
+		'alt' => null
 	],
 	'dev' => [
 		'provider' => Kit\Glider\Platform\Pdo\PdoProvider::class,
@@ -23,9 +23,10 @@ return [
 		'database' => 'test',
 		'charset' => 'utf8',
 		'collation' => 'utf8',
-		'domain' => 'http://server.web/',
+		'domain' => 'phoxphp.repo',
 		'prefix' => '',
 		'auto_commit' => true,
-		'alt' => null
+		'alt' => null,
+		'persistent' => true
 	]
 ];
