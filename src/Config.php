@@ -29,7 +29,9 @@ return [
 		'alt' => null,
 		'persistent' => true,
 		'options' => [
-			
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_CASE => PDO::CASE_NATURAL,
+			PDO::ATTR_PERSISTENT => true
 		]
 	]
 ];

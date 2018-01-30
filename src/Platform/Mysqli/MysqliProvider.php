@@ -160,4 +160,12 @@ class MysqliProvider implements PlatformProvider
 		return $this->config[$key] ?? null;
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	final public function getPlatformName() : String
+	{
+		return get_class($this);
+	}
+
 }

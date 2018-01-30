@@ -24,28 +24,14 @@
 * @author 	Peter Taiwo
 */
 
-namespace Kit\Glider\Statements\Exceptions;
 
-use StdClass;
-use Exception;
+namespace Kit\Glider\Query\Builder\Platforms;
 
-class QueryException extends Exception
+use Kit\Glider\Query\Builder\QueryBuilder;
+
+class PdoQueryBuilder extends QueryBuilder
 {
 
-	/**
-	* This exception is thrown when/if an error occurs when a query
-	* is run. THe first argument {$queryObject} must be an instance of StdClass which should
-	* contain the converted query string.
-	*
-	* @param 	$message <String>
-	* @param 	$queryObject <StdClass>
-	* @access 	public
-	* @return 	void
-	*/
-	public function __construct(String $message, StdClass $queryObject)
-	{
-		$message .= ' [query: '. $queryObject->query .']';
-		parent::__construct($message);
-	}
+	//
 
 }

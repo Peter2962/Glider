@@ -121,9 +121,9 @@ interface QueryBuilderProvider
 	* Returns the registered ResultMapper.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	Mixed
 	*/
-	public function getResultMapper() : String;
+	public function getResultMapper();
 
 	/**
 	* This method checks if a `ResultMapper` class is being used for the current

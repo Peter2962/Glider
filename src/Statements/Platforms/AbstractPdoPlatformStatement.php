@@ -24,28 +24,51 @@
 * @author 	Peter Taiwo
 */
 
-namespace Kit\Glider\Statements\Exceptions;
+namespace Kit\Glider\Statements\Platforms;
 
-use StdClass;
-use Exception;
-
-class QueryException extends Exception
+abstract class AbstractPdoPlatformStatement
 {
 
 	/**
-	* This exception is thrown when/if an error occurs when a query
-	* is run. THe first argument {$queryObject} must be an instance of StdClass which should
-	* contain the converted query string.
+	* Returns the next row in the result set.
 	*
-	* @param 	$message <String>
-	* @param 	$queryObject <StdClass>
 	* @access 	public
-	* @return 	void
+	* @return 	Mixed
 	*/
-	public function __construct(String $message, StdClass $queryObject)
-	{
-		$message .= ' [query: '. $queryObject->query .']';
-		parent::__construct($message);
-	}
+	abstract public function fetch();
+
+	/**
+	* Returns an array containing all of the result set rows.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	abstract public function fetchAll();
+
+	/**
+	* Returns a single column from the next row of a result set.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	abstract public function fetchColumn();
+
+	/**
+	* Fetches the next row and returns it as an object.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	abstract public function fetchObject();
+
+	/**
+	* Returns instances of the specified class, mapping the columns of each row to
+	* named properties in the class.
+	*
+	* @param 	$className <String>
+	* @access 	public
+	* @return 	Mixed
+	*/
+	abstract public function fetchWithClass(String $className);
 
 }

@@ -21,6 +21,7 @@
 */
 
 /**
+* @author 	Peter Taiwo
 * @package 	Repository
 *
 * This Repository handles all database operations provided by

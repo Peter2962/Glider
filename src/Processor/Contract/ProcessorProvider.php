@@ -21,8 +21,8 @@
 */
 
 /**
+* @author 	Peter Taiwo
 * @package 	ProcessorProvider
-* @version 	0.1.0
 *
 * ProcessorProvider gives each platform an architecture template that is required.
 * @method fetch
@@ -40,6 +40,7 @@ use Kit\Glider\Result\Collection;
 use Kit\Glider\Query\Builder\QueryBuilder;
 use Kit\Glider\Query\Builder\SqlGenerator;
 use Kit\Glider\Platform\Contract\PlatformProvider;
+use Kit\Glider\Statements\Contract\StatementContract;
 
 interface ProcessorProvider
 {
@@ -70,9 +71,9 @@ interface ProcessorProvider
 	* Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	Kit\Glider\Statements\Contract\StatementContract
 	*/
-	public function insert(QueryBuilder $queryBuilder, Parameters $parameters);
+	public function insert(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
 	/**
 	* Update data in the database. This method accepts instance
@@ -80,9 +81,9 @@ interface ProcessorProvider
 	* Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	Kit\Glider\Statements\Contract\StatementContract
 	*/
-	public function update(QueryBuilder $queryBuilder, Parameters $parameters);
+	public function update(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
 	/**
 	* Returns the statement result.

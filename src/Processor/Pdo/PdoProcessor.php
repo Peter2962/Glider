@@ -20,23 +20,30 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+*/
+
 #####################
 # Pdo processor class
 #####################
 
 namespace Kit\Glider\Processor\Pdo;
 
+use PDO;
 use StdClass;
 use PDOException;
 use Kit\Glider\Query\Parameters;
 use Kit\Glider\Result\Collection;
 use Kit\Glider\Result\ResultMapper;
 use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Statements\Platforms\PdoStatement;
 use Kit\Glider\Platform\Contract\PlatformProvider;
 use Kit\Glider\Processor\AbstractProcessorProvider;
 use Kit\Glider\Processor\Exceptions\QueryException;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
 use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Statements\Contract\StatementContract;
 use Kit\Glider\Results\Contract\ResultObjectProvider;
 
 class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvider
@@ -67,6 +74,11 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	protected 	$connection;
 
 	/**
+	* @const 	DEFAULT_PARAM_TYPE
+	*/
+	const 		DEFAULT_PARAM_TYPE = PDO::PARAM_STR;
+
+	/**
 	* {@inheritDoc}
 	*/
 	public function __construct(PlatformProvider $platform)
@@ -78,25 +90,49 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	/**
 	* {@inheritDoc}
 	*/
-	public function fetch(QueryBuilder $queryBuilder, Parameters $parameters) : Collection
+	public function fetch(QueryBuilder $queryBuilder, Parameters $parametersRepository) : Collection
 	{
+		$queryObject = $this->resolveQuery($queryBuilder, $parametersRepository);
+		$statement = new PdoStatement($queryObject->statement);
 
+		if ($queryBuilder->resultMappingEnabled()) {
+
+			$mapper = $queryBuilder->getResultMapper();
+
+			if (gettype($mapper) == 'string') {
+				$mapper = new $mapper();
+			}
+
+			if ($mapper instanceof ResultMapper && $mapper->register()) {
+				$result = $queryObject->statement->fetchAll(PDO::FETCH_CLASS, $mapper->getMapperName());
+			}
+		}else{
+			$result = $queryObject->statement->fetchAll(PDO::FETCH_OBJ);
+		}
+
+		$this->result = $result;
+		return new Collection($this);
 	}
 
 	/**
 	* {@inheritDoc}
 	*/
-	public function insert(QueryBuilder $queryBuilder, Parameters $parameters)
+	public function insert(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract
 	{
 		$query = $this->resolveQuery($queryBuilder, $parameters);
+		$query->statement->lastInsertId = $query->connection->lastInsertId();
+		$query->statement->closeCursor();
+		return new PdoStatement($query->statement);
 	}
 
 	/**
 	* {@inheritDoc}
 	*/
-	public function update(QueryBuilder $queryBuilder, Parameters $parameters)
+	public function update(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract
 	{
-
+		$query = $this->resolveQuery($queryBuilder, $parameters);
+		$query->statement->closeCursor();
+		return new PdoStatement($query->statement);
 	}
 
 	/**
@@ -104,7 +140,7 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	*/
 	public function getResult()
 	{
-
+		return $this->result;
 	}
 
 	/**
@@ -112,7 +148,8 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	*/
 	public function query(String $queryString, int $queryType=1)
 	{
-
+		$queryObject = $this->connection->query($queryString);
+		return new PdoStatement($queryObject);
 	}
 
 	/**
@@ -126,25 +163,79 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	protected function resolveQuery(QueryBuilder $queryBuilder, Parameters $parametersRepository) : StdClass
 	{
 		$queryObject = new StdClass;
-
-		print '<pre>';
-		print_r($this->connection);
-
-		// bind query parameters.
-
-		if ($parametersRepository->size() > 0) {
-			$parameters = $parametersRepository->getAll();
-			foreach(array_keys($parameters) as $i => $parameter) {
-				$i += 1; // Increase index by 1 to avoid bindParam error.
-			}
-		}
+		$connection = $this->connection;
+		$statement = $connection->prepare($queryBuilder->getQuery());
+		$transaction = null;
 
 		try {
 
+			$executeParameters = null;
+			// bind query parameters.
+
+			$parameters = $parametersRepository->getAll();
+			if ($parametersRepository->size() > 0) {
+
+				foreach(array_keys($parameters) as $i => $parameter) {
+					$i += 1; // Increase index by 1 to avoid bindParam error.
+
+					$paramValue = $parameters[$parameter];
+					$paramType = self::DEFAULT_PARAM_TYPE;
+
+					// The parameter data type is being checked here 
+					switch ($parametersRepository->getType($paramValue)) {
+						case 'i':
+							$paramType = PDO::PARAM_INT;
+							break;
+						case 'd':
+						case 's':
+							$paramType = PDO::PARAM_STR;
+							break;
+						default:
+							$paramType = PDO::PARAM_NULL;
+							break;
+					}
+					if ($queryBuilder->getQueryType() !== 3) {
+						if ($queryBuilder->getQueryType() == 2) {
+							$statement->bindValue($i, $paramValue, $paramType);
+						}else{
+							$statement->bindParam($i, $paramValue, $paramType);
+						}
+					}
+				}
+			}
+
+			if ($queryBuilder->getQueryType() == 3) {
+				$executeParameters = $parameters;
+			}
+
+			$autocommitDisabled = !$this->platform->isAutoCommitEnabled() && in_array($queryBuilder->getQueryType(), [2, 3]);
+				
+			if ($autocommitDisabled) {
+				$transaction = $this->platform->transaction();
+				$transaction()->begin($connection);
+			}
+
+			$statement->execute($executeParameters);
+
+			if ($autocommitDisabled) {
+				$transaction->commit($connection);
+			}
+
 		} catch(PdoException $exception) {
+
+			if ($autocommitDisabled) {
+				$transaction->rollback($connection);
+			}
+
+			throw new QueryException(
+				$exception->getMessage(),
+				$queryBuilder->generator->convertToSql($queryBuilder->getQuery(), $parametersRepository)
+			);
 
 		}
 
+		$queryObject->statement = $statement;
+		$queryObject->connection = $connection;
 		return $queryObject;
 	}
 

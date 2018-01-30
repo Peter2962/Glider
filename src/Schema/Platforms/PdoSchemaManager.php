@@ -20,6 +20,10 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+*/
+
 ##########################
 # Pdo schema manager class
 ##########################

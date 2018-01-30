@@ -20,6 +20,10 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+*/
+
 namespace Kit\Glider\Transactions\Pdo;
 
 use Kit\Glider\Platform\Contract\PlatformProvider;
