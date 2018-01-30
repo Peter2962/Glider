@@ -42,6 +42,7 @@ use Kit\Glider\Processor\Exceptions\QueryException;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
 use Kit\Glider\Statements\Platforms\MysqliStatement;
 use Kit\Glider\Result\Contract\ResultMapperContract;
+use Kit\Glider\Statements\Contract\StatementContract;
 use Kit\Glider\Results\Contract\ResultObjectProvider;
 
 class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProvider
@@ -163,7 +164,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function insert(QueryBuilder $queryBuilder, Parameters $parameterBag)
+	public function insert(QueryBuilder $queryBuilder, Parameters $parameterBag) : StatementContract
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
 		return new MysqliStatement($queryObject->statement);
@@ -172,7 +173,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* {@inheritDoc}
 	*/
-	public function update(QueryBuilder $queryBuilder, Parameters $parameterBag)
+	public function update(QueryBuilder $queryBuilder, Parameters $parameterBag) : StatementContract
 	{
 		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
 		return new MysqliStatement($queryObject->statement);
@@ -237,9 +238,22 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 		$parameterTypes = '';
 		$boundParameters = [];
 
+		$transaction = null;
+		$parameters = [];
+
+		$query = $queryBuilder->getQuery();
+		$sqlGenerator = $queryBuilder->generator;
+
+		$sqlObject = $sqlGenerator->convertToSql($query, $parameterBag);
+		$query = $sqlObject->query;
+		$parameters = $sqlObject->parameterValues;
+
+		$std->queryObject = $sqlObject;
+		$query = $sqlObject->query;
+
 		if ($parameterBag->size() > 0) {
 
-			foreach(array_values($parameterBag->getAll()) as $param) {
+			foreach($parameters as $param) {
 				
 				$isset = false;
 
@@ -267,11 +281,10 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			$boundParameters[] = $parameterTypes;
 
 			$count = 0;
-			$values = array_values($parameterBag->getAll());
 			$paramValues = [];
 
-			while ($count <= count($values) - 1) {
-				$value = $values[$count];
+			while ($count <= count($parameters) - 1) {
+				$value = $parameters[$count];
 				$isBound = false;
 				if (is_array($value)) {
 					foreach($value as $val) {
@@ -280,24 +293,12 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 				}
 
 				if (!is_array($value)) {
-					$boundParameters[] =& $values[$count];
+					$boundParameters[] =& $parameters[$count];
 				}
 				
 				$count++;
 			}
 		}
-
-
-		$transaction = null;
-
-		$query = $queryBuilder->getQuery();
-		$sqlGenerator = $queryBuilder->generator;
-
-		$queryObject = $sqlGenerator->convertToSql($query, $parameterBag);
-		$query = $queryObject->query;
-
-		$std->queryObject = $queryObject;
-		$query = $queryObject->query;
 
 		// Turn error reporting on for mysqli
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -319,7 +320,8 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			$statement->prepare($query);
 
 			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3]) && !empty($boundParameters)) {
-
+		
+				pre($boundParameters);				
 				call_user_func_array([$statement, 'bind_param'], $boundParameters);
 
 			}
@@ -329,7 +331,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			if (!$this->platformProvider->isAutoCommitEnabled()) {
 
 				$transaction->commit($this->connection); // Commit transaction
-				
+
 			}
 
 
@@ -341,7 +343,7 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 
 			}
 
-			throw new QueryException($sqlExp->getMessage(), $queryObject);
+			throw new QueryException($sqlExp->getMessage(), $sqlObject);
 
 		}
 

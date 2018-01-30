@@ -104,9 +104,9 @@ class QueryBuilder implements QueryBuilderProvider
 
 	/**
 	* @var 		$processorProvider
-	* @access 	private
+	* @access 	protected
 	*/
-	private 	$processorProvider;
+	protected 	$processorProvider;
 
 	/**
 	* @var 		$parameterBag
@@ -141,8 +141,8 @@ class QueryBuilder implements QueryBuilderProvider
 		$this->provider = $connectionManager->getConnection($connectionId);
 		$this->connector = $this->provider->connector();
 		$this->processorProvider = $this->provider->processor();
-		$this->generator = $classLoader->getInstanceOfClass('Kit\Glider\Query\Builder\SqlGenerator');
-		$this->binder = new QueryBinder();
+		$this->generator = new SqlGenerator();
+		$this->binder = new QueryBinder($this);
 		$this->parameterBag = new Parameters();
 		$this->allowedOperators = ['AND', 'OR', '||', '&&']; // Will add more here.
 	}
@@ -480,7 +480,7 @@ class QueryBuilder implements QueryBuilderProvider
 	/**
 	* {@inheritDoc}
 	*/
-	public function getResultMapper() : String
+	public function getResultMapper()
 	{
 		return $this->resultMapper;
 	}
@@ -490,11 +490,11 @@ class QueryBuilder implements QueryBuilderProvider
 	*/
 	public function resultMappingEnabled() : Bool
 	{
-		if (gettype($this->resultMapper) !== 'string' || !class_exists($this->resultMapper)) {
+		if (gettype($this->resultMapper) == 'string' && !class_exists($this->resultMapper)) {
 			return false;
 		}
 
-		return (new $this->resultMapper instanceof ResultMapper) ? true : false;
+		return ($this->resultMapper instanceof ResultMapper) ? true : false;
 	}
 
 	/**
@@ -558,6 +558,17 @@ class QueryBuilder implements QueryBuilderProvider
 	public function getQueryType() : int
 	{
 		return $this->queryType;
+	}
+
+	/**
+	* Returns platform name.
+	*
+	* @access 	public
+	* @return 	String
+	*/
+	public function getPlatformName() : String
+	{
+		return $this->provider->getPlatformName();
 	}
 
 	/**

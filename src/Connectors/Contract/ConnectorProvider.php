@@ -21,6 +21,7 @@
 */
 
 /**
+* @author 	Peter Taiwo
 * @package 	ConnectorProvider
 *
 * All connectors must implement this interface.

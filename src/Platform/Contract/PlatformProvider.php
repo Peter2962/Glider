@@ -157,4 +157,12 @@ interface PlatformProvider
 	*/
 	public function getConfig(String $key=null);
 
+	/**
+	* Returns name of platform.
+	*
+	* @access 	public
+	* @return 	String
+	*/
+	public function getPlatformName() : String;
+
 }

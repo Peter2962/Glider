@@ -78,6 +78,14 @@ abstract Class ResultMapper implements ResultMapperContract
 	}
 
 	/**
+	* Returns name of mapper class.
+	*
+	* @access 	public
+	* @return 	String
+	*/
+	abstract public function getMapperName() : String;
+
+	/**
 	* Check if a property is not public.
 	*
 	* @param 	$property <Object>

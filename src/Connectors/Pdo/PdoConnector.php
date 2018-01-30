@@ -20,6 +20,10 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+*/
+
 ###############################
 # PDO database connection class 
 ###############################
@@ -76,6 +80,7 @@ class PdoConnector implements ConnectorProvider
 		$database = $database == null ? $this->platform->getConfig('database') : $database;
 		$collation = $collation == null ? $this->platform->getConfig('collation') : $collation;
 		$charset = $charset == null ? $this->platform->getConfig('charset') : $charset;
+		$options = $options == null ? $this->platform->getConfig('options') : $options;
 		
 		$persistent = (
 			$this->platform->getConfig('persistent') &&
@@ -89,10 +94,14 @@ class PdoConnector implements ConnectorProvider
 		}
 
 		$pdo = new PDO($dsn, $username, $password);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-		$pdo->setAttribute(PDO::ATTR_PERSISTENT, $persistent);
 
+		if (sizeof(array_keys($options)) > 0) {
+			foreach($options as $i => $option) {
+				$pdo->setAttribute($i, $option);
+			}
+		}
+
+		return $pdo;
 	}
 
 	/**

@@ -21,6 +21,7 @@
 */
 
 /**
+* @author 	Peter Taiwo
 * This class helps to set and get query parameters.
 */
 
@@ -96,9 +97,9 @@ class Parameters
 	*
 	* @param 	$paramter <Mixed>
 	* @access 	public
-	* @return 	String
+	* @return 	Mixed
 	*/
-	public function getType($parameter='') : String
+	public function getType($parameter='')
 	{
 		$parameterType = null;
 		switch (gettype($parameter)) {

@@ -20,6 +20,10 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+*/
+
 ####################
 # Pdo Provider class
 ####################
@@ -39,6 +43,7 @@ use Kit\Glider\Processor\Contract\ProcessorProvider;
 use Kit\Glider\Schema\Contract\SchemaManagerContract;
 use Kit\Glider\Connectors\Contract\ConnectorProvider;
 use Kit\Glider\Schema\Column\Contract\ColumnContract;
+use Kit\Glider\Query\Builder\Platforms\PdoQueryBuilder;
 use Kit\Glider\Connection\Contract\ConnectionInterface;
 use Kit\Glider\Transactions\Contract\TransactionProvider;
 use Kit\Glider\Schema\Column\Index\Contract\IndexContract;
@@ -93,13 +98,13 @@ class PdoProvider implements PlatformProvider
 	}
 
 	/**
-	* We're using the default query builder.
+	* We're using pdo query builder.
 	*
 	* {@inheritDoc}
 	*/
 	public function queryBuilder(ConnectionInterface $connection, String $connectionId=null) : QueryBuilderProvider
 	{
-		return new QueryBuilder($connection, $connectionId);
+		return new PdoQueryBuilder($connection, $connectionId);
 	}
 
 	/**
@@ -156,6 +161,14 @@ class PdoProvider implements PlatformProvider
 	final public function getConfig(String $key=null)
 	{
 		return $this->config[$key] ?? null;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	final public function getPlatformName() : String
+	{
+		return 'PDO';
 	}
 
 }

@@ -112,7 +112,7 @@ class Collection implements CollectionContract
 	*/
 	public function first()
 	{
-		if ($this->collected[0]) {
+		if (isset($this->collected[0])) {
 			$this->offset = 0;
 		}
 

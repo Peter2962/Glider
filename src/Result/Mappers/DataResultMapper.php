@@ -33,6 +33,8 @@ class DataResultMapper extends ResultMapper
 	* @access 	protected
 	*/
 	protected 		$id;
+	protected 		$age;
+	protected 		$date_created;
 
 	/**
 	* @var 		$name
@@ -54,6 +56,14 @@ class DataResultMapper extends ResultMapper
 	public function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function getMapperName() : String
+	{
+		return '\\Kit\\Glider\\Result\\Mappers\\DataResultMapper';
 	}
 
 }

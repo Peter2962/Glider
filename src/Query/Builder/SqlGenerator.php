@@ -53,41 +53,50 @@ class SqlGenerator
 	* Constructor accepts Kit\Glider\Query\Builder\QueryBinder as an argument. It gets the
 	* created queries and then generates sql query from it.
 	*
-	* @param 	$binder Kit\Glider\Query\Builder\QueryBinder
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct(QueryBinder $binder)
+	public function __construct()
 	{
 		//
 	}
 
 	/**
-	* Converts a query string with named parameters to marked parameters and returs an object.
+	* Converts a query string with named parameters to marked placeholders and returs an object.
 	*
 	* @param 	$query <String>
-	* @param 	$parameterBag Kit\Glider\Query\Parameters
+	* @param 	$parameterRepository <Kit\Glider\Query\Parameters>
 	* @access 	public
 	* @return 	Object
 	*/
-	public function convertToSql(String $query, Parameters $parameterBag) : StdClass
+	public function convertToSql(String $query, Parameters $parameterRepository) : StdClass
 	{
 		$stdClass = new StdClass();
-		$stdClass->parameters = [];
+		$stdClass->parameterValues = [];
+		$placeholder = '?';
 		$stdClass->query = '';
 		$match = false;
 
-		if (preg_match_all('/\:([^ ]+)/s', $query, $matched)) {
-			$stdClass->parameters = array_map(function($m) use ($parameterBag, $matched) {
-				if ($parameterBag->getParameter($m) == null) {
-					throw new InvalidParameterCountException('Number of parameters does not match length of proposed parameters.', $matched[1], $parameterBag);
+		if (preg_match_all('/\:([^ ,]+)/s', $query, $matched)) {
+			$stdClass->parameterValues = array_map(function($value) use ($parameterRepository, $matched) {
+				$value = str_replace(',', '', $value);
+				if ($parameterRepository->getParameter($value) == null) {
+					throw new InvalidParameterCountException(
+						'Number of parameters does not match length of proposed parameters.',
+						$matched[1],
+						$parameterRepository
+					);
 				}
-				return $m;
+
+				return $parameterRepository->getParameter($value);
 			}, $matched[1]);
 		}
 
-		$setParams = $parameterBag->getAll();
 		$stdClass->query = str_replace($matched[0], '?', $query);
+
+		if (sizeof($stdClass->parameterValues) < 1) {
+			$stdClass->parameterValues = array_values($parameterRepository->getAll());
+		}
 
 		return $stdClass;
 	}

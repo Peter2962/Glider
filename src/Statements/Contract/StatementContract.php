@@ -21,6 +21,7 @@
 */
 
 /**
+* @author 	Peter Taiwo
 * @package 	Kit\Glider\Statements\Contract\StatementContract
 *
 * StatementContract helps to formulize a platform's statement. It gives
@@ -47,7 +48,17 @@ use Kit\Glider\Platform\Contract\PlatformProvider;
 
 interface StatementContract
 {
+
 	/**
+	* @param 	$statement
+	* @access 	public
+	* @return 	void
+	*/
+	public function __construct($statement);
+
+	/**
+	* Returns number of affected rows from a statement.
+	*
 	* @access 	public
 	* @return 	Integer
 	*/
@@ -78,6 +89,8 @@ interface StatementContract
 	public function error();
 
 	/**
+	* Returns the number of columns/fields in result set.
+	*
 	* @access 	public
 	* @return 	Integer
 	*/

@@ -31,6 +31,7 @@ namespace Kit\Glider\Query\Builder;
 
 use RuntimeException;
 use Kit\Glider\Query\Builder\SqlGenerator;
+use Kit\Glider\Query\Builder\QueryBuilder;
 
 class QueryBinder
 {
@@ -65,12 +66,20 @@ class QueryBinder
 	protected 	$generator;
 
 	/**
+	* @var 		$queryBuilder
+	* @access 	protected
+	*/
+	protected 	$queryBuilder;
+
+	/**
+	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
 	* @return 	void
 	*/
-	public function __construct()
+	public function __construct(QueryBuilder $queryBuilder)
 	{
 		$this->generator = new SqlGenerator($this);
+		$this->queryBuilder = $queryBuilder;
 	}
 
 	/**
@@ -190,7 +199,7 @@ class QueryBinder
 		}
 
 		if (!empty($value)) {
-			$where .= ' ' . $with . ' ?';
+			$where .= ' ' . $with . ' :' . $column;
 		}else if ($value == NULL) {
 			$where .= ($with == '=') ? ' IS NULL' : ' IS NOT NULL';
 		}
@@ -261,21 +270,27 @@ class QueryBinder
 	*/
 	private function update(String $table, Array $columns)
 	{
+		$platformName = $this->queryBuilder->getPlatformName();
+
 		$placeholders = implode(', ', array_fill(0, count(array_keys($columns)), '?'));
 		$query = "UPDATE $table";
 		$clause = [];
 		$parameters = [];
+		$set = null;
 
 		if (empty($columns)) {
 			throw new RuntimeException('Update query failed. Columns cannot be empty');
 		}
 
 		foreach(array_keys($columns) as $key) {
-			$clause[] = $key . ' = ?';
+			$clause[] = $key = $key . ' = :' . $key;
 		}
 
-		$query .= ' SET ' .implode(', ', $clause);
-		
+		if (sizeof($clause) > 0) {
+			$set = implode(', ', $clause);
+			$query .= ' SET ' . $set;
+		}
+
 		if (!empty($this->bindings['where'])) {
 			$conditions = implode(' ', $this->bindings['where']);
 			$query .= '' . $conditions;
