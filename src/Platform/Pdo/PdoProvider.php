@@ -36,7 +36,9 @@ use Kit\Glider\Processor\Pdo\PdoProcessor;
 use Kit\Glider\Query\Builder\QueryBuilder;
 use Kit\Glider\Connectors\Pdo\PdoConnector;
 use Kit\Glider\Connection\PlatformResolver;
+use Kit\Glider\Schema\Column\Index\PdoIndex;
 use Kit\Glider\Transactions\Pdo\PdoTransaction;
+use Kit\Glider\Schema\Column\Platform\PdoColumn;
 use Kit\Glider\Schema\Platforms\PdoSchemaManager;
 use Kit\Glider\Platform\Contract\PlatformProvider;
 use Kit\Glider\Processor\Contract\ProcessorProvider;
@@ -120,7 +122,7 @@ class PdoProvider implements PlatformProvider
 	*/
 	public function column($column) : ColumnContract
 	{
-
+		return new PdoColumn($column);
 	}
 
 	/**
@@ -128,7 +130,7 @@ class PdoProvider implements PlatformProvider
 	*/
 	public function columnIndex(StdClass $index) : IndexContract
 	{
-
+		return new PdoIndex($index);
 	}
 
 	/**

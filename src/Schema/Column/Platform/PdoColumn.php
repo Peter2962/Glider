@@ -20,48 +20,14 @@
 * SOFTWARE.
 */
 
-namespace Kit\Glider\Result\Mappers;
+namespace Kit\Glider\Schema\Column\Platform;
 
-use Kit\Glider\Result\ResultMapper;
-use Kit\Glider\Result\Contract\ResultMapperContract;
+use StdClass;
+use Kit\Glider\Schema\Column\Platform\MysqliColumn;
 
-class DataResultMapper extends ResultMapper
+class PdoColumn extends MysqliColumn
 {
 
-	/**
-	* @var 		$id
-	* @access 	protected
-	*/
-	protected 		$id;
-
-	/**
-	* @var 		$name
-	* @access 	protected
-	*/
-	protected 		$name;
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function register() : Bool
-	{
-		return true;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function getMapperName() : String
-	{
-		return '\\Kit\\Glider\\Result\\Mappers\\DataResultMapper';
-	}
+	//
 
 }
