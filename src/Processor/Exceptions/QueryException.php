@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Processor\Exceptions\QueryException
+*/
+
 namespace Kit\Glider\Processor\Exceptions;
 
 use StdClass;

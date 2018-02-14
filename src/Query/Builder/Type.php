@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\Type
+*/
+
 namespace Kit\Glider\Query\Builder;
 
 abstract class Type

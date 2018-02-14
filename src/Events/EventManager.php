@@ -21,8 +21,10 @@
 */
 
 /**
-* @package 	EventManager
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Events\EventManager
 * @version 	0.1.0
+*
 * This class helps to make and fire events at some certain sections of Glider.
 * Note that this is just a simple event architecture class for Glider.
 */

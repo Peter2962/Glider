@@ -1,37 +1,64 @@
 <?php
-return [
-	'default' => [
-		'provider' => Kit\Glider\Platform\Mysqli\MysqliProvider::class,
-		'host' => 'localhost',
-		'alias' => 'mysqli',
-		'username' => 'root',
-		'password' => 'root',
-		'database' => 'test',
-		'charset' => 'utf8',
-		'collation' => '',
-		'domain' => 'phoxphp.repo',
-		'auto_commit' => false,
-		'prefix' => '',
-		'alt' => null
-	],
-	'dev' => [
-		'provider' => Kit\Glider\Platform\Pdo\PdoProvider::class,
-		'host' => 'localhost',
-		'alias' => 'pdo',
-		'username' => 'root',
-		'password' => 'root',
-		'database' => 'test',
-		'charset' => 'utf8',
-		'collation' => 'utf8',
-		'domain' => 'phoxphp.repo',
-		'prefix' => '',
-		'auto_commit' => true,
-		'alt' => null,
-		'persistent' => true,
-		'options' => [
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_CASE => PDO::CASE_NATURAL,
-			PDO::ATTR_PERSISTENT => true
-		]
-	]
-];
+/**
+* MIT License
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
+/**
+* @author 	Peter Taiwo
+*/
+
+return config()->get('database');
+
+// return [
+// 	'default' => [
+// 		'provider' => Kit\Glider\Platform\Mysqli\MysqliProvider::class,
+// 		'host' => 'localhost',
+// 		'alias' => 'mysqli',
+// 		'username' => 'root',
+// 		'password' => 'root',
+// 		'database' => 'test',
+// 		'charset' => 'utf8',
+// 		'collation' => '',
+// 		'domain' => 'phoxphp.repo',
+// 		'auto_commit' => false,
+// 		'prefix' => '',
+// 		'alt' => null
+// 	],
+// 	'dev' => [
+// 		'provider' => Kit\Glider\Platform\Pdo\PdoProvider::class,
+// 		'host' => 'localhost',
+// 		'alias' => 'pdo',
+// 		'username' => 'root',
+// 		'password' => 'root',
+// 		'database' => 'test',
+// 		'charset' => 'utf8',
+// 		'collation' => 'utf8',
+// 		'domain' => 'phoxphp.repo',
+// 		'prefix' => '',
+// 		'auto_commit' => true,
+// 		'alt' => null,
+// 		'persistent' => true,
+// 		'options' => [
+// 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+// 			PDO::ATTR_CASE => PDO::CASE_NATURAL,
+// 			PDO::ATTR_PERSISTENT => true
+// 		]
+// 	]
+// ];

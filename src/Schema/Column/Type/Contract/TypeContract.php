@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Type\Contract\TypeContract
+*/
+
 namespace Kit\Glider\Schema\Column\Type\Contract;
 
 interface TypeContract

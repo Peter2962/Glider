@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\QueryBuilder
+*/
+
 namespace Kit\Glider\Query\Builder;
 
 use RuntimeException;

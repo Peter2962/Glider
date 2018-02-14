@@ -22,6 +22,8 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Parameters
+*
 * This class helps to set and get query parameters.
 */
 

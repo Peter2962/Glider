@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Scheme
+*/
+
 namespace Kit\Glider\Schema;
 
 use RuntimeException;

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Index\Contract\IndexContract
+*/
+
 namespace Kit\Glider\Schema\Column\Index\Contract;
 
 use StdClass;

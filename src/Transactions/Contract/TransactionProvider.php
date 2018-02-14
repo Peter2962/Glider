@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	TransactionProvider
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Transactions\Contract\TransactionProvider
 *
 * Transaction provider constructs the methods that platforms transaction
 * provider will imitate. This helps to have more control on how to initialize

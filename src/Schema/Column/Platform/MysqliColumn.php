@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Platform\MysqliColumn
+*/
+
 namespace Kit\Glider\Schema\Column\Platform;
 
 use StdClass;

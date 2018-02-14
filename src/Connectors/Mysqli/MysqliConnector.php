@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connectors\Mysqli\MysqliConnector
+*/
+
 ##################################
 # Mysqli database connection class 
 ##################################

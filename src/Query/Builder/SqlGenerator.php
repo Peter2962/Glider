@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	SqlGenerator
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\SqlGenerator
 * @version 	0.1.0
 *
 * This class helps to generate sql queries from an array of query

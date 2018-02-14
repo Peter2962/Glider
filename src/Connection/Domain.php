@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\Domain
+*/
+
 namespace Kit\Glider\Connection;
 
 abstract class Domain

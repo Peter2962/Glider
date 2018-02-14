@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\Platforms\MysqliResult
+*/
+
 namespace Kit\Glider\Result\Platforms;
 
 use mysqli_result;

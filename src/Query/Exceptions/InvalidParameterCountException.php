@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Exceptions\InvalidParameterCountException
+*/
+
 namespace Kit\Glider\Query\Exceptions;
 
 use Exception;

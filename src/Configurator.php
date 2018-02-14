@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Configurator
+*/
+
 namespace Kit\Glider;
 
 use Closure;

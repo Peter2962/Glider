@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Exceptions\ConnectionFailedException
+*/
+
 namespace Kit\Glider\Exceptions;
 
 use RuntimeException;

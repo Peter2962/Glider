@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Expressions
+*/
+
 namespace Kit\Glider\Schema;
 
 class Expressions

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Platform\Mysqli\MysqliProvider
+*/
+
 #######################
 # Mysqli Provider class
 #######################

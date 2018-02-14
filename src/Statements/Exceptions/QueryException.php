@@ -22,6 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Statements\Exceptions\QueryException
 */
 
 namespace Kit\Glider\Statements\Exceptions;

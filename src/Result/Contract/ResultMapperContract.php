@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	ResultMapperContract
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\Contract\ResultMapperContract
 */
 
 namespace Kit\Glider\Result\Contract;

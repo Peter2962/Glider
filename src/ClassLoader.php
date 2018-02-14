@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\ClassLoader
+*/
+
 namespace Kit\Glider;
 
 use StdClass;

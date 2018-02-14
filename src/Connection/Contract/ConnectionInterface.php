@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\Contract\ConnectionInterface
+*/
+
 namespace Kit\Glider\Connection\Contract;
 
 use Closure;

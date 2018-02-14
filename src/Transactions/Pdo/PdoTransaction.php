@@ -22,6 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Transactions\Pdo\PdoTransaction
 */
 
 namespace Kit\Glider\Transactions\Pdo;

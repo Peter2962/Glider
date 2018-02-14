@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	PlatformProvider
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Platform\Contract\PlatformProvider
 * @version 	0.1.0
 *
 * Platform provider interface for all available platforms

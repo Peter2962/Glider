@@ -22,8 +22,8 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\Platforms\PdoQueryBuilder
 */
-
 
 namespace Kit\Glider\Query\Builder\Platforms;
 

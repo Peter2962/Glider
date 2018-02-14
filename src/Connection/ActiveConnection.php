@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\ActiveConnection
+*/
+
 namespace Kit\Glider\Connection;
 
 use Kit\Glider\Connection\Connector;

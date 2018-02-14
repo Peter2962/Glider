@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Contract\ColumnContract
+*/
+
 namespace Kit\Glider\Schema\Column\Contract;
 
 // Represents a platform's column.

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\Exceptions\InvalidPropertyAccessException
+*/
+
 namespace Kit\Glider\Result\Exceptions;
 
 use RuntimeException;

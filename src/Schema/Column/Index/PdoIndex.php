@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Index\PdoIndex
+*/
+
 namespace Kit\Glider\Schema\Column\Index;
 
 use StdClass;
