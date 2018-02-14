@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\ConnectionManager
+*/
+
 namespace Kit\Glider\Connection;
 
 use Str;

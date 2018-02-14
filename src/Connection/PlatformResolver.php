@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\PlatformResolver
+*/
+
 namespace Kit\Glider\Connection;
 
 use StdClass;

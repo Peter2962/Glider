@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Contract\SchemaManagerContract
+*/
+
 namespace Kit\Glider\Schema\Contract;
 
 use Closure;

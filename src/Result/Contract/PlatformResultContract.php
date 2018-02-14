@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\Contract\PlatformResultContract
+*/
+
 namespace Kit\Glider\Result\Contract;
 
 interface PlatformResultContract

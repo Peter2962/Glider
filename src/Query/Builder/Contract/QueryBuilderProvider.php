@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	QueryBuilderProvider
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider
 * @version 	0.1.0
 *
 * Query builder provider contract that returns an architecture of Glider's

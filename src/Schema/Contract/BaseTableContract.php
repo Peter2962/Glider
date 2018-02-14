@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Contract\BaseTableContract
+*/
+
 namespace Kit\Glider\Schema\Contract;
 
 use Closure;

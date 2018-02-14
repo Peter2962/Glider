@@ -21,6 +21,11 @@
 */
 
 /**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Events\Contract\Subscriber
+*/
+
+/**
 * This interface must be implemented by all subscribers that will be
 * attached to the event manager.
 */

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Transactions\Mysqli\MysqliTransaction
+*/
+
 namespace Kit\Glider\Transactions\Mysqli;
 
 use Kit\Glider\Platform\Contract\PlatformProvider;

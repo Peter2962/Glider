@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	QueryBinder
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Query\Builder\QueryBinder
 *
 * QueryBinder saves created queries into an array that would later
 * be used by the SqlGenerator to generate query.

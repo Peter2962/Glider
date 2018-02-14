@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Connection\QueuedConnections
+*/
+
 namespace Kit\Glider\Connection;
 
 use Kit\Glider\Configurator;

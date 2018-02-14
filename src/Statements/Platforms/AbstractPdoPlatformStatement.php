@@ -22,6 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Statements\Platforms\AbstractPdoPlatformStatement
 */
 
 namespace Kit\Glider\Statements\Platforms;

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Column\Type\Bit
+*/
+
 namespace Kit\Glider\Schema\Column\Type;
 
 use Kit\Glider\Schema\Column\Type\Contract\TypeContract;

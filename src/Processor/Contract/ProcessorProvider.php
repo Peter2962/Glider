@@ -22,7 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	ProcessorProvider
+* @package 	Kit\Glider\Processor\Contract\ProcessorProvider
 *
 * ProcessorProvider gives each platform an architecture template that is required.
 * @method fetch

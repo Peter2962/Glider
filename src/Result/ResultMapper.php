@@ -21,7 +21,8 @@
 */
 
 /**
-* @package 	ResultMapper
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\ResultMapper
 *
 * ResultMapper helps to define properties that would be accessed in a result set.
 * All ResultMapper classes must extend this class.

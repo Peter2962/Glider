@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Result\Exceptions\FunctionNotFoundException
+*/
+
 namespace Kit\Glider\Result\Exceptions;
 
 use Exception;

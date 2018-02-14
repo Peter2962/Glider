@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Events\Subscribers\BuildEventsSubscriber
+*/
+
 namespace Kit\Glider\Events\Subscribers;
 
 use RuntimeException;

@@ -20,6 +20,11 @@
 * SOFTWARE.
 */
 
+/**
+* @author 	Peter Taiwo
+* @package 	Kit\Glider\Schema\Platforms\MysqliSchemaManager
+*/
+
 namespace Kit\Glider\Schema\Platforms;
 
 use Kit\Glider\Schema\SchemaManager;

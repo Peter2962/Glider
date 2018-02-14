@@ -22,6 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
+* @package 	Kit\Glider\Platform\Pdo\PdoProvider
 */
 
 ####################
