@@ -38,7 +38,7 @@ abstract class Model extends Repository
 	* @access 	public
 	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
 	*/
-	public function getQueryBuilder(String $connectionId=null) : QueryBuilder
+	public function queryBuilder(String $connectionId=null) : QueryBuilder
 	{
 		return parent::getQueryBuilder($connectionId);
 	}
