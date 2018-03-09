@@ -25,22 +25,47 @@
 * @package 	Kit\Glider\Model\Model
 */
 
+namespace Kit\Glider\Model;
+
 use Kit\Glider\Repository;
+use Kit\Glider\Model\Foundation\Record;
+use Kit\Glider\Model\Foundation\Relation;
 use Kit\Glider\Query\Builder\QueryBuilder;
 
 abstract class Model extends Repository
 {
 
 	/**
+	* @var 		$connectionId
+	* @access 	protected
+	*/
+	protected 	$connectionId = null;
+
+	/**
+	* @var 		$table
+	* @access 	protected
+	*/
+	protected 	$table = null;
+
+	/**
+	* @access 	public
+	* @return 	void
+	*/
+	public function __construct()
+	{
+		//
+	}
+
+	/**
 	* Returns sn instance of query builder.
-	*
+	* 
 	* @param 	$connectionId <String>
 	* @access 	public
 	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
 	*/
-	public function queryBuilder(String $connectionId=null) : QueryBuilder
+	final public function queryBuilder() : QueryBuilder
 	{
-		return parent::getQueryBuilder($connectionId);
+		return parent::getQueryBuilder($this->connectionId);
 	}
 
 	/**
@@ -49,9 +74,25 @@ abstract class Model extends Repository
 	* @access 	public
 	* @return 	String
 	*/
-	public function getName() : String
+	final public function getName()
 	{
 		return get_class($this);
 	}
+
+	/**
+	* Returns connection id.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	abstract public function getConnectionId();
+
+	/**
+	* Returns the table associated to this model.
+	*
+	* @access public
+	* @return 	String
+	*/
+	abstract public function getAssociatedTable() : String;
 
 }
