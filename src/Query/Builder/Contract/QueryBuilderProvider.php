@@ -429,4 +429,13 @@ interface QueryBuilderProvider
 	*/
 	public function update(String $table, Array $fields);
 
+	/**
+	* Deletes records from the database table.
+	*
+	* @param 	$table <String>
+	* @access 	public
+	* @return 	void
+	*/
+	public function delete(String $table);
+
 }
