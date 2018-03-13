@@ -139,6 +139,16 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	/**
 	* {@inheritDoc}
 	*/
+	public function delete(QueryBuilder $queryBuilder, Parameters $parameterBag) : StatementContract
+	{
+		$query = $this->resolveQuery($queryBuilder, $parameters);
+		$query->statement->closeCursor();
+		return new PdoStatement($query->statement);		
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function getResult()
 	{
 		return $this->result;

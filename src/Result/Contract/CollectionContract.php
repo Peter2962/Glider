@@ -169,10 +169,11 @@ interface CollectionContract
 	*
 	* @param 	$elements <Array>
 	* @param 	$callback <Closure>
+	* @param 	$with <Array>
 	* @access 	public
 	* @return 	Kit\Glider\Result\CollectionContract
 	*/
-	public function map(Array $elements, Closure $callback) : CollectionContract;
+	public function map(Array $elements, Closure $callback, Array $with=[]) : CollectionContract;
 
 	/**
 	* Convert an object or flattens objects to array.

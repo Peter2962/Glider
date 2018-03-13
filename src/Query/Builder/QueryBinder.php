@@ -300,4 +300,21 @@ class QueryBinder
 		return $query;
 	}
 
+	/**
+	* @param 	$table <String>
+	* @access 	private
+	* @return 	String
+	*/	
+	private function delete(String $table)
+	{
+		$query = 'DELETE FROM ' . $table;
+
+		if (!empty($this->bindings['where'])) {
+			$conditions = implode(' ', $this->bindings['where']);
+			$query .= '' . $conditions;
+		}
+
+		return $query;
+	}
+
 }

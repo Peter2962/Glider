@@ -68,6 +68,10 @@ class Collection implements CollectionContract
 		}
 
 		$this->statement = $statement;
+
+		if (sizeof($this->collected) < 1) {
+			return false;
+		}
 	}
 
 	/**
@@ -214,12 +218,20 @@ class Collection implements CollectionContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function map(Array $elements, Closure $callback) : CollectionContract
+	public function map(Array $elements, Closure $callback, Array $with=[]) : CollectionContract
 	{
-		array_map(function($element, $index) use ($callback, $elements) {
-			call_user_func_array($callback, [
-				$element, $index
-			]);
+		array_map(function($element, $index) use ($callback, $elements, $with) {
+			$callbackArguments = [$element, $index, $this];
+
+			if (sizeof($with > 0)) {
+				$callbackArguments = array_merge($callbackArguments, $with);
+			}
+
+			return call_user_func_array(
+				$callback,
+				$callbackArguments
+			);
+
 		}, $elements, array_keys($elements));
 
 		return $this;

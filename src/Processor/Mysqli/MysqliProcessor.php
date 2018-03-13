@@ -182,6 +182,15 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 	/**
 	* {@inheritDoc}
 	*/
+	public function delete(QueryBuilder $queryBuilder, Parameters $parameterBag) : StatementContract
+	{
+		$queryObject = $this->resolveQueryObject($queryBuilder, $parameterBag);
+		return new MysqliStatement($queryObject->statement);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function getResult()
 	{
 		return $this->result;
@@ -319,9 +328,8 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			
 			$statement->prepare($query);
 
-			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3]) && !empty($boundParameters)) {
+			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3, 4]) && !empty($boundParameters)) {
 		
-				pre($boundParameters);				
 				call_user_func_array([$statement, 'bind_param'], $boundParameters);
 
 			}

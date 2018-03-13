@@ -181,6 +181,10 @@ class QueryBuilder implements QueryBuilderProvider
 	{
 		if (sizeof($arguments) < 1) {
 			$arguments = ['*'];
+		}else{
+			if (is_array($arguments[0])) {
+				$arguments = $arguments[0];
+			}
 		}
 
 		$this->queryType = 1;
@@ -346,8 +350,12 @@ class QueryBuilder implements QueryBuilderProvider
 	public function whereIn(String $column, Array $values) : QueryBuilderProvider
 	{
 		if (!empty($this->binder->getBinding('select')) && sizeof($values) > 0) {
-			$values = implode(',', $values);
-			$this->sqlQuery .= ' WHERE ' . $column . ' IN (' . $values . ')';
+			
+			$this->parameterBag->setParameter(
+				$column, $values
+			);
+
+			$this->sqlQuery .= ' WHERE ' . $column . ' IN (?)';
 		}
 
 		return $this;
@@ -540,6 +548,16 @@ class QueryBuilder implements QueryBuilderProvider
 		$this->queryType = 3;
 		$this->sqlQuery = $this->binder->createBinding('update', $table, $fields);
 		return $this->processorProvider->update($this, $this->parameterBag);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	public function delete(String $table)
+	{
+		$this->queryType = 4;
+		$this->sqlQuery = $this->binder->createBinding('delete', $table);
+		return $this->processorProvider->delete($this, $this->parameterBag);
 	}
 
 	/**

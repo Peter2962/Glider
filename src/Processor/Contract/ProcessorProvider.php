@@ -78,12 +78,26 @@ interface ProcessorProvider
 	/**
 	* Update data in the database. This method accepts instance
 	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and
-	* Parameters <Kit\Glider\Query\Parameters> as an argument.
+	* Parameters <Kit\Glider\Query\Parameters> as it's arguments.
 	*
+	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
+	* @param 	$parameters <Kit\Glider\Query\Parameters>
 	* @access 	public
-	* @return 	Kit\Glider\Statements\Contract\StatementContract
+	* @return 	Object Kit\Glider\Statements\Contract\StatementContract
 	*/
 	public function update(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
+
+	/**
+	* Deletes record/data in the database. This method accepts instance
+	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and
+	* Parameters <Kit\Glider\Query\Parameters> as it's arguments.
+	*
+	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
+	* @param 	$parameters <Kit\Glider\Query\Parameters>
+	* @access 	public
+	* @return 	Object Kit\Glider\Statements\Contract\StatementContract
+	*/
+	public function delete(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
 	/**
 	* Returns the statement result.
@@ -102,6 +116,7 @@ interface ProcessorProvider
 	* of mysqli_result and if it is set to 2, it will return an instance of mysqli_stmt.
 	*
 	* @param 	$queryString <String>
+	* @param 	$returnType <Integer>
 	* @access 	public
 	* @return 	Mixed 
 	*/

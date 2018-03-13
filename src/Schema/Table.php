@@ -29,7 +29,7 @@ namespace Kit\Glider\Schema;
 
 use Closure;
 use RuntimeException;
-use Kit\Glider\Factory;
+use Kit\Glider\Repository;
 use Kit\Glider\Schema\Scheme;
 use Kit\Glider\Schema\Column;
 use Kit\Glider\Schema\Expressions;
@@ -224,7 +224,7 @@ class Table implements BaseTableContract
 
 		foreach($columns as $column) {
 
-			$_columns[] = Factory::getPlatformColumn($column);
+			$_columns[] = Repository::getPlatformColumn($column);
 
 		}
 
@@ -244,7 +244,7 @@ class Table implements BaseTableContract
 
 		foreach($columns as $column) {
 			if ($column->Field == $columnName) {
-				return Factory::getPlatformColumn($column);
+				return Repository::getPlatformColumn($column);
 			}
 		}	
 	}
@@ -303,7 +303,7 @@ class Table implements BaseTableContract
 
 			return array_map(function($index) {
 
-				return Factory::getProvider()->columnIndex($index);
+				return Repository::getProvider()->columnIndex($index);
 
 			}, $result->all());
 
@@ -511,7 +511,7 @@ class Table implements BaseTableContract
 	*/
 	protected function builder()
 	{
-		return Factory::getQueryBuilder();
+		return Repository::getQueryBuilder();
 	}
 
 	/**

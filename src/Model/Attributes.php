@@ -22,14 +22,18 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Kit\Glider\Model\Foundation\Record
+* @package 	Kit\Glider\Model\Attributes
 */
 
-namespace Kit\Glide\Model\Foundation;
+namespace Kit\Glider\Model;
 
-trait Record
+class Attributes
 {
 
-
+	const CONNECTION_ID = 'default';
+	const PRIMARY_KEY = 'id';
+	const TABLE = 'table';
+	const ALL_SELECTOR = '*';
+	const FINDBY_REGEX = '/findBy(.*)/';
 
 }
