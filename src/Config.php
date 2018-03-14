@@ -41,7 +41,7 @@ return [
 		'prefix' => '',
 		'alt' => null
 	],
-	'dev' => [
+	'pdo' => [
 		'provider' => Kit\Glider\Platform\Pdo\PdoProvider::class,
 		'host' => 'localhost',
 		'alias' => 'pdo',
