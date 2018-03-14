@@ -35,16 +35,18 @@ trait Finder
 {
 
 	/**
-	* Handles findBy methods called via __callStatic magic method.
+	* Handles findBy methods called via __callStatic magic method. If the result returned is more than
+	* one, an array of the model object is returned.
 	*
 	* @param 	$context <Kit\Glider\Model\Model>
 	* @param 	$childModel <Kit\Glider\Model\Model>
+	* @param 	$childClassName <String>
 	* @param 	$clause <String>
 	* @param 	$clauseArguments <Array>
 	* @access 	protected
 	* @return 	Mixed
 	*/
-	protected function initializeFindBy(Model $context, Model $childModel, String $clause, Array $clauseArguments=[])
+	protected function initializeFindBy(Model $context, Model $childModel, String $childClassName, String $clause, Array $clauseArguments=[])
 	{
 		$this->table = $childModel->table;
 		$builder = $this->toSql(
@@ -68,20 +70,24 @@ trait Finder
 
 				foreach($resultArray as $i => $result) {
 					$res = $resultArray[$i];
-					$accessible = [];
+
+					// If '$childModel' property is used here, same records will be returned so we are
+					// to create new instances of the model class.
+					$accessible = new $childClassName;
 
 					foreach(array_keys($res) as $i => $key) {
 						if ($childModel->isAccessible($key)) {
-							$accessible[$key] = $res[$key];
+							$accessible->softProperties[$key] = $res[$key];
 						}
 					}
 
 					$results[] = $accessible;
+					$accessible = null;
 				}
 			}else{
 				foreach($resultArray[0] as $key => $result) {
 					if ($childModel->isAccessible($key)) {
-						$childModel::$softProperties[$key] = $resultArray[0][$key];
+						$childModel->softProperties[$key] = $resultArray[0][$key];
 					}
 				}
 			}

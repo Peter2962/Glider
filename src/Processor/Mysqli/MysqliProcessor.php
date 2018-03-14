@@ -295,9 +295,12 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			while ($count <= count($parameters) - 1) {
 				$value = $parameters[$count];
 				$isBound = false;
+
 				if (is_array($value)) {
-					foreach($value as $val) {
-						$boundParameters[] =& $val;
+					$iterate = count($boundParameters);
+					foreach($value as $i => $val) {
+						$boundParameters[$iterate] =& $value[$i];
+						$iterate++;
 					}
 				}
 
@@ -325,7 +328,6 @@ class MysqliProcessor extends AbstractProcessorProvider implements ProcessorProv
 			}
 
 			$statement = $this->connection->stmt_init();
-			
 			$statement->prepare($query);
 
 			if (!empty($hasMappableFields) || in_array($queryBuilder->getQueryType(), [1, 2, 3, 4]) && !empty($boundParameters)) {

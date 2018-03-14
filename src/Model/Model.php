@@ -53,7 +53,7 @@ class Model extends Repository implements ModelContract
 	* @var 		$softProperties
 	* @access 	protected
 	*/
-	protected static $softProperties = [];
+	protected 	$softProperties = [];
 
 	/**
 	* @var 		$relations
@@ -92,7 +92,7 @@ class Model extends Repository implements ModelContract
 	*/
 	public function __set($var, $value)
 	{
-		Model::$softProperties[$var] = $value;
+		$this->softProperties[$var] = $value;
 	}
 
 	/**
@@ -105,8 +105,8 @@ class Model extends Repository implements ModelContract
 	public function __get($var)
 	{
 		$accessibleProperties = $this->accessibleProperties();
-		if (in_array($var, $accessibleProperties) && isset(Model::$softProperties[$var])) {
-			return Model::$softProperties[$var];
+		if (in_array($var, $accessibleProperties) && isset($this->softProperties[$var])) {
+			return $this->softProperties[$var];
 		}
 	}
 
@@ -168,7 +168,7 @@ class Model extends Repository implements ModelContract
 	final public function addPropertyIf(Bool $condition=null, String $property, $value=null)
 	{
 		if ($condition == true) {
-			Model::$softProperties[$property] = $value;
+			$this->softProperties[$property] = $value;
 		}
 	}
 
@@ -184,7 +184,7 @@ class Model extends Repository implements ModelContract
 	final public function addPropertyIfNot(Bool $condition=null, String $property, $value=null)
 	{
 		if ($condition == false) {
-			Model::$softProperties[$property] = $value;
+			$this->softProperties[$property] = $value;
 		}
 	}
 
@@ -214,7 +214,7 @@ class Model extends Repository implements ModelContract
 	*/
 	public static function hasSoftProperty(String $property=null) : Bool
 	{
-		return (isset(Model::$softProperties[$property])) ? true : false; 
+		return (isset($this->softProperties[$property])) ? true : false; 
 	}
 
 	/**
@@ -229,10 +229,10 @@ class Model extends Repository implements ModelContract
 	public static function getSoftProperties(Bool $asObject=false)
 	{
 		if ($asObject == true) {
-			return (Object) Model::$softProperties;
+			return (Object) $this->softProperties;
 		}
 
-		return Model::$softProperties;
+		return $this->softProperties;
 	}
 
 	/**
@@ -258,7 +258,7 @@ class Model extends Repository implements ModelContract
 
 			array_map(function($key) use ($first) {
 
-				Model::$softProperties[$key] = $first[$key];
+				$this->softProperties[$key] = $first[$key];
 
 			}, array_keys($first));
 
@@ -384,6 +384,7 @@ class Model extends Repository implements ModelContract
 			$result = $context->initializeFindBy(
 				$context,
 				$childModel,
+				$childClass,
 				$clause,
 				$arguments
 			);

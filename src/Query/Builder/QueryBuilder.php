@@ -355,7 +355,8 @@ class QueryBuilder implements QueryBuilderProvider
 				$column, $values
 			);
 
-			$this->sqlQuery .= ' WHERE ' . $column . ' IN (?)';
+			$markers = implode(', ', array_fill(0, count($values), '?'));
+			$this->sqlQuery .= ' WHERE ' . $column . ' IN (' . $markers . ')';
 		}
 
 		return $this;
