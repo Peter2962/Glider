@@ -62,7 +62,7 @@ trait Record
 				$this->$key,
 				$key,
 				$this->getAssociatedTable(),
-				Model::getSoftProperties()
+				$this->getSoftProperties()
 			);
 
 			return $savedModel;
@@ -70,7 +70,7 @@ trait Record
 
 		$record = $this->queryBuilder()->insert(
 			$this->getAssociatedTable(), // name of model table
-			Model::getSoftProperties() // model soft properties
+			$this->getSoftProperties() // model soft properties
 		);
 
 		// assign new property $id amd add to soft properties
@@ -89,9 +89,9 @@ trait Record
 	{
 		$builder = $this->queryBuilder();
 
-		if (isset(Model::$softProperties[$this->key])) {
+		if (isset($this->softProperties[$this->key])) {
 			$builder->where(
-				$this->key, Model::$softProperties[$this->key]
+				$this->key, $this->softProperties[$this->key]
 			);
 		}
 
