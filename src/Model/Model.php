@@ -226,7 +226,7 @@ class Model extends Repository implements ModelContract
 	* @static
 	* @return 	Mixed
 	*/
-	public static function getSoftProperties(Bool $asObject=false)
+	public function getSoftProperties(Bool $asObject=false)
 	{
 		if ($asObject == true) {
 			return (Object) $this->softProperties;
@@ -473,12 +473,11 @@ class Model extends Repository implements ModelContract
 	* Returns the child model that is extending this base model.
 	*
 	* @access 	protected
-	* @return 	Object Kit\Glider\Model\Contracts\ModelContract
+	* @return 	String
 	*/
-	protected function getInheritingModel() : ModelContract
+	protected function getAssociatedTable()
 	{
-		$childClass = get_class();
-		return new $childClass();
+		return $this->table;
 	}
 
 }
