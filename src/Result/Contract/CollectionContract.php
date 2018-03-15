@@ -114,6 +114,14 @@ interface CollectionContract
 	public function offset(int $offset=0);
 
 	/**
+	* Returns the last row in the result array.
+	*
+	* @access 	public
+	* @return 	Mixed
+	*/
+	public function last();
+
+	/**
 	* Return only specific or certain columns from a query result set.
 	* This method returns an instance of Kit\Glider\Result\Collection if the collected
 	* result is not empty.

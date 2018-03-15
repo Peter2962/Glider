@@ -30,6 +30,7 @@ namespace Kit\Glider\Model\Uses;
 use Exception;
 use Kit\Glider\Model\Model;
 use Kit\Glider\Model\Attributes;
+use Kit\Glider\Model\Collection;
 
 trait Finder
 {
@@ -58,7 +59,6 @@ trait Finder
 			$clause, $clauseArguments
 		)->get();
 
-		$results = $childModel;
 		if ($builder->first()) {
 
 			// If the result is not empty, the accessible properties will be extracted and returned.
@@ -84,6 +84,8 @@ trait Finder
 					$results[] = $accessible;
 					$accessible = null;
 				}
+
+				return new Collection($results, $childModel);
 			}else{
 				foreach($resultArray[0] as $key => $result) {
 					if ($childModel->isAccessible($key)) {
@@ -93,7 +95,7 @@ trait Finder
 			}
 		}
 
-		return $results;
+		return $childModel;
 	}
 
 }
