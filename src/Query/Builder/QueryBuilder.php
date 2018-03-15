@@ -596,6 +596,22 @@ class QueryBuilder implements QueryBuilderProvider
 	}
 
 	/**
+	* Returns an array of query builder methods name and according to their categories.
+	*
+	* @access 	public
+	* @static
+	* @return 	Array
+	*/
+	public static function getAvailableMethods()
+	{
+		return [
+			'search' => [],
+			'update' => [],
+			'modifier' => []
+		];
+	}
+
+	/**
 	* This method is used to set a field on ORDER BY clause.
 	*
 	* @param 	$query <String>

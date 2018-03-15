@@ -147,6 +147,16 @@ class Collection implements CollectionContract
 	/**
 	* {@inheritDoc}
 	*/
+	public function last()
+	{
+		$this->offset = count($this->collected) - 1;
+
+		return $this->collected[$this->offset] ?? null;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
 	public function only(...$columns)
 	{
 		if (!empty($columns) && !empty($this->collected)) {

@@ -389,21 +389,6 @@ class Model extends Repository implements ModelContract
 				$arguments
 			);
 
-		}else{
-
-			// Not a findBy static method, then it has to be a query builder method.
-			switch ($method) {
-				case 'value':
-					# code...
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-
-			// $result = ['<>', '/\\'];
-
 		}
 
 		return $result;

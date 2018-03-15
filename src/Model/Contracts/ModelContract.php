@@ -32,6 +32,8 @@ interface ModelContract
 
 	/**
 	* Returns instance of model.
+	* Because most of this methods cannot be accessed statically, this method will make it
+	* easy to access those methods by just creating a static instance of the model.
 	*
 	* @access 	public
 	* @static
