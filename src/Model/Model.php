@@ -33,8 +33,8 @@ use Kit\Glider\Model\Attributes;
 use Kit\Glider\Result\Collection;
 use Kit\Glider\Schema\SchemaManager;
 use Kit\Glider\Model\Relationships\HasOne;
-use Kit\Glider\Model\Uses\{Record, Finder};
 use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Model\Uses\{Record, Finder};
 use Kit\Glider\Model\Relationships\HasMany;
 use Kit\Glider\Model\Contracts\ModelContract;
 
@@ -135,7 +135,7 @@ class Model extends Repository implements ModelContract
 	}
 
 	/**
-	* Returns sn instance of query builder.
+	* Returns an instance of query builder.
 	* 
 	* @access 	public
 	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
@@ -389,6 +389,62 @@ class Model extends Repository implements ModelContract
 				$arguments
 			);
 
+		}else{
+			// If the method does not match a findby regex, we will check if it is a query builder method or not.
+			$builder = null;
+			$accessibleProperties = $childModel->getAccessibleProperties();
+
+			switch ($method) {
+				case 'select':
+					
+					if (count($arguments) < 1) {
+						throw new RuntimeException('Select fields are required when using the static select method.');
+					}
+					
+					$accessibleProperties = array_merge(
+						$accessibleProperties,
+						$arguments
+					);
+
+					$builder = $childModel->toSql(
+						implode(',', array_filter($accessibleProperties))
+					);
+
+					break;
+				case 'where':
+
+					$value = null;
+					if (!isset($arguments[0]) || !is_string($arguments[0])) {
+						throw new RuntimeException('Fields are required when using the where clause.');
+					}
+
+					if (!in_array(gettype($arguments[1]), ['object', 'array'])) {
+						$value = $arguments[1];
+					}					
+					
+					$builder = $childModel::select(null)->where(
+						$arguments[0],
+						$value
+					);
+					
+					break;
+				case 'get':
+
+					$builder = $childModel->toSql(
+						implode(',', $accessibleProperties)
+					)->get();
+					
+					break;
+				default:
+					$builder = null;
+					break;
+			}
+
+			if ($builder == null) {
+				throw new RuntimeException('No callable static method available.');
+			}
+
+			return $builder;
 		}
 
 		return $result;
