@@ -39,8 +39,9 @@ class Configurator implements ConfiguratorInterface
 	*
 	* @access 	public
 	* @return 	void
+	* @static
 	*/
-	public function fixConfiguration()
+	public static function fixConfiguration()
 	{
 		if(file_exists('Config.php')) {
 			unlink('Config.php');
