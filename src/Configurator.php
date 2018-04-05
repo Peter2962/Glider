@@ -47,7 +47,7 @@ class Configurator implements ConfiguratorInterface
 			unlink('Config.php');
 		}
 
-		rename('config.framework', 'Config.php');
+		rename('/app/vendor/phoxphp/glider/src/config.framework', '/app/vendor/phoxphp/glider/src/Config.php');
 	}
 
 }
