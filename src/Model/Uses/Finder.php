@@ -93,6 +93,8 @@ trait Finder
 					}
 				}
 			}
+		}else{
+			return false;
 		}
 
 		return $childModel;
