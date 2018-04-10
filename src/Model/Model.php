@@ -69,9 +69,9 @@ class Model extends Repository implements ModelContract
 
 	/**
 	* @var 		$table
-	* @access 	protected
+	* @access 	public
 	*/
-	protected 	$table;
+	public 		$table;
 
 	/**
 	* @access 	public
