@@ -506,12 +506,15 @@ class Table implements BaseTableContract
 	}
 
 	/**
+	* Returns instance of query builder
+	*
+	* @param 	$connectionId <String>
 	* @access 	protected
 	* @return 	Kit\Glider\Query\Builder\QueryBuilder
 	*/
-	protected function builder()
+	protected function builder(String $connectionId=null)
 	{
-		return Repository::getQueryBuilder();
+		return Repository::getQueryBuilder($connectionId);
 	}
 
 	/**

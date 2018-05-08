@@ -32,24 +32,27 @@ use Kit\Glider\Repository;
 use Kit\Glider\Model\Attributes;
 use Kit\Glider\Result\Collection;
 use Kit\Glider\Schema\SchemaManager;
-use Kit\Glider\Model\Relationships\HasOne;
 use Kit\Glider\Query\Builder\QueryBuilder;
 use Kit\Glider\Model\Uses\{Record, Finder};
-use Kit\Glider\Model\Relationships\HasMany;
 use Kit\Glider\Model\Contracts\ModelContract;
+use Kit\Glider\Model\Relationships\{HasOne, HasMany};
 
 class Model extends Repository implements ModelContract
 {
 
-	use Record, Finder;
+	use Record, Finder, HasOne, HasMany;
 
 	/**
+	* Model connection id
+	*
 	* @var 		$connectionId
 	* @access 	protected
 	*/
 	protected 	$connectionId = null;
 
 	/**
+	* Properties accessible by the model.
+	*
 	* @var 		$softProperties
 	* @access 	protected
 	*/
@@ -62,12 +65,20 @@ class Model extends Repository implements ModelContract
 	protected 	$relations = [];
 
 	/**
+	* @var 		$relationPassKey
+	* @access 	protected
+	*/
+	protected 	$relationKeys = [];
+
+	/**
 	* @var 		$key
 	* @access 	protected
 	*/
 	protected 	$key;
 
 	/**
+	* Model table name.
+	*
 	* @var 		$table
 	* @access 	public
 	*/
@@ -451,6 +462,22 @@ class Model extends Repository implements ModelContract
 	}
 
 	/**
+	* Checks if model is related to another model.
+	*
+	* @param 	$label <String>
+	* @access 	public
+	* @return 	Boolean
+	*/
+	public function hasRelation(String $label) : Bool
+	{
+		if (isset($this->relations[$label])) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	* Returns a prepared query that will be used by other find methods.
 	*
 	* @param 	$fields <Mixed>
@@ -519,6 +546,18 @@ class Model extends Repository implements ModelContract
 	protected function getAssociatedTable()
 	{
 		return $this->table;
+	}
+
+	/**
+	* Returns the name of a class without it's namespace.
+	*
+	* @param 	$string <String>
+	* @access 	protected
+	* @return 	String
+	*/
+	protected function getQualifiedClassName(String $string) : String
+	{
+		return get_class(new $string);
 	}
 
 }

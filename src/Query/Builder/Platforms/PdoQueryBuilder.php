@@ -28,10 +28,28 @@
 namespace Kit\Glider\Query\Builder\Platforms;
 
 use Kit\Glider\Query\Builder\QueryBuilder;
+use Kit\Glider\Query\Builder\Contract\QueryBuilderProvider;
 
 class PdoQueryBuilder extends QueryBuilder
 {
 
-	//
+	/**
+	* {@inheritDoc}
+	*/
+	public function whereIn(String $column, Array $values) : QueryBuilderProvider
+	{
+		if (!empty($this->binder->getBinding('select')) && sizeof($values) > 0) {
+	
+			$values = '@pdo' . implode(', ', $values) . '@pdo';			
+			$this->getParameterBag()->setParameter(
+				$column, $values
+			);
+
+			$markers = implode(', ', array_fill(0, count($values), '?'));
+			$this->sqlQuery .= ' WHERE ' . $column . ' IN (' . $markers . ')';
+		}
+
+		return $this;
+	}
 
 }

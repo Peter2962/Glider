@@ -43,19 +43,13 @@ class ConnectionLoader
 		$configLocation = $baseDir . '/Config.php';
 	
 		if (!file_exists($configLocation)) {
-
 			$resourceConfig = Config::get('database');
-
 		}else{
-
 			$resourceConfig = include $configLocation;
-			
 		}
 
 		if (gettype($resourceConfig) !== 'array') {
-
 			throw new Exception('Invalid configuration type.');
-		
 		}
 		
 		return $resourceConfig;
