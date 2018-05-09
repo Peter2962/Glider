@@ -228,6 +228,10 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 				}
 			}
 
+			if ($executeParameters == null) {
+				$executeParameters = $parameters;
+			}
+
 			$autocommitDisabled = !$this->platform->isAutoCommitEnabled() && in_array($queryBuilder->getQueryType(), [2, 3]);
 				
 			if ($autocommitDisabled) {
