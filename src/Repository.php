@@ -22,7 +22,7 @@
 
 /**
 * @author 	Peter Taiwo
-* @package 	Repository
+* @package 	Kit\Glider\Repository
 *
 * This Repository handles all database operations provided by
 * Glider. The connection manager @see Kit\Glider\Connection\ConnectionManager can also
@@ -68,13 +68,23 @@ class Repository
 	protected 	$connectionId;
 
 	/**
+	* @var 		$staticConnectionId
+	* @access 	protected
+	*/
+	protected static $staticConnectionId;
+
+	/**
 	* @param 	$connectionId <String>
 	* @access 	public
 	* @return 	void
 	*/
 	public function __construct(String $connectionId=null)
 	{
-		$this->connectionId = $connectionId;
+		$this->connectionId = Repository::$staticConnectionId; 
+		if ($connectionId !== null) {
+			$this->connectionId = $connectionId;
+		}
+
 		$connectionManager = new ConnectionManager();
 		$this->provider = $provider = $connectionManager->getConnection($this->connectionId);
 		$this->transaction = $provider->transaction();
@@ -90,6 +100,10 @@ class Repository
 	*/
 	public static function getQueryBuilder(String $connectionId=null)
 	{
+		if ($connectionId == null) {
+			$connectionId = Repository::$staticConnectionId;
+		}
+
 		return self::getInstance($connectionId)->provider->queryBuilder(new ConnectionManager(), $connectionId);
 	}
 
@@ -103,6 +117,10 @@ class Repository
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
+		if ($connectionId == null) {
+			$connectionId = Repository::$staticConnectionId;
+		}
+
 		return self::getInstance($connectionId)->provider->schemaManager($connectionId, Repository::getQueryBuilder($connectionId));
 	}
 
@@ -116,6 +134,10 @@ class Repository
 	*/
 	public static function getProvider(String $connectionId=null) : PlatformProvider
 	{
+		if ($connectionId == null) {
+			$connectionId = Repository::$staticConnectionId;
+		}
+
 		return self::getInstance($connectionId)->provider;
 	}
 
@@ -130,6 +152,19 @@ class Repository
 	public static function getPlatformColumn($column) : ColumnContract
 	{
 		return self::getInstance()->provider->column($column);
+	}
+
+	/**
+	* Sets a global connection id statically.
+	*
+	* @param 	$connectionId <String>
+	* @access 	public
+	* @return 	void
+	* @static
+	*/
+	public static function setGlobalConnectionId(String $connectionId)
+	{
+		Repository::$staticConnectionId = $connectionId;
 	}
 
 	/**

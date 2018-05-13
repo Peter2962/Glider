@@ -139,7 +139,7 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 	/**
 	* {@inheritDoc}
 	*/
-	public function delete(QueryBuilder $queryBuilder, Parameters $parameterBag) : StatementContract
+	public function delete(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract
 	{
 		$query = $this->resolveQuery($queryBuilder, $parameters);
 		$query->statement->closeCursor();
@@ -220,6 +220,15 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 			}
 			
 			if ($queryBuilder->getQueryType() == 1 && $executeParameters == null) {
+				$executeParameters = $parameters;
+				$parameterValues = array_values($executeParameters)[0];
+				if (preg_match('/\@pdo/', $parameterValues)) {
+					$parameterValues  = str_replace('@pdo', '', $parameterValues);
+					$executeParameters = [$parameterValues];
+				}
+			}
+
+			if ($executeParameters == null) {
 				$executeParameters = $parameters;
 			}
 

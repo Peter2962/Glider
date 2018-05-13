@@ -47,36 +47,43 @@ trait Record
 	*/
 	public function save(Model $relatedModel=null) : Model
 	{
-		$savedModel = $this;
-		$key = $this->primaryKey();
+		$currentModel = $this;
+		$key = $currentModel->primaryKey();
 
 		if ($relatedModel instanceof Model) {
 
-			// Does it have a relatedModel?
+			// Does it have a relatedModel? If no error is thrown till we get here,
+			// then the relationship was successfully initialized.
+			$parentModelForeignKey = $this->relationKeys['parent_model_foreign_key'];
+			$parentModelKeyValue = $this->relationKeys['parent_model_foreign_key_value'];
+
+			$currentModel = $relatedModel;
+			$currentModel->$parentModelForeignKey = $parentModelKeyValue;
+			$key = $currentModel->primaryKey();
 
 		}
 
 		// If id property exists, update instead.
-		if ($this->$key) {
-			$this->update(
-				$this->$key,
+		if ($currentModel->$key) {
+			$currentModel->update(
+				$currentModel->$key,
 				$key,
-				$this->getAssociatedTable(),
-				$this->getSoftProperties()
+				$currentModel->getAssociatedTable(),
+				$currentModel->getSoftProperties()
 			);
 
-			return $savedModel;
+			return $currentModel;
 		}
 
-		$record = $this->queryBuilder()->insert(
-			$this->getAssociatedTable(), // name of model table
-			$this->getSoftProperties() // model soft properties
+		$record = $currentModel->queryBuilder()->insert(
+			$currentModel->getAssociatedTable(), // name of model table
+			$currentModel->getSoftProperties() // model soft properties
 		);
 
 		// assign new property $id amd add to soft properties
-		$this->id = $record->insertId();
+		$currentModel->id = $record->insertId();
 
-		return $savedModel;
+		return $currentModel;
 	}
 
 	/**

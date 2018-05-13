@@ -627,4 +627,15 @@ class QueryBuilder implements QueryBuilderProvider
 		return $query;
 	}
 
+	/**
+	* Returns Kit\Glider\Query\Parameters
+	*
+	* @access 	public
+	* @return 	Object <Kit\Glider\Query\Parameters>
+	*/
+	public function getParameterBag()
+	{
+		return $this->parameterBag;
+	}
+
 }
