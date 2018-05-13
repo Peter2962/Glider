@@ -27,10 +27,27 @@
 
 namespace Kit\Glider\Model\Relationships;
 
+use Kit\Glider\Model\Relationships\Uses\HasManyRelation;
+
 trait HasMany
 {
 
-	public function hasMany()
+	/**
+	* Processes a hasmany relationship type.
+	*
+	* @param 	$options <Array> [Required]
+	* 			The $options array must have the following keys set:
+	* --------------------------------------------------------------
+	* - related_model - Related model class.
+	* - related_model_label - Related model class label.
+	* - related_model_table - Name of related model table.
+	* - model_foreign_key - Model foreign key that is available on the related model table.
+	* - model_key - Model primary key.
+	*
+	* @access 	public
+	* @return 	Object <Kit\Glider\Model\Relationships\Uses\HasManyRelation>
+	*/
+	public function hasMany() : HasManyRelation
 	{
 
 	}
