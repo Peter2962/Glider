@@ -221,15 +221,26 @@ class PdoProcessor extends AbstractProcessorProvider implements ProcessorProvide
 			
 			if ($queryBuilder->getQueryType() == 1 && $executeParameters == null) {
 				$executeParameters = $parameters;
-				$parameterValues = array_values($executeParameters)[0];
-				if (preg_match('/\@pdo/', $parameterValues)) {
-					$parameterValues  = str_replace('@pdo', '', $parameterValues);
-					$executeParameters = [$parameterValues];
+				$parameterValues = array_values($executeParameters);
+				if (isset($parameterValues[0])) {
+					$parameterValues = $parameterValues[0];
+				}
+
+				if (!is_array($parameterValues)) {
+					if (preg_match('/\@pdo/', $parameterValues)) {
+						$parameterValues  = str_replace('@pdo', '', $parameterValues);
+						$executeParameters = [$parameterValues];
+					}
 				}
 			}
 
 			if ($executeParameters == null) {
 				$executeParameters = $parameters;
+			}
+
+			// This fixes parameter error that occurs when using the insert method.
+			if ($queryBuilder->getQueryType() == 2) {
+				$executeParameters = array_values($parameters);
 			}
 
 			$autocommitDisabled = !$this->platform->isAutoCommitEnabled() && in_array($queryBuilder->getQueryType(), [2, 3]);

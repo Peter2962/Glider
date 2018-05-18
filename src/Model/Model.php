@@ -28,6 +28,7 @@
 namespace Kit\Glider\Model;
 
 use RuntimeException;
+use ReflectionMethod;
 use Kit\Glider\Repository;
 use Kit\Glider\Model\Attributes;
 use Kit\Glider\Result\Collection;
@@ -35,7 +36,8 @@ use Kit\Glider\Schema\SchemaManager;
 use Kit\Glider\Query\Builder\QueryBuilder;
 use Kit\Glider\Model\Uses\{Record, Finder};
 use Kit\Glider\Model\Contracts\ModelContract;
-use Kit\Glider\Model\Relationships\{HasOne, HasMany};
+use Kit\Glider\Model\Relationships\{HasOne, HasMany, BelongsTo};
+use Kit\Glider\Model\Relationships\Uses\{HasManyRelation, BelongsToRelation};
 
 class Model extends Repository implements ModelContract
 {
@@ -118,6 +120,17 @@ class Model extends Repository implements ModelContract
 		$accessibleProperties = $this->accessibleProperties();
 		if (in_array($var, $accessibleProperties) && isset($this->softProperties[$var])) {
 			return $this->softProperties[$var];
+		}
+
+		// Since the property is not in list of properties, we will check if the method exists and
+		// if it is a relationship type instance.
+		if (method_exists($this, $var)) {
+			$method = $this->$var();
+
+			// If an instance of HasManyRelation is returned, this means a collection object is available.
+			if ($method instanceof HasManyRelation) {
+				return $method->related;
+			}
 		}
 	}
 
@@ -249,7 +262,7 @@ class Model extends Repository implements ModelContract
 	/**
 	* {@inheritDoc}
 	*/
-	final public function find(Int $key=1, Array $options=[]) : ModelContract
+	final public function find(Int $key=null, Array $options=[]) : ModelContract
 	{
 		$model = Model::getInstanceOfModel();
 
@@ -296,9 +309,7 @@ class Model extends Repository implements ModelContract
 			$resultArray = $result->toArray()->all();
 
 			foreach($resultArray as $i => $result) {
-
 				$res = $resultArray[$i];
-
 				$accessible = [];
 
 				foreach(array_keys($res) as $i => $key) {
