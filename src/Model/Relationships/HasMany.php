@@ -27,6 +27,11 @@
 
 namespace Kit\Glider\Model\Relationships;
 
+use RuntimeException;
+use Kit\Glider\Repository;
+use Kit\Glider\Model\Model;
+use Kit\Glider\Schema\Table;
+use Kit\Glider\Model\Collection;
 use Kit\Glider\Model\Relationships\Uses\HasManyRelation;
 
 trait HasMany
@@ -47,9 +52,60 @@ trait HasMany
 	* @access 	public
 	* @return 	Object <Kit\Glider\Model\Relationships\Uses\HasManyRelation>
 	*/
-	public function hasMany() : HasManyRelation
+	public function hasMany(Array $options) : HasManyRelation
 	{
+		$options = (Object) $options;
 
+		$relatedModelName = $options->related_model;
+		$relatedModelTable = $options->related_model_table;
+		$modelForeignKey = $options->model_foreign_key;
+		$modelKey = $options->model_key;
+		$modelTable = $this->table;
+
+		// Add this related model to array of relations
+		$this->relations[] = [
+			'model' => $relatedModelName,
+			'foreign_key' => $modelForeignKey,
+			'key' => $modelKey
+		];
+
+		// Set connection id to avoid connection id errors.
+		Repository::setGlobalConnectionId($this->connectionId);
+		$table = new Table($relatedModelTable);
+
+		// Check if related model has the relation column.
+		if (!$table->hasColumn($modelForeignKey)) {
+			throw new RuntimeException(
+				sprintf(
+					'Column `%s` does not exist in `%s` table',
+					$modelForeignKey,
+					$relatedModelTable
+				)
+			);
+		}
+
+		$table = null;
+		$relatedModel = new $relatedModelName();
+
+		// set criteria
+		$keyValue = $this->$modelKey;
+		$criteria = 'findBy' . $modelForeignKey;
+		$relatedModelObject = $relatedModelName::$criteria($keyValue);
+		$hasManyRelation = new HasManyRelation($this->queryBuilder());
+
+		// // Assign parent model
+		$hasManyRelation->parentModel = $this;
+
+		if ($relatedModelObject->getContext() instanceof Model) {
+			$relatedModelObject->getContext()->relationKeys = [
+				'parent_model_primary' => $modelKey,
+				'parent_model_foreign_key' => $modelForeignKey,
+				'parent_model_foreign_key_value' => $this->$modelKey
+			];
+		}
+
+		$hasManyRelation->related = $relatedModelObject;
+		return $hasManyRelation;
 	}
 
 }

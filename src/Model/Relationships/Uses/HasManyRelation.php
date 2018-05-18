@@ -89,14 +89,16 @@ class HasManyRelation
 	*/
 	public function __call($method, $arguments)
 	{
+
+		$related = $this->related->getContext();
 		$reflectionMethod = new ReflectionMethod(
-			get_class($this->related),
+			get_class($related),
 			$method
 		);
 
-		// Invoke related model method calls
+		// // Invoke related model method calls
 		return $reflectionMethod->invokeArgs(
-			$this->related,
+			$related,
 			$arguments
 		);
 	}
@@ -108,12 +110,7 @@ class HasManyRelation
 	*/
 	public function __get($property)
 	{
-		// Only return property if related model is not null
-		if ($this->related instanceof Model) {
-			return $this->related->$property;
-		}
-
-		return null;
+		//
 	}
 
 }
