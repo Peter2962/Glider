@@ -102,13 +102,35 @@ class ConnectionAttemptSubscriber implements Subscriber
 	public function domainNotAllowed(Array $configuration)
 	{
 		$connectionName = '';
+		$config = array_values($configuration)[0];
+
 		if (key($configuration)) {
 			$connectionName = key($configuration);
 		}
 
-		throw new RuntimeException(sprintf(
-			"Connection not allowed for domain {%s} in {%s} configuration.", array_values($configuration)[0]['domain'], $connectionName)
-		);
+		if (is_array($config['domain'])) {
+			if (sizeof($config['domain']) > 1) {
+				$errorReport = sprintf(
+					"Connection not allowed for these domains [%s] in %s configuration",
+					implode(', ', array_values($configuration)[0]['domain']),
+					$connectionName
+				);
+			}else{
+				$errorReport = sprintf(
+					"Connection not allowed for domain {%s} in {%s} configuration.",
+					array_values($configuration)[0]['domain'][0],
+					$connectionName
+				);
+			}
+
+			throw new RuntimeException($errorReport);
+		}else{
+			throw new RuntimeException(sprintf(
+				"Connection not allowed for domain {%s} in {%s} configuration.", array_values($configuration)[0]['domain'], $connectionName)
+			);
+		}
+		pre($config);
+		exit;
 	}
 
 	/**
