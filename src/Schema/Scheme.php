@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Scheme
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Scheme
 */
 
 namespace Kit\Glider\Schema;
@@ -101,7 +96,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function varchar(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -110,7 +105,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function char(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -119,7 +114,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function integer(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -128,7 +123,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function bit(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -137,7 +132,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function tinyInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -146,7 +141,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function smallInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -155,7 +150,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function mediumInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -164,7 +159,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function bigInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -173,7 +168,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function decimal(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -182,7 +177,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function double(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -191,7 +186,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function text(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -200,7 +195,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function tinyText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -209,7 +204,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function mediumText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -218,7 +213,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function longText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -227,7 +222,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function blob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -236,7 +231,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function mediumBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -245,7 +240,7 @@ class Scheme
 
 	/**
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<String>
 	*/
 	public function longBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -257,24 +252,21 @@ class Scheme
 	* @param 	$columns <Array>
 	* @param 	$setUnique <Integer>
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<Object> <Kit\Glider\Schema\Scheme>
 	*/
 	public function index(String $name, Array $columns=[], int $setUnique=0)
 	{
 		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
-
 		$type = 'INDEX';
 
 		if ($setUnique == Scheme::SET_UNIQUE_KEY) {
 
 			$index = 'UNIQUE ' . $index;
-
 			$type = 'UNIQUE_INDEX';
 
 		}
 
 		Scheme::$commandsArray[$name] = ['type' => $type, 'definition' => $index];
-
 		Scheme::$commands[] = $index;
 
 		return $this;
@@ -288,7 +280,7 @@ class Scheme
 	* @param 	$onDelete <String>
 	* @param 	$onUpdate <String>
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Scheme
+	* @return 	<void>
 	*/
 	public function foreign(String $keyName, Array $options=[], String $onDelete='NO ACTION', String $onUpdate='NO ACTION')
 	{
@@ -331,7 +323,7 @@ class Scheme
 	* Returns type sql definition.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<Mixed>
 	*/
 	public function getDefinition($separator=',')
 	{
@@ -348,7 +340,7 @@ class Scheme
 	* Returns array of columns created.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	* @static
 	*/
 	public static function getCommandsArray() : Array
@@ -364,7 +356,7 @@ class Scheme
 	* @param 	$autoIncrement <Boolean>
 	* @param 	$primary <Boolean>
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function setType(String $type, String $name, $length, Bool $null, Bool $autoIncrement, Array $options)
 	{
@@ -391,27 +383,19 @@ class Scheme
 		$diffTypes = ['DECIMAL', 'DOUBLE', 'TEXT', 'LONGTEXT', 'MEDIUMTEXT', 'LONGTEXT', 'FOREIGN'];
 
 		if ($length < $typeClass->getMinimumLength() || $length > $typeClass->getMaximumLength() && !in_array($dataType, $diffTypes)) {
-
 			throw new RuntimeException(sprintf('Invalid length for column %s', $name));
-
 		}
 
 		if (is_array($length)) {
-
 			$length = implode(',', $length);
-
 		}
 
 		if ($null == true) {
-
 			$isNull = ' NULL';
-
 		}
 
 		if ($autoIncrement == false) {
-
 			$canAutoIncrement = '';
-
 		}
 
 		$definition = $name . ' ' . $typeClass->getName();
@@ -427,7 +411,7 @@ class Scheme
 	/**
 	* @param 	$type <String>
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function getLength($definition, $length)
 	{

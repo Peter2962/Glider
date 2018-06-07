@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Query\Builder\Contract\QueryBuilderProvider
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,16 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider
-* @version 	0.1.0
-*
-* Query builder provider contract that returns an architecture of Glider's
-* query builder. This contract must be implemented any query builder
-* that will be used.
 */
 
 namespace Kit\Glider\Query\Builder\Contract;
@@ -46,7 +36,7 @@ interface QueryBuilderProvider
 	* @param 	$connectorProvider <Kit\Glider\Connection\ConnectionManager>
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(ConnectionManager $connectionManager, String $connectionId=null);
 
@@ -56,7 +46,7 @@ interface QueryBuilderProvider
 	* @param 	$query <String>
 	* @param 	$useDefaultQueryMethod <Boolean>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	public function queryWithBinding(String $query, Bool $useDefaultQueryMethod) : QueryBuilderProvider;
 
@@ -66,7 +56,7 @@ interface QueryBuilderProvider
 	* @param 	$queryString <String>
 	* @param 	$type <Integer>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function query(String $queryString, int $type=1);
 
@@ -79,7 +69,7 @@ interface QueryBuilderProvider
 	* @param 	$key <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	public function setParam(String $key, $value) : QueryBuilderProvider;
 
@@ -88,7 +78,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$nullifyResultAccess <Boolean>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function get(Bool $nullifyResultAccess=false);
 
@@ -98,7 +88,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$resultMapper;
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	public function setResultMapper($resultMapper) : QueryBuilderProvider;
 
@@ -106,7 +96,7 @@ interface QueryBuilderProvider
 	* Returns an array of query parameters.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getQueryParameters() : Array;
 
@@ -114,7 +104,7 @@ interface QueryBuilderProvider
 	* Returns the query string.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getQuery() : String;
 
@@ -122,7 +112,7 @@ interface QueryBuilderProvider
 	* Returns the registered ResultMapper.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getResultMapper();
 
@@ -131,7 +121,7 @@ interface QueryBuilderProvider
 	* operation.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function resultMappingEnabled() : Bool;
 
@@ -141,7 +131,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function setOperator(String $operator) : QueryBuilderProvider;
 
@@ -152,7 +142,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$arguments <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider 
+	* @return 	<Object> <Kit\Glider\Query\Builder\Contract\QueryBuilderProvider>
 	*/
 	public function select(...$arguments) : QueryBuilderProvider;
 
@@ -162,7 +152,7 @@ interface QueryBuilderProvider
 	* @param 	$arguments <Array>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\Contract\QueryBuilderProvider>
 	*/
 	public function least(Array $arguments, String $alias) : QueryBuilderProvider;
 
@@ -172,7 +162,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function from(String $table) : QueryBuilderProvider;
 
@@ -185,7 +175,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function avg(String $column, String $alias) : QueryBuilderProvider;
 
@@ -198,7 +188,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function count(String $column, String $alias) : QueryBuilderProvider;
 
@@ -212,7 +202,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function sum(String $column, String $alias) : QueryBuilderProvider;
 
@@ -222,7 +212,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function max(String $column, String $alias) : QueryBuilderProvider;
 
@@ -232,7 +222,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function min(String $column, String $alias) : QueryBuilderProvider;
 
@@ -243,7 +233,7 @@ interface QueryBuilderProvider
 	* @param 	$alias <String>
 	* @param 	$separator <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function groupConcat(String $expression, String $alias, String $separator) : QueryBuilderProvider;
 
@@ -256,7 +246,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function where(String $column, $value='') : QueryBuilderProvider;
 
@@ -266,7 +256,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function orWhere(String $column, $value='') : QueryBuilderProvider;
 
@@ -276,7 +266,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function andWhere(String $column, $value='') : QueryBuilderProvider;
 
@@ -286,7 +276,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -296,7 +286,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function orWhereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -306,7 +296,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function andWhereNot(String $column, $value='') : QueryBuilderProvider;
 
@@ -316,7 +306,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$values <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereIn(String $column, Array $values) : QueryBuilderProvider;
 
@@ -326,7 +316,7 @@ interface QueryBuilderProvider
 	* @param 	$column <String>
 	* @param 	$values <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereNotIn(String $column, Array $values) : QueryBuilderProvider;
 
@@ -337,7 +327,7 @@ interface QueryBuilderProvider
 	* @param 	$leftValue <Mixed>
 	* @param 	$rightValue <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
 
@@ -348,7 +338,7 @@ interface QueryBuilderProvider
 	* @param 	$leftValue <Mixed>
 	* @param 	$rightValue <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereNotBetween(String $column, $leftValue=null, $rightValue=null) : QueryBuilderProvider;
 
@@ -368,7 +358,7 @@ interface QueryBuilderProvider
 	* @param 	$pattern <String>
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
 
@@ -381,7 +371,7 @@ interface QueryBuilderProvider
 	* @param 	$pattern <String>
 	* @param 	$operator <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function whereNotLike(String $column, String $pattern, String $operator='AND') : QueryBuilderProvider;
 
@@ -391,7 +381,7 @@ interface QueryBuilderProvider
 	* @param 	$limit <Integer>
 	* @param 	$offset <Integer>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function limit(Int $limit, Int $offset=0) : QueryBuilderProvider;
 
@@ -400,7 +390,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$columns <Array>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function orderBy(Array $columns) : QueryBuilderProvider;
 
@@ -409,7 +399,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$columns <Array>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\QueryBuilderProvider
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilderProvider>
 	*/
 	public function orderByField(Array $columns) : QueryBuilderProvider;
 
@@ -417,7 +407,7 @@ interface QueryBuilderProvider
 	* @param 	$table <String>
 	* @param 	$fields <Array>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function insert(String $table, Array $fields=[]);
 
@@ -425,7 +415,7 @@ interface QueryBuilderProvider
 	* @param 	$table <String>
 	* @param 	$fields <Array>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function update(String $table, Array $fields);
 
@@ -434,7 +424,7 @@ interface QueryBuilderProvider
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function delete(String $table);
 

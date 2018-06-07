@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Model\Model
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Model\Model
 */
 
 namespace Kit\Glider\Model;
@@ -88,7 +83,7 @@ class Model extends Repository implements ModelContract
 
 	/**
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct()
 	{
@@ -101,7 +96,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$var <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __set($var, $value)
 	{
@@ -140,7 +135,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$method <String>
 	* @param 	$arguments <Mixed>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function __call($method, $arguments)
 	{
@@ -151,7 +146,7 @@ class Model extends Repository implements ModelContract
 	* Returns an instance of schema manager.
 	*
 	* @access 	public
-	* @return 	Object Kit\Glider\Schema\SchemaManager
+	* @return 	<Object> <Kit\Glider\Schema\SchemaManager>
 	*/
 	final public function schema() : SchemaManager
 	{
@@ -162,7 +157,7 @@ class Model extends Repository implements ModelContract
 	* Returns an instance of query builder.
 	* 
 	* @access 	public
-	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	final public function queryBuilder() : QueryBuilder
 	{
@@ -173,7 +168,7 @@ class Model extends Repository implements ModelContract
 	* Returns name of the model class.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	final public function getName()
 	{
@@ -187,7 +182,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$property <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	final public function addPropertyIf(Bool $condition=null, String $property, $value=null)
 	{
@@ -203,7 +198,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$property <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	final public function addPropertyIfNot(Bool $condition=null, String $property, $value=null)
 	{
@@ -216,7 +211,7 @@ class Model extends Repository implements ModelContract
 	* Checks if a model has a table.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	* @final
 	*/
 	final public function hasQualifiedTable() : Bool
@@ -234,7 +229,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$property <String>
 	* @access 	public
 	* @static
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public static function hasSoftProperty(String $property=null) : Bool
 	{
@@ -248,7 +243,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$asObject <Boolean>
 	* @access 	public
 	* @static
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getSoftProperties(Bool $asObject=false)
 	{
@@ -477,7 +472,7 @@ class Model extends Repository implements ModelContract
 	*
 	* @param 	$label <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasRelation(String $label) : Bool
 	{
@@ -494,7 +489,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$fields <Mixed>
 	* @access 	protected
 	* @static
-	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	protected function toSql($fields=null)
 	{
@@ -512,7 +507,7 @@ class Model extends Repository implements ModelContract
 	* @param 	$with <Array>
 	* @param 	$addAccessibleProperties <Boolean>
 	* @access 	protected
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	protected function getAccessibleProperties(Array $with=[], Bool $addAccessibleProperties=true) : Array
 	{
@@ -537,7 +532,7 @@ class Model extends Repository implements ModelContract
 	*
 	* @param 	$property <String>
 	* @access 	protected
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	protected function isAccessible(String $property) : Bool
 	{
@@ -552,7 +547,7 @@ class Model extends Repository implements ModelContract
 	* Returns the child model that is extending this base model.
 	*
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function getAssociatedTable()
 	{
@@ -564,7 +559,7 @@ class Model extends Repository implements ModelContract
 	*
 	* @param 	$string <String>
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function getQualifiedClassName(String $string) : String
 	{

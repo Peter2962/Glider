@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Model\Uses\Record
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Model\Foundation\Record
 */
 
 namespace Kit\Glider\Model\Uses;
@@ -43,7 +38,7 @@ trait Record
 	*
 	* @param 	$relatedModel <Object>
 	* @access 	public
-	* @return 	Object Kit\Glider\Model\Model
+	* @return 	<Object> <Kit\Glider\Model\Model>
 	*/
 	public function save(Model $relatedModel=null) : Model
 	{
@@ -90,7 +85,7 @@ trait Record
 	* Deletes/removes a record from the database table.
 	*
 	* @access 	public
-	* @return 	Object Kit\Glider\Model\Model
+	* @return 	<Object> <Kit\Glider\Model\Model>
 	*/
 	public function delete() : Model
 	{
@@ -115,7 +110,7 @@ trait Record
 	* @param 	$table <String>
 	* @param 	$properties <Array>
 	* @access 	protected
-	* @return 	void
+	* @return 	<void>
 	*/
 	protected function update($keyValue=null, String $key, String $table, Array $properties=[])
 	{

@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Column\Contract\ColumnContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Column\Contract\ColumnContract
 */
 
 namespace Kit\Glider\Schema\Column\Contract;
@@ -37,6 +32,7 @@ interface ColumnContract
 	*
 	* @param 	$column
 	* @access 	public
+	* @return 	<void>
 	*/
 	public function __construct($column);
 
@@ -52,7 +48,7 @@ interface ColumnContract
 	* Returns the column type.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getType();
 
@@ -60,7 +56,7 @@ interface ColumnContract
 	* Returns the column length.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getLength();
 
@@ -68,7 +64,7 @@ interface ColumnContract
 	* Checks if column has default value.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasDefaultValue() : Bool;
 
@@ -76,7 +72,7 @@ interface ColumnContract
 	* Returns the column's default value.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getDefaultValue();
 
@@ -84,7 +80,7 @@ interface ColumnContract
 	* Checks if a column is null.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isNull() : Bool;
 
@@ -92,7 +88,7 @@ interface ColumnContract
 	* Checks if column has primary key index.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isPrimary() : Bool;
 
@@ -100,7 +96,7 @@ interface ColumnContract
 	* Checks if column has unique index.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isUnique() : Bool;
 
@@ -108,7 +104,7 @@ interface ColumnContract
 	* Checks if column has an index.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasIndex() : Bool;
 
@@ -116,7 +112,7 @@ interface ColumnContract
 	* Returns column's extra.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getExtra();
 

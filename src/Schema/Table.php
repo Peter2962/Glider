@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Table
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Table
 */
 
 namespace Kit\Glider\Schema;
@@ -477,7 +472,7 @@ class Table implements BaseTableContract
 	*
 	* @param 	$tableName <String>
 	* @access 	public
-	* @return 	Object
+	* @return 	<Object> <Kit\Glider\Schema\Table>
 	* @static
 	*/
 	public static function getInstance(String $tableName)
@@ -488,7 +483,7 @@ class Table implements BaseTableContract
 	/**
 	* @param 	$column <String>
 	* @access 	protected
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	protected function modifyColumn(String $column)
 	{
@@ -498,7 +493,7 @@ class Table implements BaseTableContract
 	/**
 	* @param 	$column <String>
 	* @access 	protected
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	protected function addColumn(String $column)
 	{
@@ -510,7 +505,7 @@ class Table implements BaseTableContract
 	*
 	* @param 	$connectionId <String>
 	* @access 	protected
-	* @return 	Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	protected function builder(String $connectionId=null)
 	{
@@ -520,7 +515,7 @@ class Table implements BaseTableContract
 	/**
 	* @param 	$column <Mixed>
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function _column($column)
 	{
@@ -538,10 +533,12 @@ class Table implements BaseTableContract
 	}
 
 	/**
+	* Processes a raw query.
+	*
 	* @param 	$expression <String>
 	* @param 	$type <Integer>
 	* @access 	protected
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	protected function runQueryWithExpression(String $expresison, int $type=1)
 	{
@@ -552,7 +549,7 @@ class Table implements BaseTableContract
 	* @param 	$table <String>
 	* @param 	$key <String>
 	* @access 	protected
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	protected function getColumnKeys(String $key)
 	{
@@ -583,7 +580,7 @@ class Table implements BaseTableContract
 	*
 	* @param 	$definition <String>
 	* @access 	protected
-	* @return 	void
+	* @return 	<void>
 	*/
 	protected function addForeign(String $definition)
 	{

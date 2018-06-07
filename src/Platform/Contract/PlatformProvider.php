@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Platform\Contract\PlatformProvider
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,15 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Platform\Contract\PlatformProvider
-* @version 	0.1.0
-*
-* Platform provider interface for all available platforms
-* registered. All platform providers must implement this interface.
 */
 
 namespace Kit\Glider\Platform\Contract;
@@ -51,10 +42,10 @@ interface PlatformProvider
 	* passes the configuration to it and Kit\Glider\Events\EventManager which handles the
 	* platform events.
 	*
-	* @param 	$platform Kit\Glider\Connection\PlatformResolver
-	* @param 	$eventManager Kit\Glider\Events\EventManager	
+	* @param 	$platform <Kit\Glider\Connection\PlatformResolver>
+	* @param 	$eventManager <Kit\Glider\Events\EventManager>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(PlatformResolver $platformResolver, EventManager $eventManager);
 
@@ -63,7 +54,7 @@ interface PlatformProvider
 	* a connection with the database.
 	*
 	* @access 	public
-	* @return 	Object Kit\Glider\Connectors\Contract\ConnectorProvider
+	* @return 	<Object> <Kit\Glider\Connectors\Contract\ConnectorProvider>
 	*/
 	public function connector() : ConnectorProvider;
 
@@ -72,7 +63,7 @@ interface PlatformProvider
 	* transactions while executing a query.
 	*
 	* @access 	public
-	* @return 	Object Kit\Glider\Transaction\Contract\TransactionProvider
+	* @return 	<Object> <Kit\Glider\Transaction\Contract\TransactionProvider>
 	*/
 	public function transaction() : TransactionProvider;
 
@@ -80,7 +71,7 @@ interface PlatformProvider
 	* The platform's processor provider that will be used to execute queries.
 	*
 	* @access 	public
-	* @return 	Kit\Glider\Processor\Contract\ProcessorProvider
+	* @return 	<Object> <Kit\Glider\Processor\Contract\ProcessorProvider>
 	*/
 	public function processor() : ProcessorProvider;
 
@@ -90,7 +81,7 @@ interface PlatformProvider
 	* @param 	$connectionId <String>
 	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Contract\SchemaManagerContract
+	* @return 	<Object> <Kit\Glider\Schema\Contract\SchemaManagerContract>
 	*/
 	public function schemaManager(String $connectionId=null, QueryBuilderProvider $queryBuilder) : SchemaManagerContract;
 
@@ -103,7 +94,7 @@ interface PlatformProvider
 	* @param 	$connectionProvider <Kit\Glider\Connection\Contract\ConnectionInterface>
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	Kit\Glider\Query\Builder\Contract\QueryBuilderProivder
+	* @return 	<Object> <Kit\Glider\Query\Builder\Contract\QueryBuilderProivder>
 	*/
 	public function queryBuilder(ConnectionInterface $connectorProvider, String $connectionId=null) : QueryBuilderProvider;
 
@@ -112,7 +103,7 @@ interface PlatformProvider
 	* object definitions so using this will make it easy to control the column attributes.
 	*
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Column\Contract\ColumnContract
+	* @return 	<Object> <Kit\Glider\Schema\Column\Contract\ColumnContract>
 	*/
 	public function column($column) : ColumnContract;
 
@@ -120,7 +111,7 @@ interface PlatformProvider
 	* Returns the platform's index class.
 	*
 	* @access 	public
-	* @return 	Kit\Glider\Schema\Column\Index\Contract\IndexContract
+	* @return 	<Object> <Kit\Glider\Schema\Column\Index\Contract\IndexContract>
 	*/
 	public function columnIndex(StdClass $index) : IndexContract;
 
@@ -129,7 +120,7 @@ interface PlatformProvider
 	* method of executing queries.
 	* 
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isPrepareCompatible() : Bool;
 
@@ -137,7 +128,7 @@ interface PlatformProvider
 	* This method checks if a platform has a query method to execute queries.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isQueryCompatible() : Bool;
 
@@ -145,7 +136,7 @@ interface PlatformProvider
 	* This method checks if auto_commit is enabled in the configuration.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isAutoCommitEnabled() : Bool;
 
@@ -154,7 +145,7 @@ interface PlatformProvider
 	*
 	* @param 	$key <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getConfig(String $key=null);
 
@@ -162,7 +153,7 @@ interface PlatformProvider
 	* Returns name of platform.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getPlatformName() : String;
 

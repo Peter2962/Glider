@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Connection\ConnectionManager
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Connection\ConnectionManager
 */
 
 namespace Kit\Glider\Connection;
@@ -105,7 +100,7 @@ class ConnectionManager implements ConnectionInterface
 	*
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getConnection($connectionId='')
 	{
@@ -124,7 +119,7 @@ class ConnectionManager implements ConnectionInterface
 	/**
 	* @param 	$id <String>
 	* @access 	protected
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	protected function canConnect($id='')
 	{
@@ -208,18 +203,8 @@ class ConnectionManager implements ConnectionInterface
 	}
 
 	/**
-	* @param 	$event <Array>
 	* @access 	private
-	* @return 	Boolean
-	*/
-	private function raiseEvent(array $event=[])
-	{
-		return null;
-	}
-
-	/**
-	* @access 	private
-	* @return 	Kit\Glider\ConnectionManager
+	* @return 	<Object> <Kit\Glider\ConnectionManager>
 	*/
 	private function fromQueue() : ConnectionManager
 	{
@@ -233,7 +218,7 @@ class ConnectionManager implements ConnectionInterface
 	*
 	* @param 	$id <String>
 	* @access 	private
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	private function get(String $id)
 	{
@@ -256,7 +241,7 @@ class ConnectionManager implements ConnectionInterface
 	/**
 	* @access 	public
 	* @final
-	* @return 	Object
+	* @return 	<Object>
 	* @static
 	*/
 	final private static function instance()

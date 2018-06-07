@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Query\Builder\SqlGenerator
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,15 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Query\Builder\SqlGenerator
-* @version 	0.1.0
-*
-* This class helps to generate sql queries from an array of query
-* keywords.
 */
 
 namespace Kit\Glider\Query\Builder;
@@ -51,24 +42,12 @@ class SqlGenerator
 	private 	$disallowedChars = ['?', '&', '%', '$', '#', '+', '!', ')', '(', '-', '^', '=', '/', '>', '<', ':', ';'];
 
 	/**
-	* Constructor accepts Kit\Glider\Query\Builder\QueryBinder as an argument. It gets the
-	* created queries and then generates sql query from it.
-	*
-	* @access 	public
-	* @return 	void
-	*/
-	public function __construct()
-	{
-		//
-	}
-
-	/**
 	* Converts a query string with named parameters to marked placeholders and returs an object.
 	*
 	* @param 	$query <String>
 	* @param 	$parameterRepository <Kit\Glider\Query\Parameters>
 	* @access 	public
-	* @return 	Object
+	* @return 	<Object> <StdClass>
 	*/
 	public function convertToSql(String $query, Parameters $parameterRepository) : StdClass
 	{
@@ -107,7 +86,7 @@ class SqlGenerator
 	*
 	* @param 	$query <String>
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getSelectedFields(String $query) : Array
 	{
@@ -130,7 +109,7 @@ class SqlGenerator
 	*
 	* @param 	$query <String>
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function hasMappableFields(String $query) : Array
 	{
@@ -147,7 +126,7 @@ class SqlGenerator
 	* Return array of disallowed characters.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getDisallowedChars() : Array
 	{

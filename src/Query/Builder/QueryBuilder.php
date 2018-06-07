@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Query\Builder\QueryBuilder
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Query\Builder\QueryBuilder
 */
 
 namespace Kit\Glider\Query\Builder;
@@ -566,7 +561,7 @@ class QueryBuilder implements QueryBuilderProvider
 	*
 	* @access 	public
 	* @static
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public static function lastQueryCustom()
 	{
@@ -577,7 +572,7 @@ class QueryBuilder implements QueryBuilderProvider
 	* Return an integer value of query type.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function getQueryType() : int
 	{
@@ -588,7 +583,7 @@ class QueryBuilder implements QueryBuilderProvider
 	* Returns platform name.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getPlatformName() : String
 	{
@@ -600,9 +595,9 @@ class QueryBuilder implements QueryBuilderProvider
 	*
 	* @access 	public
 	* @static
-	* @return 	Array
+	* @return 	<Array>
 	*/
-	public static function getAvailableMethods()
+	public static function getAvailableMethods() : Array
 	{
 		return [
 			'search' => [],
@@ -616,7 +611,7 @@ class QueryBuilder implements QueryBuilderProvider
 	*
 	* @param 	$query <String>
 	* @access 	protected
-	* @return 	String
+	* @return 	<String>
 	*/
 	protected function setOrderByFunction(String $query, String $functionName) : String
 	{
@@ -631,7 +626,7 @@ class QueryBuilder implements QueryBuilderProvider
 	* Returns Kit\Glider\Query\Parameters
 	*
 	* @access 	public
-	* @return 	Object <Kit\Glider\Query\Parameters>
+	* @return 	<Object> <Kit\Glider\Query\Parameters>
 	*/
 	public function getParameterBag()
 	{

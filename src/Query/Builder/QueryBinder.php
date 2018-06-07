@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Query\Builder\QueryBinder
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,14 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Query\Builder\QueryBinder
-*
-* QueryBinder saves created queries into an array that would later
-* be used by the SqlGenerator to generate query.
 */
 
 namespace Kit\Glider\Query\Builder;
@@ -75,7 +67,7 @@ class QueryBinder
 	/**
 	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(QueryBuilder $queryBuilder)
 	{
@@ -93,7 +85,7 @@ class QueryBinder
 	* @param 	$expr 	<Mixed>
 	* @param 	$with 	<Mixed>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function createBinding(String $key, $queryPart, $params=[], $expr='', $with='', $addValue=true)
 	{
@@ -115,7 +107,7 @@ class QueryBinder
 	/**
 	* @param 	$key <String>
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getBinding(String $key)
 	{
@@ -128,7 +120,7 @@ class QueryBinder
 	* @param 	$column <String>
 	* @param 	$alias <String>
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function alias(String $column, String $alias)
 	{
@@ -144,7 +136,7 @@ class QueryBinder
 	/**
 	* @param 	$parts <String>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function attachSeparator(String $parts)
 	{
@@ -160,7 +152,7 @@ class QueryBinder
 	/**
 	* @param 	$parameters <Array>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function select(array $parameters) : String
 	{
@@ -186,7 +178,7 @@ class QueryBinder
 	* @param 	$with <Mixed>
 	* @param 	$operator <String>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function where(String $column, $value='', String $with='=', String $operator='AND') : String
 	{
@@ -214,13 +206,13 @@ class QueryBinder
 	* @param 	$leftValue <Mixed>
 	* @param 	$rightValue <Mixed>
 	* @param 	$operator <String>
-	* @param 	$isNOt <Boolean>
+	* @param 	$isNot <Boolean>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
-	private function between(String $column, $leftValue, $rightValue, String $operator='AND', Bool $isNOt=true) : String
+	private function between(String $column, $leftValue, $rightValue, String $operator='AND', Bool $isNot=true) : String
 	{
-		$with = ($isNOt == true) ? 'BETWEEN' : 'NOT BETWEEN';
+		$with = ($isNot == true) ? 'BETWEEN' : 'NOT BETWEEN';
 		$parts = ' WHERE ' . $column . ' ' . $with . ' ' . $leftValue . ' ' . $operator . '  ' . $rightValue;
 		$this->bindings['where'][] = $parts;
 		return $parts;
@@ -231,7 +223,7 @@ class QueryBinder
 	* @param 	$pattern <String>
 	* @param 	$notLike <Boolean>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function like(String $column, String $pattern, String $operator='AND', Bool $notLike=false) : String
 	{
@@ -252,7 +244,7 @@ class QueryBinder
 	* @param 	$table <String>
 	* @param 	$fields <Array>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function insert(String $table, Array $fields)
 	{
@@ -267,7 +259,7 @@ class QueryBinder
 	* @param 	$columns <Array>
 	* @param 	$conditions <Array>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/
 	private function update(String $table, Array $columns)
 	{
@@ -303,7 +295,7 @@ class QueryBinder
 	/**
 	* @param 	$table <String>
 	* @access 	private
-	* @return 	String
+	* @return 	<String>
 	*/	
 	private function delete(String $table)
 	{

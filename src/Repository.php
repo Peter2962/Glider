@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Repository
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,15 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Repository
-*
-* This Repository handles all database operations provided by
-* Glider. The connection manager @see Kit\Glider\Connection\ConnectionManager can also
-* be used to handle some operations.
 */
 
 namespace Kit\Glider;
@@ -76,7 +67,7 @@ class Repository
 	/**
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(String $connectionId=null)
 	{
@@ -96,7 +87,7 @@ class Repository
 	* @param 	$connectionId <String>
 	* @access 	public
 	* @static
-	* @return 	Object Kit\Glider\Query\Builder\QueryBuilder
+	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
 	public static function getQueryBuilder(String $connectionId=null)
 	{
@@ -113,7 +104,7 @@ class Repository
 	* @param 	$connectionId <String>
 	* @access 	public
 	* @static
-	* @return 	Kit\Glider\Schema\SchemaManager\SchemaManagerContract
+	* @return 	<Object> <Kit\Glider\Schema\SchemaManager\SchemaManagerContract>
 	*/
 	public static function getSchema(String $connectionId=null) : SchemaManagerContract
 	{
@@ -130,7 +121,7 @@ class Repository
 	* @param 	$connectionId <String>
 	* @access 	public
 	* @static
-	* @return Kit\Glider\Platform\Contract\PlatformProvider
+	* @return 	<Object> <Kit\Glider\Platform\Contract\PlatformProvider>
 	*/
 	public static function getProvider(String $connectionId=null) : PlatformProvider
 	{
@@ -147,7 +138,7 @@ class Repository
 	* @param 	$column <Object>
 	* @access 	public
 	* @static
-	* @return 	Kit\Glider\Schema\Column\Contract\ColumnContract
+	* @return 	<Object> <Kit\Glider\Schema\Column\Contract\ColumnContract>
 	*/
 	public static function getPlatformColumn($column) : ColumnContract
 	{
@@ -159,7 +150,7 @@ class Repository
 	*
 	* @param 	$connectionId <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	* @static
 	*/
 	public static function setGlobalConnectionId(String $connectionId)
@@ -173,7 +164,7 @@ class Repository
 	* @param 	$connectionId <String>
 	* @access 	protected
 	* @static
-	* @return 	Object
+	* @return 	<Object> <Kit\Glider\Repository>
 	*/
 	protected static function getInstance(String $connectionId=null)
 	{

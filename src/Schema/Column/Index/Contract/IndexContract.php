@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Column\Index\Contract\IndexContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Column\Index\Contract\IndexContract
 */
 
 namespace Kit\Glider\Schema\Column\Index\Contract;
@@ -37,7 +32,7 @@ interface IndexContract
 	*
 	* @param 	$index <Object>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(StdClass $index);
 
@@ -45,7 +40,7 @@ interface IndexContract
 	* Returns the table where the index is found.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getTable() : String;
 
@@ -53,7 +48,7 @@ interface IndexContract
 	* Returns name of index.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getName() : String;
 
@@ -61,7 +56,7 @@ interface IndexContract
 	* Returns the index sequence.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function getSequence() : int;
 
@@ -69,7 +64,7 @@ interface IndexContract
 	* Checks if index is unique or not.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isUnique() : Bool;
 
@@ -77,7 +72,7 @@ interface IndexContract
 	* Checks if index is null.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isNull() : Bool;
 
@@ -85,7 +80,7 @@ interface IndexContract
 	* Returns the index column.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function getColumnName() : String;
 

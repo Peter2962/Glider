@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Model\Contracts\ModelContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Model\Contracts\ModelContract
 */
 
 namespace Kit\Glider\Model\Contracts;
@@ -37,7 +32,7 @@ interface ModelContract
 	*
 	* @access 	public
 	* @static
-	* @return 	Object Kit\Glider\Model\Contracts\ModelContract
+	* @return 	<Object> <Kit\Glider\Model\Contracts\ModelContract>
 	*/
 	public static function getInstanceOfModel() : ModelContract;
 
@@ -45,7 +40,7 @@ interface ModelContract
 	* Returns connection id.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getConnectionId() : String;
 
@@ -54,7 +49,7 @@ interface ModelContract
 	* in a result set.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function accessibleProperties() : Array;
 
@@ -62,7 +57,7 @@ interface ModelContract
 	* Returns the name of the primary key of the associated table.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function primaryKey() : String;
 
@@ -72,7 +67,7 @@ interface ModelContract
 	* @param 	$key <Integer>
 	* @param 	$options <Array>
 	* @access 	public
-	* @return 	Object Kit\Glider\Model\Contracts\ModelContract
+	* @return 	<Object> <Kit\Glider\Model\Contracts\ModelContract>
 	*/
 	public function find(Int $key=null, Array $options=[]) : ModelContract;
 
@@ -80,7 +75,7 @@ interface ModelContract
 	* Finds and returns all rows.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function all();
 
@@ -88,7 +83,7 @@ interface ModelContract
 	* Finds and returns the first row in result.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function first();
 
@@ -96,7 +91,7 @@ interface ModelContract
 	* Finds and returns the last row in result.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function last();
 
@@ -105,7 +100,7 @@ interface ModelContract
 	*
 	* @param 	$offset <Integer>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function offset(Int $offset);
 
@@ -116,7 +111,7 @@ interface ModelContract
 	* @param 	$arguments <Array>
 	* @access 	public
 	* @static
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public static function __callStatic($method, $arguments);
 

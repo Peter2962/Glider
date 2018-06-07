@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Connection\ActiveConnection
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,20 +20,12 @@
 * SOFTWARE.
 */
 
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Connection\ActiveConnection
-*/
-
 namespace Kit\Glider\Connection;
 
 use Kit\Glider\Connection\Connector;
 use Kit\Glider\Adapter\Contract\AdapterInterface;
 use Kit\Glider\Conenctors\Contract\ConnectorProviderInterface;
 
-/**
-* Represents the connection that is being used.
-*/
 abstract class ActiveConnection
 {
 
@@ -45,21 +37,10 @@ abstract class ActiveConnection
 	private static $activated = 0;
 
 	/**
-	* @param 	$connector Kit\Glider\Connection\Connector
-	* @access 	public
-	* @return 	void
-	* @static
-	*/
-	public static function setActiveProvider(Connector $connector)
-	{
-
-	}
-
-	/**
 	* Sets the connections activated status to 1.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function activate()
 	{
@@ -70,7 +51,7 @@ abstract class ActiveConnection
 	* Returns the current connection status.
 	*
 	* @access 	public
-	* @return 	String
+	* @return 	<String>
 	*/
 	public function status()
 	{

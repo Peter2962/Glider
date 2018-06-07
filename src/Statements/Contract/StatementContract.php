@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Statements\Contract\StatementContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,12 +18,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Statements\Contract\StatementContract
-*
+* -------------------------------------------------------------------------------
 * StatementContract helps to formulize a platform's statement. It gives
 * each platform an architecture template that is required. The StatementProvider handles
 * query processing. 
@@ -52,7 +47,7 @@ interface StatementContract
 	/**
 	* @param 	$statement
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct($statement);
 
@@ -60,7 +55,7 @@ interface StatementContract
 	* Returns number of affected rows from a statement.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function affectedRows() : int;
 
@@ -68,7 +63,7 @@ interface StatementContract
 	* Return error number.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function errno() : int;
 
@@ -76,7 +71,7 @@ interface StatementContract
 	* Return an array of error list.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Array>
 	*/
 	public function errorList();
 
@@ -84,7 +79,7 @@ interface StatementContract
 	* Returns error string.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Mixed>
 	*/
 	public function error();
 
@@ -92,7 +87,7 @@ interface StatementContract
 	* Returns the number of columns/fields in result set.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function fieldCount() : int;
 
@@ -100,15 +95,15 @@ interface StatementContract
 	* Returns the last insert id.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
-	public function insertId();
+	public function insertId() : int;
 
 	/**
 	* Returns size of parameters.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function paramCount() : int;
 
@@ -116,7 +111,7 @@ interface StatementContract
 	* Returns sql state.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function sqlState() : int;
 }

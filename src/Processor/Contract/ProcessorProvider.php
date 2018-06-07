@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Processor\Contract\ProcessorProvider
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,13 +18,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Processor\Contract\ProcessorProvider
-*
-* ProcessorProvider gives each platform an architecture template that is required.
+* ------------------------------------------------------------------------------
 * @method fetch
 * @method insert
 * @method update
@@ -49,9 +43,9 @@ interface ProcessorProvider
 	* The constructor accepts Kit\Glider\Platform\Contract\PlatformProvider as the only
 	* argument.
 	*
-	* @param 	$platformProvider Kit\Glider\Platform\Contract\PlatformProvider
+	* @param 	$platformProvider <Kit\Glider\Platform\Contract\PlatformProvider>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(PlatformProvider $platformProvider);
 
@@ -59,9 +53,9 @@ interface ProcessorProvider
 	* The fetch method is used to fetch results from the database. This method accepts instance
 	* of QueryBuilder<Kit\Glider\Query\Builder\QueryBuilder> and Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
-	* @param 	$queryBuiler Kit\Glider\Query\Builder\QueryBuilder
+	* @param 	$queryBuiler <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
-	* @return 	Kit\Glider\Result\Collection
+	* @return 	<Object> <Kit\Glider\Result\Collection>
 	*/
 	public function fetch(QueryBuilder $queryBuiler, Parameters $parameters) : Collection;
 
@@ -71,7 +65,7 @@ interface ProcessorProvider
 	* Parameters <Kit\Glider\Query\Parameters> as an argument.
 	*
 	* @access 	public
-	* @return 	Kit\Glider\Statements\Contract\StatementContract
+	* @return 	<Object> <Kit\Glider\Statements\Contract\StatementContract>
 	*/
 	public function insert(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
@@ -83,7 +77,7 @@ interface ProcessorProvider
 	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @param 	$parameters <Kit\Glider\Query\Parameters>
 	* @access 	public
-	* @return 	Object Kit\Glider\Statements\Contract\StatementContract
+	* @return 	<Object> <Kit\Glider\Statements\Contract\StatementContract>
 	*/
 	public function update(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
@@ -95,7 +89,7 @@ interface ProcessorProvider
 	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @param 	$parameters <Kit\Glider\Query\Parameters>
 	* @access 	public
-	* @return 	Object Kit\Glider\Statements\Contract\StatementContract
+	* @return 	<Object> <Kit\Glider\Statements\Contract\StatementContract>
 	*/
 	public function delete(QueryBuilder $queryBuilder, Parameters $parameters) : StatementContract;
 
@@ -103,7 +97,7 @@ interface ProcessorProvider
 	* Returns the statement result.
 	*
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function getResult();
 
@@ -118,7 +112,7 @@ interface ProcessorProvider
 	* @param 	$queryString <String>
 	* @param 	$returnType <Integer>
 	* @access 	public
-	* @return 	Mixed 
+	* @return 	<Mixed> 
 	*/
 	public function query(String $queryString, int $returnType=1);
 

@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Contract\BaseTableContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Contract\BaseTableContract
 */
 
 namespace Kit\Glider\Schema\Contract;
@@ -38,7 +33,7 @@ interface BaseTableContract
 	*
 	* @param 	$tableName <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(String $tableName);
 
@@ -47,7 +42,7 @@ interface BaseTableContract
 	*
 	* @param 	$engine <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function setEngine(String $engine);
 
@@ -55,7 +50,7 @@ interface BaseTableContract
 	* Checks if a table exists.
 	*
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function exists();
 
@@ -71,7 +66,7 @@ interface BaseTableContract
 	*
 	* @param 	$scheme <Closure>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	* @see 		Kit\Glider\Schema\Scheme
 	*/
 	public function create(Closure $scheme);
@@ -88,7 +83,7 @@ interface BaseTableContract
 	*
 	* @param 	$scheme <Closure>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function modify(Closure $scheme);
 
@@ -96,7 +91,7 @@ interface BaseTableContract
 	* Drops table.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function drop();
 
@@ -105,7 +100,7 @@ interface BaseTableContract
 	*
 	* @param 	$newName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function rename(String $newName);
 
@@ -114,7 +109,7 @@ interface BaseTableContract
 	*
 	* @param 	$column <String>|<Kit\Glider\Schema\Column>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasColumn($column) : Bool;
 
@@ -182,7 +177,7 @@ interface BaseTableContract
 	*
 	* @param 	$column <String>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function hasIndex(String $column) : Bool;
 
@@ -202,7 +197,7 @@ interface BaseTableContract
 	* @param 	$columns <Array>
 	* @param 	$setUnique <Integer>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function addIndex(String $name, Array $columns=[], int $setUnique);
 
@@ -221,7 +216,7 @@ interface BaseTableContract
 	*
 	* @param 	$index <Mixed>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function isUnique($index) : Bool;
 
@@ -239,7 +234,7 @@ interface BaseTableContract
 	* Drops a primary key on the table.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function dropPrimary();
 
@@ -248,7 +243,7 @@ interface BaseTableContract
 	*
 	* @param 	$foreignKey <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasForeign(String $foreignKey) : Bool;
 
@@ -257,7 +252,7 @@ interface BaseTableContract
 	*
 	* @param 	$foreignKey <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function dropForeign(String $foreignKey) : Bool;
 

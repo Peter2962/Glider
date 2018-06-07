@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Connection\PlatformResolver
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Connection\PlatformResolver
 */
 
 namespace Kit\Glider\Connection;
@@ -73,9 +68,9 @@ class PlatformResolver
 	private 	$preparedConnection;
 
 	/**
-	* @param 	$contract Kit\Glider\Connectors\Contract\ConnectionInterface
+	* @param 	$contract <Kit\Glider\Connectors\Contract\ConnectionInterface>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(ConnectionInterface $contract)
 	{
@@ -87,9 +82,9 @@ class PlatformResolver
 	/**
 	* Resolve provided connection's platform.
 	*
-	* @param 	$eventManager Kit\Glider\Events\EventManager
+	* @param 	$eventManager <Kit\Glider\Events\EventManager>
 	* @access 	public
-	* @return 	Object Kit\Glider\Platform\Contract\PlatformProvider
+	* @return 	<Object> <Kit\Glider\Platform\Contract\PlatformProvider>
 	*/
 	public function resolvePlatform(EventManager $eventManager)
 	{
@@ -123,10 +118,10 @@ class PlatformResolver
 	/**
 	* Resolves a connector's provider and returns it's object.
 	*
-	* @param 	$eventManager Kit\Glider\Events\EventManager 	
+	* @param 	$eventManager <Kit\Glider\Events\EventManager 	>
 	* @param 	$platform <Array>
 	* @access 	private
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	private function getPlatformProvider($platform=[], EventManager $eventManager)
 	{	
@@ -168,7 +163,7 @@ class PlatformResolver
 	*
 	* @access 	public
 	* @final
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	final public function preparedConnection()
 	{

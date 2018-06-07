@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Events\EventManager
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,15 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Events\EventManager
-* @version 	0.1.0
-*
-* This class helps to make and fire events at some certain sections of Glider.
-* Note that this is just a simple event architecture class for Glider.
 */
 
 namespace Kit\Glider\Events;
@@ -64,7 +55,7 @@ class EventManager
 	* @param 	$listenerId <String>
 	* @param 	$callback <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(String $listenerId=null, $callback=null)
 	{
@@ -79,7 +70,7 @@ class EventManager
 	* @param 	$callback <Mixed>
 	* @access 	public
 	* @static
-	* @return 	void
+	* @return 	<void>
 	*/
 	public static function listenTo(String $eventId, $callback)
 	{
@@ -94,9 +85,9 @@ class EventManager
 	* Dispatches an event with the @param $eventId only if it exists.
 	*
 	* @param 	$eventId <String>
-	* @param 	$subscriber Kit\Glider\Events\Contract\Subscriber
+	* @param 	$subscriber <Kit\Glider\Events\Contract\Subscriber>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function dispatchEvent(String $eventId, $subscriber=null)
 	{
@@ -111,9 +102,9 @@ class EventManager
 	* This method attaches an event through it's subscribe object. List of events
 	* are loaded from the subscriber and added to the listeners.
 	*
-	* @param 	$subscriber Kit\Glider\Events\Contract\Subcriber
+	* @param 	$subscriber <Kit\Glider\Events\Contract\Subcriber>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function attachSubscriber(Subscriber $subscriber)
 	{

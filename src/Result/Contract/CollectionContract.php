@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Result\Contract\CollectionContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,12 +18,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Result\Contract\CollectionContract
-*
+* -------------------------------------------------------------------------
 * Methods:
 * 1. __construct
 * 2. all - Return array of query result.
@@ -48,10 +43,10 @@ interface CollectionContract
 	/**
 	* Collection instance constructor.
 	*
-	* @param 	$statementProvider Kit\Glider\Statements\Contract\StatementProvider | Array
+	* @param 	$statementProvider <Kit\Glider\Statements\Contract\StatementProvider> | <Array>
 	* @param 	$statement <Mixed>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct($statementProvider, $statement);
 
@@ -60,7 +55,7 @@ interface CollectionContract
 	*
 	* @param 	$property <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function __get($property);
 
@@ -68,7 +63,7 @@ interface CollectionContract
 	* Return result statement.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function statement();
 
@@ -76,7 +71,7 @@ interface CollectionContract
 	* Resets the saved collection.
 	*
 	* @access 	public
-	* @return 	Kit\Glider\Resets\CollectionContract
+	* @return 	<object> <Kit\Glider\Resets\CollectionContract>
 	*/
 	public function reset() : CollectionContract;
 
@@ -84,7 +79,7 @@ interface CollectionContract
 	* Returns an array of query result.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function all() : Array;
 
@@ -92,7 +87,7 @@ interface CollectionContract
 	* Return the first offset of the query result array.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function first();
 
@@ -100,7 +95,7 @@ interface CollectionContract
 	* Return the next offset of the query result array.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function next();
 
@@ -109,7 +104,7 @@ interface CollectionContract
 	*
 	* @param 	$offset <Integer>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function offset(int $offset=0);
 
@@ -117,7 +112,7 @@ interface CollectionContract
 	* Returns the last row in the result array.
 	*
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function last();
 
@@ -129,7 +124,7 @@ interface CollectionContract
 	*
 	* @param 	$columns <Array>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function only(...$columns);
 
@@ -137,7 +132,7 @@ interface CollectionContract
 	* Return size of collected array result.
 	*
 	* @access 	public
-	* @return 	Integer
+	* @return 	<Integer>
 	*/
 	public function size() : int;
 
@@ -146,7 +141,7 @@ interface CollectionContract
 	*
 	* @param 	$data <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function add($data) : CollectionContract;
 
@@ -157,7 +152,7 @@ interface CollectionContract
 	*
 	* @param 	$key <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function remove($key) : CollectionContract;
 
@@ -167,7 +162,7 @@ interface CollectionContract
 	* @param 	$key <String>
 	* @param 	$value <Mixed>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function removeWhere(String $key, $value) : CollectionContract;
 
@@ -179,7 +174,7 @@ interface CollectionContract
 	* @param 	$callback <Closure>
 	* @param 	$with <Array>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function map(Array $elements, Closure $callback, Array $with=[]) : CollectionContract;
 
@@ -190,7 +185,7 @@ interface CollectionContract
 	*
 	* @param 	$elements <Array>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function toArray(Array $elements=[]) : CollectionContract;
@@ -204,7 +199,7 @@ interface CollectionContract
 	* @param 	$elements <Array>
 	* @param 	$functionName <String>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function invoke(Array $elements, String $functionName) : CollectionContract;
 
@@ -217,7 +212,7 @@ interface CollectionContract
 	* @param 	$elements <Mixed> Array|Kit\Glider\Result\CollectionContract
 	* @param 	$index <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function max($elements=[], String $index=null);
 
@@ -230,7 +225,7 @@ interface CollectionContract
 	* @param 	$elements <Mixed> Array|Kit\Glider\Result\CollectionContract
 	* @param 	$index <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function min($elements=[], String $index=null);
 
@@ -242,7 +237,7 @@ interface CollectionContract
 	*
 	* @param 	$key <String>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function groupBy(String $key) : CollectionContract;
@@ -252,7 +247,7 @@ interface CollectionContract
 	*
 	* @param 	$to <Integer>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	* @see 		Kit\Glider\Result\CollectionContract::all
 	*/
 	public function partition(int $to) : CollectionContract;
@@ -263,7 +258,7 @@ interface CollectionContract
 	*
 	* @param 	$conditions <Array>
 	* @access 	public
-	* @return 	Kit\Glider\Result\CollectionContract
+	* @return 	<Object> <Kit\Glider\Result\CollectionContract>
 	*/
 	public function where(Array $conditions=[]) : CollectionContract;
 

@@ -1,16 +1,16 @@
 <?php
 /**
-* MIT License
+* @author 		Peter Taiwo <peter@phoxphp.com>
+* @package 		Kit\Glider\Schema\Contract\SchemaManagerContract
+* @license 		MIT License
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,11 +18,6 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
-/**
-* @author 	Peter Taiwo
-* @package 	Kit\Glider\Schema\Contract\SchemaManagerContract
 */
 
 namespace Kit\Glider\Schema\Contract;
@@ -41,7 +36,7 @@ interface SchemaManagerContract
 	* @param 	$connectionId <String>
 	* @param 	$queryBuilder <Kit\Glider\Query\Builder\QueryBuilder>
 	* @access 	public
-	* @return 	void
+	* @return 	<void>
 	*/
 	public function __construct(String $connectionId=null, QueryBuilder $queryBuilder);
 
@@ -51,7 +46,7 @@ interface SchemaManagerContract
 	* @param 	$method <String>
 	* @param 	$parameters <Array>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public static function __callStatic($method, $parameters);
 
@@ -60,7 +55,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$databaseName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function createDatabase(String $databaseName);
 
@@ -69,7 +64,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$databaseName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function createDatabaseIfNotExist(String $databaseName);
 
@@ -78,7 +73,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$databaseName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function switchDatabase(String $databaseName);
 
@@ -87,7 +82,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$databaseName <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function dropDatabase(String $databaseName);
 
@@ -96,7 +91,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasTable(String $table) : Bool;
 
@@ -104,7 +99,7 @@ interface SchemaManagerContract
 	* Returns array of tables in the database.
 	*
 	* @access 	public
-	* @return 	Array
+	* @return 	<Array>
 	*/
 	public function getAllTables();
 
@@ -114,7 +109,7 @@ interface SchemaManagerContract
 	* @param 	$table <String>
 	* @param 	$column <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasColumn(String $table, String $column) : Bool;
 
@@ -123,7 +118,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getColumns(String $table);
 
@@ -132,7 +127,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getColumnNames(String $table);
 
@@ -141,7 +136,7 @@ interface SchemaManagerContract
 	*
 	* @param 	$table <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getColumnTypes(String $table);
 
@@ -151,7 +146,7 @@ interface SchemaManagerContract
 	* @param 	$table <String>
 	* @param 	$column <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getColumn(String $table, String $column) : Column;
 
@@ -161,25 +156,16 @@ interface SchemaManagerContract
 	* @param 	$table <String>
 	* @param 	$column <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function getColumnType(String $table, String $column);
-
-	/**
-	* Return an instance of table.
-	*
-	* @param 	$tableName <String>
-	* @param 	$column <Closure>
-	* @access 	public
-	* @return 	void
-	*/
 
 	/**
 	* Sets table storage engine.
 	*
 	* @param 	$engine <String>
 	* @access 	public
-	* @return 	Mixed
+	* @return 	<Mixed>
 	*/
 	public function setTableEngine(String $engine);
 
@@ -189,7 +175,7 @@ interface SchemaManagerContract
 	* @param 	$table <String>
 	* @param 	$foreignKey <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function hasForeign(String $table, String $foreignKey) : Bool;
 
@@ -199,7 +185,7 @@ interface SchemaManagerContract
 	* @param 	$table <String>
 	* @param 	$foreignKey <String>
 	* @access 	public
-	* @return 	Boolean
+	* @return 	<Boolean>
 	*/
 	public function dropForeign(String $table, String $foreignKey) : Bool;
 
