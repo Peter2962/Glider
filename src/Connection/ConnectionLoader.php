@@ -37,9 +37,9 @@ class ConnectionLoader
 	public function getConnectionsFromResource() : Array
 	{	
 		$baseDir = dirname(__DIR__);
-		$configLocation = $baseDir . '/Config.php';
+		$configLocation = $baseDir . '/config.php';
 	
-		if (!file_exists($configLocation)) {
+		if (!file_exists($configLocation) && class_exists(Config::class)) {
 			$resourceConfig = Config::get('database');
 		}else{
 			$resourceConfig = include $configLocation;
