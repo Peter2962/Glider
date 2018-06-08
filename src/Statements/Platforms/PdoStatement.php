@@ -80,7 +80,7 @@ class PdoStatement extends AbstractPdoPlatformStatement implements StatementCont
 	/**
 	* {@inheritDoc}
 	*/
-	public function insertId()
+	public function insertId() : int
 	{
 		return $this->statement->lastInsertId;
 	}

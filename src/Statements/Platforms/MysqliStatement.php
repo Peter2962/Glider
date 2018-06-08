@@ -88,7 +88,7 @@ class MysqliStatement implements StatementContract
 	/**
 	* {@inheritDoc}
 	*/
-	public function insertId()
+	public function insertId() : int
 	{
 		return $this->statement->insert_id;
 	}

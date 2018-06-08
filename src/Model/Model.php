@@ -82,6 +82,12 @@ class Model extends Repository implements ModelContract
 	public 		$table;
 
 	/**
+	* @var 		$findOptions
+	* @access 	protected
+	*/
+	protected static $findOptions = [];
+
+	/**
 	* @access 	public
 	* @return 	<void>
 	*/
@@ -468,6 +474,14 @@ class Model extends Repository implements ModelContract
 	}
 
 	/**
+	* {@inheritDOc}
+	*/
+	public function setFindOptions(Array $options)
+	{
+		Model::$findOptions = $options;
+	}
+
+	/**
 	* Checks if model is related to another model.
 	*
 	* @param 	$label <String>
@@ -491,11 +505,37 @@ class Model extends Repository implements ModelContract
 	* @static
 	* @return 	<Object> <Kit\Glider\Query\Builder\QueryBuilder>
 	*/
-	protected function toSql($fields=null)
+	protected function toSql($fields=null) : QueryBuilder
 	{
-		return $this->queryBuilder()
+		$queryBuilder = $this->queryBuilder()
 		->select($fields)
 		->from($this->table);
+
+		$orderBy = [];
+
+		if (isset(Model::$findOptions['asc'])) {
+			$orderBy[] = Model::$findOptions['asc'] . ' ASC';
+		}
+
+		if (isset(Model::$findOptions['desc'])) {
+			$orderBy[] = Model::$findOptions['desc'] . ' DESC';
+		}
+
+		if (!empty($orderBy)) {
+			$queryBuilder->orderBy($orderBy);
+		}
+
+		if (isset(Model::$findOptions['limit'])) {
+			$limit = Model::$findOptions['limit'];
+
+			if (is_array($limit) && count($limit) > 1) {
+				$queryBuilder->limit($limit[0], $limit[1]);
+			}else{
+				$queryBuilder->limit($limit);
+			}
+		}
+
+		return $queryBuilder;
 	}
 
 	/**
