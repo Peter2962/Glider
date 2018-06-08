@@ -115,4 +115,20 @@ interface ModelContract
 	*/
 	public static function __callStatic($method, $arguments);
 
+	/**
+	* Sets query options to use when finding results.
+	* -----------------------------------------------
+	* Available options as at v1.6.1
+	* -----------------------------------------------
+	* 
+	* asc -> Orders result by field by ascending
+	* desc -> Orders result by field by descending
+	* limit -> Limits number of rows returned. 
+	*
+	* @param 	$options <Array>
+	* @access 	public
+	* @return 	<void>
+	*/
+	public function setFindOptions(Array $options);
+
 }
