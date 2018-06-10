@@ -33,7 +33,7 @@ class Composer
 	* @return 	<void>
 	* @static
 	*/
-	public static function postInstall()
+	public static function postCreateProjectCmd()
 	{
 		if(file_exists('Config.php')) {
 			unlink('Config.php');
