@@ -1,0 +1,27 @@
+<?php
+
+use Kit\Glider\Schema\SchemaManager;
+use Kit\Glider\Query\Builder\QueryBuilder;
+
+class phx:class
+{
+	
+	/**
+	* @access 	public
+	* @return 	<void>
+	*/
+	public function up()
+	{
+		//
+	}
+
+	/**
+	* @access 	public
+	* @return 	<void>
+	*/
+	public function down()
+	{
+		//
+	}
+
+}
