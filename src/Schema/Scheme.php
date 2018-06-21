@@ -371,9 +371,7 @@ class Scheme
 		$type = ucfirst($type);
 
 		if (!class_exists($this->typeNamespace . '\\' . $type)) {
-
 			throw new RuntimeException(sprintf('Class for type %s does not exist.', $type));
-
 		}
 
 		$type = $this->typeNamespace . '\\' . $type;
@@ -400,12 +398,34 @@ class Scheme
 
 		$definition = $name . ' ' . $typeClass->getName();
 		$definition = $this->getLength($definition, $length);
-		$definition = $definition . $isNull . $isPrimary . $canAutoIncrement;
+		
+		if (isset($options['unsigned']) && $options['unsigned'] == true) {
+			$definition .= ' UNSIGNED';
+		}
+
+		$definition .= $isNull . $isPrimary . $canAutoIncrement;
+
+		if (isset($options['default'])) {
+			$definition .= ' DEFAULT ' . $options['default'];
+		}
 
 		Scheme::$commandsArray[$name] = ['type' => $dataType, 'definition' => $definition];
 		Scheme::$commands[] = $definition;
 
 		return $this;
+	}
+
+	/**
+	* Empties the columns and columnsArray property.
+	*
+	* @access 	public
+	* @return 	<void>
+	* @static
+	*/
+	public static function destroyColumns()
+	{
+		Scheme::$commands = [];
+		Scheme::$commandsArray = [];
 	}
 
 	/**
@@ -416,9 +436,7 @@ class Scheme
 	protected function getLength($definition, $length)
 	{
 		if ($length == null) {
-
 			return $definition;
-
 		}
 
 		return $definition . '(' . $length . ')';

@@ -398,7 +398,6 @@ class Model extends Repository implements ModelContract
 		$childClass = get_called_class();
 
 		$result = $childModel = new $childClass;
-		$isFindBy = null;
 
 		if (preg_match(Attributes::FINDBY_REGEX, $method, $match)) {
 

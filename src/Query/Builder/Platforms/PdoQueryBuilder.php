@@ -35,9 +35,9 @@ class PdoQueryBuilder extends QueryBuilder
 	{
 		if (!empty($this->binder->getBinding('select')) && sizeof($values) > 0) {
 	
-			$values = '@pdo' . implode(', ', $values) . '@pdo';			
+			$paramValues = '@pdo' . implode(', ', $values) . '@pdo';
 			$this->getParameterBag()->setParameter(
-				$column, $values
+				$column, $paramValues
 			);
 
 			$markers = implode(', ', array_fill(0, count($values), '?'));

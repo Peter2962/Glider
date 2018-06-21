@@ -28,6 +28,7 @@ abstract class Domain
 	/**
 	* Checks if the server host matches provided domain(s). A single
 	* domain (string) or array of domains can be provided.
+	* Note: This does not work when dealing with the cli.
 	*
 	* @param 	$providedDomain <Mixed>
 	* @access 	public
@@ -36,6 +37,10 @@ abstract class Domain
 	*/
 	public static function matches($providedDomain=null)
 	{
+		if (strtolower(php_sapi_name()) == 'cli') {
+			return true;
+		}
+
 		if (is_string($providedDomain)) {
 			return $_SERVER['HTTP_HOST'] == $providedDomain;
 		}

@@ -100,16 +100,14 @@ class Table implements BaseTableContract
 		$schemeObject = new Scheme();
 
 		$create = function() use ($scheme, $schemeObject) {
-
 			return $scheme($schemeObject);
-
 		};
 
 		$create();
 		$commands = $schemeObject->getDefinition();
 		$expresison = Expressions::createTable($this->tableName, $commands);
 
-		return $this->runQueryWithExpression($expresison);
+		$this->runQueryWithExpression($expresison);
 	}
 
 	/**
@@ -120,9 +118,7 @@ class Table implements BaseTableContract
 		$schemeObject = new Scheme();
 
 		$create = function() use ($scheme, $schemeObject) {
-
 			return $scheme($schemeObject);
-
 		};
 
 		$create();
@@ -136,15 +132,12 @@ class Table implements BaseTableContract
 		}
 
 		array_map(function($key) use ($commands) {
-
 			$command = $commands[$key];
 
 			if (!in_array($command['type'], ['INDEX', 'UNIQUE_INDEX', 'FOREIGN'])) {
 
 				if ($this->hasColumn($key)) {
-
 					$this->modifyColumn($commands[$key]['definition']);
-
 				}else{
 
 					// Create column if it does not exist in table.
@@ -218,9 +211,7 @@ class Table implements BaseTableContract
 		$_columns = [];
 
 		foreach($columns as $column) {
-
 			$_columns[] = Repository::getPlatformColumn($column);
-
 		}
 
 		return $_columns;
@@ -352,15 +343,11 @@ class Table implements BaseTableContract
 	{
 
 		$index = 'INDEX ' . $name . '(' . implode(',', $columns) . ')';
-
 		$type = 'INDEX';
 
 		if ($setUnique == Scheme::SET_UNIQUE_KEY) {
-
 			$index = 'UNIQUE ' . $index;
-
 			$type = 'UNIQUE_INDEX';
-
 		}
 
 		return $this->runQueryWithExpression(Expressions::addIndex($this->tableName, $index));
@@ -388,9 +375,7 @@ class Table implements BaseTableContract
 		if (is_string($index)) {
 
 			if (!$this->hasIndex($index)) {
-
 				throw new RuntimeException(sprintf('Index `%s` does not exist in `%s` table', $index, $this->tableName));
-
 			}
 
 			$index = $this->getIndex($index);
@@ -398,9 +383,7 @@ class Table implements BaseTableContract
 		}
 
 		if ($index->isUnique()) {
-
 			return true;
-
 		}
 
 		return false;
@@ -412,15 +395,11 @@ class Table implements BaseTableContract
 	public function addPrimary($column)
 	{
 		if (is_string($column) && !$this->hasColumn($column)) {
-
 			throw new RuntimeException(sprintf('Column `%s` does not exist in `%s` table', $column, $this->tableName));
-
 		}
 
 		if ($column instanceof ColumnContract) {
-
 			$column = $column->getName();
-
 		}
 
 		return $this->runQueryWithExpression(Expressions::addPrimary($this->tableName, $column));
@@ -542,7 +521,9 @@ class Table implements BaseTableContract
 	*/
 	protected function runQueryWithExpression(String $expresison, int $type=1)
 	{
-		return $this->builder()->query($expresison, $type);
+		$query = $this->builder()->query($expresison, $type);
+		Scheme::destroyColumns();
+		return $query;
 	}
 
 	/**
