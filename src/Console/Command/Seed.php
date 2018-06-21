@@ -22,9 +22,13 @@
 
 namespace Kit\Glider\Console\Command;
 
+use Kit\Glider\Helper;
 use Kit\Console\Command;
 use Kit\Console\Environment;
 use Kit\Console\Contract\Runnable;
+use Kit\Glider\Console\TemplateBuilder;
+use Kit\Glider\Seed\Exceptions\SeederNotFoundException;
+use Kit\Glider\Seed\Exceptions\SeedFileInvalidException;
 
 class Seed implements Runnable
 {
@@ -63,7 +67,26 @@ class Seed implements Runnable
 	*/
 	public function run(Array $argumentsList, int $argumentsCount)
 	{
-		//
+		$command = $argumentsList[0];
+		unset($argumentsList[0]);
+		$arguments = array_values($argumentsList);
+
+		switch ($command) {
+			case 'create':
+				return $this->createSeed();
+				break;
+			case 'run':
+				return $this->runSeeds();
+				break;
+			case 'run-class':
+				$path = $this->cmd->getConfigOpt('seeds_storage') . '/' . trim($arguments[0]) . '.php';
+				include $path;
+				return $this->runSeed(basename($path, '.php'));
+				break;
+			default:
+				return $this->env->sendOutput('No command run.');
+				break;
+		}
 	}
 
 	/**
@@ -71,7 +94,94 @@ class Seed implements Runnable
 	*/
 	public function runnableCommands() : Array
 	{
-		return [];
+		return [
+			'run' => ':none',
+			'create' => ':none',
+			'run-class' => 1,
+		];
+	}
+
+	/**
+	* Create new seed class.
+	*
+	* @access 	protected
+	* @return 	<void>
+	*/
+	protected function createSeed()
+	{
+		$templateTags = [];
+		$seedsDirectory = $this->cmd->getConfigOpt('seeds_storage');
+
+		$filename = trim($this->cmd->question('Seed filename?'));
+		$templateTags['phx:class'] = Helper::getQualifiedClassName($filename);
+
+		$path = $seedsDirectory . '/' . $filename . '.php';
+
+		if (file_exists($path)) {
+			throw new SeedFileInvalidException(
+				sprintf(
+					'Seed file [%s] exists.',
+					$filename
+				)
+			);
+		}
+
+		$builder = new TemplateBuilder($this->cmd, $this->env);
+		$builder->createClassTemplate('seed', $filename, $seedsDirectory, $templateTags);
+	}
+
+	/**
+	* Runs all seeders.
+	*
+	* @access 	protected
+	* @return 	<void>
+	*/
+	protected function runSeeds()
+	{
+		foreach($this->getSeeders() as $file) {
+			require_once $file;
+			$className = basename($file, '.php');
+			$this->runSeed($className);
+		}
+	}
+
+	/**
+	* Runs a single seeder.
+	*
+	* @param 	$className <String>
+	* @access 	protected
+	* @return 	<void>
+	*/
+	protected function runSeed(String $className)
+	{
+		if (!class_exists($className)) {
+			throw new SeederNotFoundException(
+				sprintf(
+					'[%s] seeder class not found.',
+					$className
+				)
+			);
+		}
+
+		$seeder = new $className();
+		return $seeder->run();
+	}
+
+	/**
+	* Returns an array of seeder files.
+	*
+	* @access 	protected
+	* @return 	<Array>
+	*/
+	protected function getSeeders() : Array
+	{
+		$seeders = [];
+		$seedsDirectory = $this->cmd->getConfigOpt('seeds_storage');
+		foreach(glob($seedsDirectory . '/*' . '.php') as $file) {
+			$seeders[] = $file;
+		}
+
+		return $seeders;
 	}
 
 }

@@ -31,6 +31,7 @@ use Kit\Glider\Migration\Migrator;
 use Kit\Glider\Migration\Attribute;
 use Kit\Glider\Console\TemplateBuilder;
 use Kit\Glider\Migration\Exceptions\MigrationFileInvalidException;
+use Kit\Glider\Migration\Exceptions\MigrationClassNotFoundException;
 
 class Migration implements Runnable
 {
@@ -72,7 +73,7 @@ class Migration implements Runnable
 	{
 		$this->env = $env;
 		$this->cmd = $cmd;
-		$this->migrator = new Migrator();
+		$this->migrator = new Migrator($env);
 	}
 
 	/**
@@ -88,15 +89,22 @@ class Migration implements Runnable
 	*/
 	public function run(Array $argumentsList, int $argumentsCount)
 	{
-		switch ($argumentsList[0]) {
+		$command = $argumentsList[0];
+		unset($argumentsList[0]);
+		$arguments = array_values($argumentsList);
+
+		switch ($command) {
 			case 'create':
 				return $this->create();
 				break;
 			case 'run':
 				return $this->processMigrations();
 				break;
+			case 'run-class':
+				return $this->processMigration($arguments);
+				break;
 			default:
-				# code...
+				return $this->env->sendOutput('No command run.');
 				break;
 		}
 	}
@@ -109,7 +117,7 @@ class Migration implements Runnable
 		return [
 			'create' => ':none',
 			'run' => ':none',
-			'run-class' => 1
+			'run-class' => ':i'
 		];
 	}
 
@@ -185,12 +193,29 @@ class Migration implements Runnable
 	/**
 	* Processes a specific migration.
 	*
+	* @param 	$arguments <Array>
 	* @access 	protected
 	* @return 	<void>
 	*/
-	protected function processMigration()
+	protected function processMigration(Array $arguments)
 	{
+		$migrationClass = $arguments[0];
 
+		$migration = Model::findByclass_name($migrationClass);
+		if (!$migration) {
+			throw new MigrationClassNotFoundException(
+				sprintf(
+					'Migration class [%s] does not exist',
+					$migrationClass
+				)
+			);
+		}
+
+		if (isset($arguments[1]) && $arguments[1] == '--down') {
+			self::$migrationType = Attribute::DOWNGRADE;
+		}
+
+		$this->migrator->runSingleMigration($migration);
 	}
 
 }

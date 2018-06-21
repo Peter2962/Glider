@@ -1,7 +1,7 @@
 <?php
 /**
 * @author 		Peter Taiwo <peter@phoxphp.com>
-* @package 		Kit\Glider\Console\Command\Database
+* @package 		Kit\Glider\Seed\Exceptions\SeederNotFoundException
 * @license 		MIT License
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,58 +20,11 @@
 * SOFTWARE.
 */
 
-namespace Kit\Glider\Console\Command;
+namespace Kit\Glider\Seed\Exceptions;
 
-use Kit\Console\Command;
-use Kit\Console\Environment;
-use Kit\Console\Contract\Runnable;
+use RuntimeException;
 
-class Database implements Runnable
+class SeederNotFoundException extends RuntimeException
 {
-	
-	/**
-	* @var 		$env
-	* @access 	protected
-	*/
-	protected	$env;
-
-	/**
-	* @var 		$cmd
-	* @access 	protected
-	*/
-	protected	$cmd;
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function __construct(Environment $env, Command $cmd)
-	{
-		$this->env = $env;
-		$this->cmd = $cmd;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function getId() : String
-	{
-		return 'db';
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function run(Array $argumentsList, int $argumentsCount)
-	{
-		//
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	public function runnableCommands() : Array
-	{
-		return [];
-	}
-
+	//
 }

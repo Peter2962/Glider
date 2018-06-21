@@ -24,7 +24,7 @@ namespace Kit\Glider\Migration;
 
 use Closure;
 use Kit\Glider\Helper;
-use Kit\Glider\Repository;
+use Kit\Console\Environment;
 use Kit\Glider\Migration\Model;
 use Kit\Glider\Migration\Attribute;
 use Kit\Glider\Schema\SchemaManager;
@@ -33,6 +33,24 @@ use Kit\Glider\Migration\Exceptions\MigrationClassNotFoundException;
 
 class Migrator
 {
+
+	/**
+	* @var 		$env
+	* @access 	protected
+	*/
+	protected 	$env;
+
+	/**
+	* Migrator construct.
+	*
+	* @param 	$env <Kit\Console\Environment>
+	* @access 	public
+	* @return 	<void>
+	*/
+	public function __construct(Environment $env)
+	{
+		$this->env = $env;
+	}
 
 	/**
 	* Creates 'migrations' table if it does not exist.
@@ -72,22 +90,17 @@ class Migrator
 	}
 
 	/**
-	* Runs all migration classes in migrations directory.
+	* Runs all migration classes with pending status.
 	*
-	* @param 	$migrationsDirectory <String>
 	* @access 	public
 	* @return 	<void>
 	*/
-	public function runMigrations(String $migrationsDirectory)
+	public function runMigrations()
 	{
-		
-		$migrationFiles = $this->getMigrationFilesFromDirectory($migrationsDirectory);
 		$migrations = Model::where('status', 'pending');
 
 		if ($migrations->get()->size() > 0) {
 			foreach($migrations->get()->all() as $migration) {
-				require_once $migration->path;
-
 				$this->runSingleMigration($migration);
 			}
 		}
@@ -102,8 +115,9 @@ class Migrator
 	*/
 	public function runSingleMigration($migration)
 	{
-
+		require_once $migration->path;
 		$migrationClass = $migration->class_name;
+		
 		if (!class_exists($migrationClass)) {
 			throw new MigrationClassNotFoundException(
 				sprintf(
@@ -124,6 +138,14 @@ class Migrator
 		$migration = Model::findById($migration->id);
 		$migration->status = 'migrated';
 		$migration->save();
+
+		$this->env->sendOutput(
+			sprintf(
+				'[%s] migration was successful',
+				$migration->class_name
+			),
+			'green'
+		);
 	}
 
 }
