@@ -95,6 +95,20 @@ class Scheme
 	const 		SET_UNIQUE_KEY = 1;
 
 	/**
+	* Returns an auto incremented field with a primary key index.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @access 	public
+	* @return 	Object 
+	*/
+	public function id(String $name = 'id', int $length = 15, Bool $null = false)
+	{
+		return $this->integer($name, $length, $null, true, ['primary' => true]);
+	}
+
+	/**
 	* @access 	public
 	* @return 	<String>
 	*/
