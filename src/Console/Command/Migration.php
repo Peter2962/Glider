@@ -93,6 +93,8 @@ class Migration implements Runnable
 		unset($argumentsList[0]);
 		$arguments = array_values($argumentsList);
 
+		$this->migrator->createMigrationsTable();
+
 		switch ($command) {
 			case 'create':
 				return $this->create();
@@ -142,9 +144,6 @@ class Migration implements Runnable
 	*/
 	protected function create(Array $arguments=[])
 	{
-		// The migrations table will only be created if it does not exist already.
-		$this->migrator->createMigrationsTable();
-
 		$migrationsDirectory = $this->cmd->getConfigOpt('migrations_storage');
 		$templateTags = [];
 
