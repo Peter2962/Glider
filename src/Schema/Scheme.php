@@ -95,13 +95,13 @@ class Scheme
 	const 		SET_UNIQUE_KEY = 1;
 
 	/**
-	* Returns an auto incremented field with a primary key index.
+	* Represents an auto incremented field with a primary key index.
 	*
 	* @param 	$name String
 	* @param 	$length Integer
 	* @param 	$null Boolean
 	* @access 	public
-	* @return 	Object 
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function id(String $name = 'id', int $length = 15, Bool $null = false)
 	{
@@ -109,8 +109,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a variable-length non-binary string field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function varchar(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -118,8 +125,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a fixed-length nonbinary (character) string field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function char(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -127,8 +141,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a standard integer field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function integer(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -136,8 +157,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a bit field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function bit(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -145,8 +173,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a very small integer field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function tinyInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -154,8 +189,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a small integer field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function smallInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -163,8 +205,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a medium-sized integer field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function mediumInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -172,8 +221,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a large integer field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function bigInt(String $name, int $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -181,8 +237,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a fixed-point number field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function decimal(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -190,8 +253,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a double-precision floating number field.
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function double(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -199,8 +269,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a small non-binary string field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function text(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -208,8 +285,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a very small non-binary string field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function tinyText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -217,8 +301,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a medium sized non-binary string field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function mediumText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -226,8 +317,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a large non-binary string field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function longText(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -235,8 +333,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a small blob field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function blob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -244,8 +349,15 @@ class Scheme
 	}
 
 	/**
+	* Represents a medium-sized blob field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function mediumBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
@@ -253,12 +365,118 @@ class Scheme
 	}
 
 	/**
+	* Represents a large blob field. 
+	*
+	* @param 	$name String
+	* @param 	$length Integer
+	* @param 	$null Boolean
+	* @param 	$autoIncrement Boolean
+	* @param 	$options Array
 	* @access 	public
-	* @return 	<String>
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
 	*/
 	public function longBlob(String $name, $length=15, Bool $null=false, Bool $autoIncrement=false, Array $options=[])
 	{
 		return $this->setType('LongBlob', $name, $length, $null, $autoIncrement, $options);
+	}
+
+	/**
+	* Represents a date field. 
+	*
+	* @param 	$name String
+	* @param 	$null Boolean
+	* @param 	$options Array
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function date(String $name, Bool $null = false, Array $options = [])
+	{
+		return $this->setType('Date', $name, null, $null, false, $options);
+	}
+
+	/**
+	* Represents a date_created timestamp field.
+	*
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function dateCreated()
+	{
+		return $this->date('date_created', true);
+	}
+
+	/**
+	* Represents a date_updated timestamp field.
+	*
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function dateUpdated()
+	{
+		return $this->timestamp('date_updated', true);
+	}
+
+	/**
+	* Represents a time field. 
+	*
+	* @param 	$name String
+	* @param 	$null Boolean
+	* @param 	$options Array
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function time(String $name, Bool $null = false, Array $options = [])
+	{
+		return $this->setType('Time', $name, null, $null, false, $options);
+	}
+
+	/**
+	* Represents a datetime field. 
+	*
+	* @param 	$name String
+	* @param 	$null Boolean
+	* @param 	$options Array
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function datetime(String $name, Bool $null = false, Array $options = [])
+	{
+		return $this->setType('DateTime', $name, null, $null, false, $options);
+	}
+
+	/**
+	* Represents a year field. 
+	*
+	* @param 	$name String
+	* @param 	$null Boolean
+	* @param 	$options Array
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function year(String $name, Bool $null = false, Array $options = [])
+	{
+		return $this->setType('Year', $name, null, $null, false, $options);
+	}
+
+	/**
+	* Represents a timestamp field. 
+	*
+	* @param 	$name String
+	* @param 	$null Boolean
+	* @param 	$options Array
+	* @access 	public
+	* @return 	Object Kit\Glider\Schema\Column\Type\Contract\TypeContract
+	* @since 	1.4.6
+	*/
+	public function timestamp(String $name, Bool $null = false, Array $options = [])
+	{
+		return $this->setType('Timestamp', $name, null, $null, false, $options);
 	}
 
 	/**
@@ -363,6 +581,8 @@ class Scheme
 	}
 
 	/**
+	* Sets the given column/field type.
+	*
 	* @param 	$type <String>
 	* @param 	$name <String>
 	* @param 	$length <Integer>
