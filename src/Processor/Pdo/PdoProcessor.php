@@ -237,7 +237,7 @@ class PdoProcessor implements ProcessorProvider
 				
 			if ($autocommitDisabled) {
 				$transaction = $this->platform->transaction();
-				$transaction()->begin($connection);
+				$transaction->begin($connection);
 			}
 
 			$statement->execute($executeParameters);
